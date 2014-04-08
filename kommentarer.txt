@@ -1,0 +1,10 @@
+--alla komponenter borde ta bussen som både insignal och utsignal
+--samt en en bit för om den ska läsa från bussen, och en för om den ska skriva till bussen
+--om den ska läsa från bussen sköts detta med en ifsats
+--en ifsats sköter också att:
+-- 	om vi ska skriva till bussen, skicka det som signal till bussen
+--  om vi inte ska skriva till bussen, skicka "Z" som signal till bussen
+
+--lite länkar:
+--http://www.cs.umd.edu/class/sum2003/cmsc311/Notes/CompOrg/tristate.html
+--http://www.isy.liu.se/en/edu/kurs/TSEA83/tex/komp.pdf
