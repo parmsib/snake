@@ -7,4 +7,6 @@
 
 --lite länkar:
 --http://www.cs.umd.edu/class/sum2003/cmsc311/Notes/CompOrg/tristate.html
+
 --http://www.isy.liu.se/en/edu/kurs/TSEA83/tex/komp.pdf
+--denna har ett exempel på hur vhdl-filen längst upp 
