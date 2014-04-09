@@ -27,7 +27,11 @@ begin
 	process(clk) begin
 		if rising_edge(clk) then
 			if rst = '1' then
-				mem <= "MAAAAAAASSVIS MED NOLLOR";
+				for row in 31 downto 0 loop
+					for column in 31 downto 0 loop
+						mem(row, column) <= "0000";
+					end loop;
+				end loop;
 			elsif should_read_dbus = '1' then
 				--write. address from write_adr. data from dbus
 				mem(write_adr(9 downto 5),write_adr(4 downto 0)) <= dbus(3 downto 0);
