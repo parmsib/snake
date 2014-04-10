@@ -27,6 +27,7 @@ begin
 	process(clk) begin
 		if rising_edge(clk) then
 			if rst = '1' then
+				-- reset mem
 				for row in 31 downto 0 loop
 					for column in 31 downto 0 loop
 						mem(row, column) <= "0000";
