@@ -52,6 +52,7 @@ begin
 			if rst = '1' then
 				pxX <= X"00";
 				pxY <= X"00";
+				colck_ctr <= "00"
 			end if;
 		end if;
 	end process;
@@ -70,9 +71,9 @@ begin
 					'0' when others;
 					
 	--pxX counter
-	process(vga_clock) begin
-		if rising_edge(vga_clock) then
-			if hsync = '1' or vsync = '1' then
+	process(clk) begin
+		if rising_edge(clk) and vga_clock = '1' then
+			if pxX = 799 then
 				pxX = X"00";
 			else
 				pxX = pxX + 1;
@@ -81,21 +82,21 @@ begin
 	end process;
 	
 	--pxY counter
-	process(vga_clock) begin
-		if rising_edge(vga_clock) then
-			if vsync = '1' then
+	process(clk) begin
+		if rising_edge(clk) and vga_clock = '1' then
+			if pxY = 520 and pxX = 799 then
 				pxY = X"00";
-			elsif hsync = '1' then
+			elsif pxX = 799 then
 				pxY = pxY + 1
 			end if;
 		end if;
 	end process;
 	
 	--kombinatoriskt nät
-	hsync <=	'1' when pxX > 256 else
-				'0' when others;
-	vsync <=	'1' when pxY > 256 else
-				'0' when others;
+	hsync <=	'0' when pxX > 656 and pxX < 752 else
+				'1' when others;
+	vsync <=	'0' when pxY > 490 and pxY < 492 else
+				'1' when others;
 	gmem_adr <= pxX(7 downto 3) & pxY(7 downto 3);
 	
 	
@@ -103,9 +104,15 @@ begin
 	vga_vsync <= vsync;
 	
 	--kombinatorik som kopplar tiletyp till färg
-	vga_red   <= tile_colors(tile_type).red;
-	vga_green <= tile_colors(tile_type).green;
-	vga_blue  <= tile_colors(tile_type).blue;
+	vga_red   <=	tile_colors(tile_type).red when pxX < 256 and pxY < 256 else --innanför
+					"111" when pxX = 0 or pxX = 639 or pxY = 0 or pxY = 479 else --ram runt
+					"010" when others; --fylla med random färg
+	vga_green <=	tile_colors(tile_type).green when pxX < 256 and pxY < 256 else --innanför
+					"111" when pxX = 0 or pxX = 639 or pxY = 0 or pxY = 479 else --ram runt
+					"010" when others; --fylla med random färg
+	vga_blue  <=	tile_colors(tile_type).blue when pxX < 256 and pxY < 256 else --innanför
+					"11" when pxX = 0 or pxX = 639 or pxY = 0 or pxY = 479 else --ram runt
+					"10" when others; --fylla med random färg
 	
 end behv;
 
