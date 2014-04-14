@@ -37,7 +37,7 @@ PART=xc6slx16-3-csg324
 
 #GPU-test:
 lab.%: S=GPU/GPU.vhd GMEM/GMEM.vhd 
-lab.%: T=lab_tb.vhd
+lab.%: T=GPU_tb.vhd
 lab.%: U=lab.ucf
 
 

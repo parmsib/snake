@@ -10,11 +10,11 @@ entity GPU is
 		clk, rst : in STD_LOGIC;
 		tile_type : in STD_LOGIC_VECTOR(3 downto 0);
 		gmem_adr : out STD_LOGIC_VECTOR (9 downto 0);
-		vga_red : out STD_LOGIC_VECTOR(2 downto 0);
-		vga_green : out STD_LOGIC_VECTOR(2 downto 0);
-		vga_blue : out STD_LOGIC_VECTOR(2 downto 1);
-		vga_hsync :out STD_LOGIC;
-		vga_vsync : out STD_LOGIC);
+		vgaRed : out STD_LOGIC_VECTOR(2 downto 0);
+		vgaGreen : out STD_LOGIC_VECTOR(2 downto 0);
+		vgaBlue : out STD_LOGIC_VECTOR(2 downto 1);
+		Hsync :out STD_LOGIC;
+		Vsync : out STD_LOGIC);
 end GPU;
 
 architecture behv of GPU is
@@ -43,31 +43,35 @@ architecture behv of GPU is
 		("000", "000", "00"),
 		("000", "000", "00"));
 	
-	signal pxX, pxY : STD_LOGIC_VECTOR (7 downto 0);
-	signal hsync, vsync: STD_LOGIC;
+	signal pxX, pxY : STD_LOGIC_VECTOR (9 downto 0);
+	signal hsync_pre, vsync_pre: STD_LOGIC;
 	signal clock_ctr : STD_LOGIC_VECTOR(1 downto 0);
 	signal vga_clock : STD_LOGIC;
 	-- signal tile_X : STD_LOGIC_VECTOR (7 downto 0);
 	-- signal tile_Y : STD_LOGIC_VECTOR (7 downto 0);
 begin
 	--reset
-	process(clk) begin
-		if rising_edge(clk) then
-			if rst = '1' then
-				pxX <= X"00";
-				pxY <= X"00";
-				clock_ctr <= "00";
-			end if;
-		end if;
-	end process;
+	--process(clk) begin
+	--	if rising_edge(clk) then
+	--		if rst = '1' then
+	--			pxX <= "00000000";
+	--			pxY <= "00000000";
+	--			clock_ctr <= "00";
+	--		end if;
+	--	end if;
+	--end process;
 	
 	--vga-klockare
 	process(clk) begin
 		if rising_edge(clk) then
-			if clock_ctr = "11" then
+			if rst = '1' then
 				clock_ctr <= "00";
 			else
-				clock_ctr <= clock_ctr + 1; --se över detta
+				if clock_ctr = "11" then
+					clock_ctr <= "00";
+				else
+					clock_ctr <= clock_ctr + 1; --se över detta
+				end if;
 			end if;
 		end if;
 	end process;
@@ -75,46 +79,54 @@ begin
 					'0';
 					
 	--pxX counter
-	process(clk) begin
-		if rising_edge(clk) and vga_clock = '1' then
-			if pxX = 799 then
-				pxX <= X"00";
-			else
-				pxX <= pxX + 1;
+	process(clk, vga_clock) begin
+		if rising_edge(clk) and rst = '1' then
+			pxX <= B"00_0000_0000";
+		else
+			if rising_edge(clk) and vga_clock = '1' then
+				if pxX = 799 then
+					pxX <= B"00_0000_0000";
+				else
+					pxX <= pxX + 1;
+				end if;
 			end if;
 		end if;
 	end process;
 	
 	--pxY counter
-	process(clk) begin
-		if rising_edge(clk) and vga_clock = '1' then
-			if pxY = 520 and pxX = 799 then
-				pxY <= X"00";
-			elsif pxX = 799 then
-				pxY <= pxY + 1;
+	process(clk, vga_clock) begin
+		if rising_edge(clk) and rst = '1' then
+			pxY <= B"00_0000_0000";
+		else
+			if rising_edge(clk) and vga_clock = '1' then
+				if pxY = 520 and pxX = 799 then
+					pxY <= B"00_0000_0000";
+				elsif pxX = 799 then
+					pxY <= pxY + 1;
+				end if;
 			end if;
 		end if;
 	end process;
 	
 	--kombinatoriskt nät
-	hsync <=	'0' when pxX > 656 and pxX < 752 else
+	hsync_pre <=	'0' when pxX > 655 and pxX < 753 else
 				'1';
-	vsync <=	'0' when pxY > 490 and pxY < 492 else
+	vsync_pre <=	'0' when (pxY > 490 and pxY < 492) or (pxX = 799 and pxY = 490) else
 				'1';
 	gmem_adr <= pxX(7 downto 3) & pxY(7 downto 3);
 	
 	
-	vga_hsync <= hsync;
-	vga_vsync <= vsync;
+	Hsync <= hsync_pre;
+	Vsync <= vsync_pre;
 	
 	--kombinatorik som kopplar tiletyp till färg
-	vga_red   <=	tile_colors(conv_integer(tile_type)).red when pxX < 256 and pxY < 256 else --innanför
+	vgaRed   <=	tile_colors(conv_integer(tile_type)).red when pxX < 256 and pxY < 256 else --innanför
 					"111" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
 					"010"; --fylla med random färg
-	vga_green <=	tile_colors(conv_integer(tile_type)).green when pxX < 256 and pxY < 256 else --innanför
+	vgaGreen <=	tile_colors(conv_integer(tile_type)).green when pxX < 256 and pxY < 256 else --innanför
 					"111" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
 					"010"; --fylla med random färg
-	vga_blue  <=	tile_colors(conv_integer(tile_type)).blue when pxX < 256 and pxY < 256 else --innanför
+	vgaBlue  <=	tile_colors(conv_integer(tile_type)).blue when pxX < 256 and pxY < 256 else --innanför
 					"11" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
 					"10"; --fylla med random färg
 	

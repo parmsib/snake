@@ -10,23 +10,64 @@ architecture behv of GPU_tb is
 		port (	clk, rst : in STD_LOGIC;
 				tile_type : in STD_LOGIC_VECTOR(3 downto 0);
 				gmem_adr : out STD_LOGIC_VECTOR (9 downto 0);
-				vga_red : out STD_LOGIC_VECTOR(2 downto 0);
-				vga_green : out STD_LOGIC_VECTOR(2 downto 0);
-				vga_blue : out STD_LOGIC_VECTOR(2 downto 1);
-				vga_hsync :out STD_LOGIC;
-				vga_vsync : out STD_LOGIC;);
+				vgaRed : out STD_LOGIC_VECTOR(2 downto 0);
+				vgaGreen : out STD_LOGIC_VECTOR(2 downto 0);
+				vgaBlue : out STD_LOGIC_VECTOR(2 downto 1);
+				Hsync :out STD_LOGIC;
+				Vsync : out STD_LOGIC);
 	end component;
+
+--	component GMEM is
+--		port ( 	clk, rst : in STD_LOGIC;
+--		--tile type
+--		dbus_in : in STD_LOGIC_VECTOR ( 15 downto 0 ); 
+--		--borde aldrig vara något annat än Z. ta bort?
+--		dbus_out: out STD_LOGIC_VECTOR (15 downto 0); 
+--		-- fr mikrokontroller
+--		should_read_dbus, should_write_dbus : in STD_LOGIC; 
+--		--fr Gadr 
+--		write_adr: in STD_LOGIC_VECTOR (9 downto 0); 
+--		-- fr GPU
+--		read_adr: in STD_LOGIC_VECTOR (9 downto 0);  
+--		-- till GPU
+--		tile_type_out: out STD_LOGIC_VECTOR (3 downto 0)); 
+--	end component;
 	
   SIGNAL clk : std_logic := '0';
   SIGNAL rst : std_logic := '0';
-  
+
+	signal dbus : STD_LOGIC_VECTOR(15 downto 0);  
+	
+	signal tile_adr : STD_LOGIC_VECTOR(9 downto 0);
+	signal tile_type : STD_LOGIC_VECTOR(3 downto 0);
+
   signal vgaRed, vgaGreen : STD_LOGIC_VECTOR (2 downto 0);
   signal vgaBlue : STD_LOGIC_VECTOR (2 downto 1);
+  signal Hsync, Vsync : STD_LOGIC;
+
+  signal tb_running : boolean := true;
   
 begin
 
-	GPU: testgpu port map (	clk <= clk,
-							srt <= rst);
+	uut: GPU port map (clk => clk,
+							rst => rst,
+				tile_type => B"0000",
+				vgaRed => vgaRed,
+				vgaBlue => vgaBlue,
+				vgaGreen => vgaGreen,
+				Hsync => Hsync,
+				Vsync => Vsync);
+				--gmem_adr => tile_adr);
+--	testmem: GMEM port map ( 	clk, rst, 
+--					B"0000_0000_0000_0000",
+--					dbus,
+--					'0',
+--					'0',
+--					B"00000_00000",
+--					tile_adr,
+--					tile_type);
+					
+					
 							
 	-- 100 MHz system clock
 	clk_gen : process
