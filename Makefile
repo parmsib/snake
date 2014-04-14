@@ -33,7 +33,10 @@ XILINX_INIT = source /sw/xilinx/ise_14.2i/ISE_DS/settings64.sh;
 PART=xc6slx16-3-csg324
 
 
-lab.%: S=snake.vhd GPU/GPU.vhd GMEM/GMEM.vhd CPU/CPU.vhd UART/UART.vhd Common/shiftregister.vhd 
+#riktigt : lab.%: S=snake.vhd GPU/GPU.vhd GMEM/GMEM.vhd CPU/CPU.vhd UART/UART.vhd Common/shiftregister.vhd 
+
+#GPU-test:
+lab.%: S=GPU/GPU.vhd snake.vhd GMEM/GMEM.vhd CPU/CPU.vhd UART/UART.vhd Common/shiftregister.vhd 
 lab.%: T=lab_tb.vhd
 lab.%: U=lab.ucf
 
