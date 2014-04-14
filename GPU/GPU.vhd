@@ -10,7 +10,7 @@ entity GPU is
 		gmem_adr : out STD_LOGIC_VECTOR (9 downto 0);
 		vga_red : out STD_LOGIC_VECTOR(2 downto 0);
 		vga_green : out STD_LOGIC_VECTOR(2 downto 0);
-		vga_blue : out STD_LOGIC_VECTOR(1 downto 0);
+		vga_blue : out STD_LOGIC_VECTOR(2 downto 1);
 		vga_hsync :out STD_LOGIC;
 		vga_vsync : out STD_LOGIC;)
 end GPU;
@@ -20,7 +20,7 @@ architecture behv of GPU is
 	type color is record
 		red: std_logic_vector(2 downto 0);
 		green: std_logic_vector(2 downto 0);
-		blue: std_logic_vector(1 downto 0);
+		blue: std_logic_vector(2 downto 1);
 	end record;
 	constant tile_colors is array(0 to 15) of color := 
 		(("111", "111", "00"),
@@ -105,13 +105,13 @@ begin
 	
 	--kombinatorik som kopplar tiletyp till färg
 	vga_red   <=	tile_colors(tile_type).red when pxX < 256 and pxY < 256 else --innanför
-					"111" when pxX = 0 or pxX = 639 or pxY = 0 or pxY = 479 else --ram runt
+					"111" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
 					"010" when others; --fylla med random färg
 	vga_green <=	tile_colors(tile_type).green when pxX < 256 and pxY < 256 else --innanför
-					"111" when pxX = 0 or pxX = 639 or pxY = 0 or pxY = 479 else --ram runt
+					"111" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
 					"010" when others; --fylla med random färg
 	vga_blue  <=	tile_colors(tile_type).blue when pxX < 256 and pxY < 256 else --innanför
-					"11" when pxX = 0 or pxX = 639 or pxY = 0 or pxY = 479 else --ram runt
+					"11" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
 					"10" when others; --fylla med random färg
 	
 end behv;
