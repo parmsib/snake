@@ -2,37 +2,34 @@ library ieee ;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
-entity grx is
+entity asr is
 	port ( 	buss : inout std_logic_vector(15 downto 0);
-			at : in std_logic_vector(3 downto 0);
 			frombus : in std_logic_vector(3 downto 0);
 			tobus : in std_logic_vector(3 downto 0);
 			clk : in std_logic
 		);
-end grx;
+end asr;
 
-architecture behav of grx is
-	type REG is array(15 downto 0) of std_ulogic;
-	type GRX16 is array(0 to 15) of REG;
-	signal gr : GRX16;
-	signal in_tmp : REG;
-	signal out_tmp : REG;
+architecture behav of asr is
+	signal out_tmp : std_logic_vector(11 downto 0);
+	signal in_tmp : std_logic_vector(15 downto 0);
+	signal val : std_logic_vector(11 downto 0);
 begin
-	process (reader, writer)
+	process(clk)
 	begin
 		if clk'rising_edge then
-			if tobus="0110" then
-				out_tmp <= gr(at);
+			if tobus="0111" then
+				out_tmp <= "0000" & val;
 			else
 				out_tmp <= "ZZZZ_ZZZZ_ZZZZ_ZZZZ";
 			end if;
-			if frombus="0110" then
-				in_tmp <= buss;
+			if frombus="0111" then
+				in_tmp <= buss(11 downto 0);
 			else
 				in_tmp <= "ZZZZ_ZZZZ_ZZZZ_ZZZZ";
 			end if;
 		end if;
 	end process;
 	buss <= out_tmp;
-	gr(at) <= in_tmp;
+	val <= in_tmp;
 end behav;
