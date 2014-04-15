@@ -63,18 +63,7 @@ architecture behv of GPU is
 
         signal tile_int : integer := 0;  -- tile_type conversion
 begin
-	--reset
-	--process(clk) begin
-	--	if rising_edge(clk) then
-	--		if rst = '1' then
-	--			pxX <= "00000000";
-	--			pxY <= "00000000";
-	--			clock_ctr <= "00";
-	--		end if;
-	--	end if;
-	--end process;
-	
-	--vga-klockare
+	--vga clock
 	process(clk) begin
 		if rising_edge(clk) then
 			if rst = '1' then
@@ -88,10 +77,7 @@ begin
 			end if;
 		end if;
 	end process;
---	vga_clock <=	'1' when clock_ctr = "00" else
---					'0';
-					
-					
+
 	--pxX counter
 	process(clk) begin
 		if rising_edge(clk) then --and rst = '1' then
@@ -153,10 +139,6 @@ begin
 					"00" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
 					bg_color(1 downto 0); --fylla med random färg
 
-
---          pxX_led <= "000000000000" & tile_type;
-
---        led : leddriver port map (clk, rst, seg, an, pxX_led);
 end behv;
 
 

@@ -26,14 +26,20 @@ architecture GMbehv of GMEM is
 
 	type GM_type is array (0 to 31, 0 to 31) of STD_LOGIC_VECTOR(3 downto 0); --Y X.  Indexerad först på Y, sen X
 	signal mem : GM_type := (
+		0 => (
+			others => "1111"
+		),
 		15 => (
 			15 => "1111",
 			others => "0000"
 		),
+		31 => (
+			others => "1111"
+		),
 		others => (
 			others => "0000"
 		)
-	); --en färgad cell i mitten nånstans
+	); --en färgad cell i mitten nånstans och lite ram
 	
 	
 begin

@@ -3,6 +3,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 use IEEE.NUMERIC_STD.ALL;
 
+
+
+
 entity snake is 
 	Port (	clk, rst : in STD_LOGIC;
 		--
@@ -13,8 +16,11 @@ entity snake is
 		an : out STD_LOGIC_VECTOR(3 downto 0); --mux-variabel över vilken 7segment (tror jag)
                 seg : out std_logic_vector(7 downto 0);
 		--
-		sw : in STD_LOGIC_VECTOR(7 downto 0)); --switchar på kortet (kontrollerar bakgrundsfärg)
+		sw : in STD_LOGIC_VECTOR(7 downto 0)); --spakar på kortet (kontrollerar bakgrundsfärg)
 end snake;
+
+
+
 
 architecture behv of snake is
 
