@@ -36,22 +36,23 @@ architecture behv of GPU is
 	end record;
 	type colorset is array (0 to 15) of color;
 	constant tile_colors : colorset := (
-		("111", "111", "00"),
-		("110", "110", "10"),
-		("010", "101", "10"),
-		("000", "000", "00"),
-		("000", "000", "00"),
-		("000", "000", "00"),
-		("000", "000", "00"),
-		("000", "000", "00"),
-		("000", "000", "00"),
-		("000", "000", "00"),
-		("000", "000", "00"),
-		("000", "000", "00"),
-		("000", "000", "00"),
-		("000", "000", "00"),
-		("000", "000", "00"),
-		("000", "000", "00"));
+                0 => ("000", "011", "01"),
+                1 => ("000", "011", "01"),
+		2 => ("000", "011", "01"),
+		3 => ("111", "111", "11"),
+                4 => ("000", "011", "01"),
+                5 => ("000", "011", "01"),
+                6 => ("000", "011", "01"),
+                7 => ("000", "011", "01"),
+                8 => ("000", "011", "01"),
+                9 => ("000", "011", "01"),
+                10 => ("000", "011", "01"),
+                11 => ("000", "011", "01"),
+                12 => ("000", "011", "01"),
+                13 => ("000", "011", "01"),
+                14 => ("000", "011", "01"),
+                15 => ("000", "011", "01")
+		);
 	
 	signal pxX, pxY : STD_LOGIC_VECTOR (9 downto 0);
 	signal hsync_pre, vsync_pre: STD_LOGIC;
@@ -62,6 +63,10 @@ architecture behv of GPU is
 
         signal test_clk : std_logic_vector(25 downto 0) := "00000000000000000000000000";
         signal pxX_led : std_logic_vector(15 downto 0) := "0000000000000000";
+
+        signal vs, hs : std_logic := '1';          --vipport
+
+        signal tile_int : integer := 0;  -- tile_type conversion
 begin
 	--reset
 	--process(clk) begin
@@ -88,70 +93,104 @@ begin
 			end if;
 		end if;
 	end process;
-	vga_clock <=	'1' when clock_ctr = "11" else
+	vga_clock <=	'1' when clock_ctr = "00" else
 					'0';
 					
+					
 	--pxX counter
-	process(clk, vga_clock) begin
-		if rising_edge(clk) and rst = '1' then
-			pxX <= B"00_0000_0000";
-		else
-			if rising_edge(clk) and vga_clock = '1' then
-				if pxX = 799 then
-					pxX <= B"00_0000_0000";
-				else
-					pxX <= pxX + 1;
-				end if;
-			end if;
-		end if;
+	--process(clk, vga_clock) begin
+	process(clk) begin
+		if rising_edge(clk) then --and rst = '1' then
+                  if rst = '1' then
+                    pxX <= B"00_0000_0000";
+                    hs <= '1';
+                  elsif clock_ctr = "11" then
+                    if pxX = 799 then
+                      pxX <= B"00_0000_0000";
+                    else
+                      pxX <= pxX + 1;
+                    end if;
+                  end if;
+                  --vipporna
+                  if pxX = 656 then
+                    hs <= '0';
+                  elsif pxX = 752 then
+                    hs <= '1';
+                  end if;
+               end if;
 	end process;
-	
+        
+	process(clk) begin
+		if rising_edge(clk) then --and rst = '1' then
+                  if rst = '1' then
+                    pxY <= B"00_0000_0000";
+                    vs <= '1';
+                  elsif pxX = 799 and clock_ctr = "00" then
+                    if pxY = 520 then
+                      pxY <= B"00_0000_0000";
+                    else
+                      pxY <= pxY + 1;
+                    end if;
+                    --vipporna
+                    if pxY = 490 then
+                      vs <= '0';
+                    elsif pxY = 492 then
+                      vs <= '1';
+                    end if;
+                  end if;
+               end if;
+	end process;
+	Hsync <= hs;
+        Vsync <= vs;
 	--pxY counter
-	process(clk, vga_clock) begin
-		if rising_edge(clk) and rst = '1' then
-			pxY <= B"00_0000_0000";
-		else
-			if rising_edge(clk) and vga_clock = '1' then
-				if pxY = 524 and pxX = 799 then
-					pxY <= B"00_0000_0000";
-				elsif pxX = 799 then
-					pxY <= pxY + 1;
-				end if;
-			end if;
-		end if;
-	end process;
+	--process(clk, vga_clock) begin
+--		process (clk) begin
+--		if rising_edge(clk) and rst = '1' then
+--			pxY <= B"00_0000_0000";
+--		else
+--			if rising_edge(clk) and clock_ctr = "00" then
+--				if pxY = 520 and pxX = 799 then
+--					pxY <= B"00_0000_0000";
+--				elsif pxX = 799 then
+--					pxY <= pxY + 1;
+--				end if;
+--			end if;
+--		end if;
+--	end process;
 	
 	--kombinatoriskt nät
-	hsync_pre <=	'0' when pxX >= 655 and pxX < 752 else
-				'1';
-	vsync_pre <=	'0' when (pxY >= 489 and pxY < 491) else -- or (pxX = 799 and pxY = 490) else
-				'1';
+--	hsync_pre <=	'0' when (pxX > 655 and pxX <= 751) else '1';
+--	vsync_pre <=	'0' when (pxY > 490 and pxY <= 492) else -- or (pxX = 799 and pxY = 490) else
+--				'1';
 	gmem_adr <= pxX(7 downto 3) & pxY(7 downto 3);
 	
 	
-	Hsync <= hsync_pre;
-	Vsync <= vsync_pre;
-	
+--	Hsync <= hsync_pre;
+--	Vsync <= vsync_pre;
+
+        tile_int <= to_integer(unsigned(tile_type));
 	--kombinatorik som kopplar tiletyp till färg
-	vgaRed   <=	tile_colors(conv_integer(tile_type)).red when pxX < 256 and pxY < 256 else --innanför
+	vgaRed   <=	tile_colors(tile_int).red when pxX < 256 and pxY < 256 else --innanför
 					"000" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
-					"010"; --fylla med random färg
-	vgaGreen <=	tile_colors(conv_integer(tile_type)).green when pxX < 256 and pxY < 256 else --innanför
+					"000"; --fylla med random färg
+	vgaGreen <=	tile_colors(tile_int).green when pxX < 256 and pxY < 256 else --innanför
 					"000" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
-					"010"; --fylla med random färg
-	vgaBlue  <=	tile_colors(conv_integer(tile_type)).blue when pxX < 256 and pxY < 256 else --innanför
+					"000"; --fylla med random färg
+	vgaBlue  <=	tile_colors(tile_int).blue when pxX < 256 and pxY < 256 else --innanför
 					"00" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
 					"10"; --fylla med random färg
 
 
-        process(clk)
-          begin
-            test_clk <= test_clk + 1;
-            if test_clk = "00000000000000000000000000" then
-              pxX_led <= pxX_led + 1;
-            end if;
-          end process;
-          
+       -- process(clk)
+        --  begin
+          --  if rising_edge(clk) then
+            --  test_clk <= test_clk + 1;
+              --if test_clk = "00000000000000000000000000" then
+                --pxX_led <= pxX_led + 1;
+         --     end if;
+          --  end if;
+          --end process;
+          pxX_led <= "000000000000" & tile_type;
 
         led : leddriver port map (clk, rst, seg, an, pxX_led);
 end behv;

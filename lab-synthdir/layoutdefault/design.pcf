@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map M.81d on Tue Apr 15 14:38:12 2014
+// Written by: Map M.81d on Tue Apr 15 16:34:32 2014
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -27,16 +27,21 @@ COMP "vgaRed<0>" LOCATE = SITE "U7" LEVEL 1;
 COMP "rst" LOCATE = SITE "B8" LEVEL 1;
 COMP "vgaRed<1>" LOCATE = SITE "V7" LEVEL 1;
 COMP "vgaRed<2>" LOCATE = SITE "N7" LEVEL 1;
-TIMEGRP sys_clk_pin = BEL "led/counter_r_17" BEL "led/counter_r_16" BEL
-        "led/counter_r_15" BEL "led/counter_r_14" BEL "led/counter_r_13" BEL
-        "led/counter_r_12" BEL "led/counter_r_11" BEL "led/counter_r_10" BEL
-        "led/counter_r_9" BEL "led/counter_r_8" BEL "led/counter_r_7" BEL
-        "led/counter_r_6" BEL "led/counter_r_5" BEL "led/counter_r_4" BEL
-        "led/counter_r_3" BEL "led/counter_r_2" BEL "led/counter_r_1" BEL
-        "led/counter_r_0" BEL "led/segments_6" BEL "led/segments_5" BEL
-        "led/segments_4" BEL "led/segments_3" BEL "led/segments_2" BEL
-        "led/segments_1" BEL "led/segments_0" BEL "led/an_3" BEL "led/an_2"
-        BEL "led/an_1" BEL "led/an_0" BEL "clk_BUFGP/BUFG";
+TIMEGRP sys_clk_pin = BEL "clock_ctr_0" BEL "clock_ctr_1" BEL
+        "led/counter_r_17" BEL "led/counter_r_16" BEL "led/counter_r_15" BEL
+        "led/counter_r_14" BEL "led/counter_r_13" BEL "led/counter_r_12" BEL
+        "led/counter_r_11" BEL "led/counter_r_10" BEL "led/counter_r_9" BEL
+        "led/counter_r_8" BEL "led/counter_r_7" BEL "led/counter_r_6" BEL
+        "led/counter_r_5" BEL "led/counter_r_4" BEL "led/counter_r_3" BEL
+        "led/counter_r_2" BEL "led/counter_r_1" BEL "led/counter_r_0" BEL
+        "led/segments_6" BEL "led/segments_5" BEL "led/segments_4" BEL
+        "led/segments_3" BEL "led/segments_2" BEL "led/segments_1" BEL
+        "led/segments_0" BEL "led/an_3" BEL "led/an_2" BEL "led/an_1" BEL
+        "led/an_0" BEL "hs" BEL "vs" BEL "pxY_1" BEL "pxY_2" BEL "pxY_3" BEL
+        "pxY_4" BEL "pxY_5" BEL "pxY_6" BEL "pxY_7" BEL "pxY_8" BEL "pxY_9"
+        BEL "pxY_0" BEL "pxX_0" BEL "pxX_1" BEL "pxX_2" BEL "pxX_3" BEL
+        "pxX_4" BEL "pxX_5" BEL "pxX_6" BEL "pxX_7" BEL "pxX_8" BEL "pxX_9"
+        BEL "clock_ctr_0_1" BEL "clock_ctr_1_1" BEL "clk_BUFGP/BUFG";
 TS_sys_clk_pin = PERIOD TIMEGRP "sys_clk_pin" 100 MHz HIGH 50%;
 SCHEMATIC END;
 

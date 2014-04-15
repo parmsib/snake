@@ -42,7 +42,7 @@ architecture behv of GPU_tb is
 	signal dbus : STD_LOGIC_VECTOR(15 downto 0);  
 	
 	signal tile_adr : STD_LOGIC_VECTOR(9 downto 0);
-	signal tile_type : STD_LOGIC_VECTOR(3 downto 0);
+	signal tile_type : STD_LOGIC_VECTOR(3 downto 0) := "0000";
 
   signal vgaRed, vgaGreen : STD_LOGIC_VECTOR (2 downto 0);
   signal vgaBlue : STD_LOGIC_VECTOR (2 downto 1);
@@ -52,12 +52,15 @@ architecture behv of GPU_tb is
 
         signal seg : std_logic_vector(7 downto 0);
         signal an : std_logic_vector(3 downto 0);
+
+        signal tile_stat : std_logic_vector(3 downto 0) := "0000";
         
 begin
-
+  tile_stat <= "0000";
+  tile_type <= "0000";
 	uut: GPU port map (clk => clk,
 							rst => rst,
-				tile_type => B"0000",
+				tile_type => tile_type,
 				vgaRed => vgaRed,
 				vgaBlue => vgaBlue,
 				vgaGreen => vgaGreen,
