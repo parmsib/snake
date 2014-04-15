@@ -15,34 +15,22 @@ entity GPU is
 		vgaBlue : out STD_LOGIC_VECTOR(2 downto 1);
 		Hsync :out STD_LOGIC;
 		Vsync : out STD_LOGIC;
-                seg : out STD_LOGIC_VECTOR(7 downto 0);
-                an : out STD_LOGIC_VECTOR(3 downto 0);
-		--FLYTTA TILL SNAKE SEN
-		sw : in STD_LOGIC_VECTOR(7 downto 0)	
-		----------------------
-		);
+		bg_color : in STD_LOGIC_VECTOR(7 downto 0));
 end GPU;
 
 architecture behv of GPU is
-
-        component leddriver
-          port (
-            clk, rst : in  std_logic;
-            seg      : out std_logic_vector(7 downto 0);
-            an       : out std_logic_vector(3 downto 0);
-            value    : in  std_logic_vector(15 downto 0));
-        end component;
-
   
 	type color is record
 		red: std_logic_vector(2 downto 0);
 		green: std_logic_vector(2 downto 0);
 		blue: std_logic_vector(2 downto 1);
 	end record;
+
 	type colorset is array (0 to 15) of color;
+
 	constant tile_colors : colorset := (
-                0 => ("000", "011", "01"),
-                1 => ("000", "011", "01"),
+                0 => ("111", "111", "11"),
+                1 => ("010", "010", "01"),
 		2 => ("000", "011", "01"),
 		3 => ("111", "111", "11"),
                 4 => ("000", "011", "01"),
@@ -56,19 +44,20 @@ architecture behv of GPU is
                 12 => ("000", "011", "01"),
                 13 => ("000", "011", "01"),
                 14 => ("000", "011", "01"),
-                15 => ("000", "011", "01")
+                15 => ("111", "000", "01")
 		);
 
 	
 	signal pxX, pxY : STD_LOGIC_VECTOR (9 downto 0);
 	signal hsync_pre, vsync_pre: STD_LOGIC;
 	signal clock_ctr : STD_LOGIC_VECTOR(1 downto 0);
-	signal vga_clock : STD_LOGIC;
+
+--	signal vga_clock : STD_LOGIC;
 	-- signal tile_X : STD_LOGIC_VECTOR (7 downto 0);
 	-- signal tile_Y : STD_LOGIC_VECTOR (7 downto 0);
 
-        signal test_clk : std_logic_vector(25 downto 0) := "00000000000000000000000000";
-        signal pxX_led : std_logic_vector(15 downto 0) := "0000000000000000";
+--        signal test_clk : std_logic_vector(25 downto 0) := "00000000000000000000000000";
+--        signal pxX_led : std_logic_vector(15 downto 0) := "0000000000000000";
 
         signal vs, hs : std_logic := '1';          --vipport
 
@@ -99,12 +88,11 @@ begin
 			end if;
 		end if;
 	end process;
-	vga_clock <=	'1' when clock_ctr = "00" else
-					'0';
+--	vga_clock <=	'1' when clock_ctr = "00" else
+--					'0';
 					
 					
 	--pxX counter
-	--process(clk, vga_clock) begin
 	process(clk) begin
 		if rising_edge(clk) then --and rst = '1' then
                   if rst = '1' then
@@ -126,6 +114,7 @@ begin
                end if;
 	end process;
         
+	--pxY counter
 	process(clk) begin
 		if rising_edge(clk) then --and rst = '1' then
                   if rst = '1' then
@@ -148,57 +137,26 @@ begin
 	end process;
 	Hsync <= hs;
         Vsync <= vs;
-	--pxY counter
-	--process(clk, vga_clock) begin
---		process (clk) begin
---		if rising_edge(clk) and rst = '1' then
---			pxY <= B"00_0000_0000";
---		else
---			if rising_edge(clk) and clock_ctr = "00" then
---				if pxY = 520 and pxX = 799 then
---					pxY <= B"00_0000_0000";
---				elsif pxX = 799 then
---					pxY <= pxY + 1;
---				end if;
---			end if;
---		end if;
---	end process;
-	
-	--kombinatoriskt nät
---	hsync_pre <=	'0' when (pxX > 655 and pxX <= 751) else '1';
---	vsync_pre <=	'0' when (pxY > 490 and pxY <= 492) else -- or (pxX = 799 and pxY = 490) else
---				'1';
-	gmem_adr <= pxX(7 downto 3) & pxY(7 downto 3);
-	
-	
---	Hsync <= hsync_pre;
---	Vsync <= vsync_pre;
 
-        tile_int <= to_integer(unsigned(tile_type));
+	gmem_adr <= pxX(7 downto 3) & pxY(7 downto 3); --fixa sen
+	
+
 	--kombinatorik som kopplar tiletyp till färg
+        tile_int <= to_integer(unsigned(tile_type));
 	vgaRed   <=	tile_colors(tile_int).red when pxX < 256 and pxY < 256 else --innanför
 					"000" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
-					sw(7 downto 5); --fylla med random färg
+					bg_color(7 downto 5); --fylla med random färg
 	vgaGreen <=	tile_colors(tile_int).green when pxX < 256 and pxY < 256 else --innanför
 					"000" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
-					sw(4 downto 2); --fylla med random färg
+					bg_color(4 downto 2); --fylla med random färg
 	vgaBlue  <=	tile_colors(tile_int).blue when pxX < 256 and pxY < 256 else --innanför
 					"00" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
-					sw(1 downto 0); --fylla med random färg
+					bg_color(1 downto 0); --fylla med random färg
 
 
-       -- process(clk)
-        --  begin
-          --  if rising_edge(clk) then
-            --  test_clk <= test_clk + 1;
-              --if test_clk = "00000000000000000000000000" then
-                --pxX_led <= pxX_led + 1;
-         --     end if;
-          --  end if;
-          --end process;
-          pxX_led <= "000000000000" & tile_type;
+--          pxX_led <= "000000000000" & tile_type;
 
-        led : leddriver port map (clk, rst, seg, an, pxX_led);
+--        led : leddriver port map (clk, rst, seg, an, pxX_led);
 end behv;
 
 

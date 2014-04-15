@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity GM is
+entity GMEM is
 	Port (
 		clk, rst : in STD_LOGIC;
 		--tile type
@@ -20,19 +20,20 @@ entity GM is
 		read_adr: in STD_LOGIC_VECTOR (9 downto 0);  
 		-- till GPU
 		tile_type_out: out STD_LOGIC_VECTOR (3 downto 0)); 
-end GM;
+end GMEM;
 
-architecture GMbehv of GM is
+architecture GMbehv of GMEM is
 
-	-- component GPU
-		-- Port(	clk, rst: in STD_LOGIC;
-				-- tile_type: in tile;
-				-- read_adr: out STD_LOGIC_VECTOR (15 downto 0);)
-	-- end component;
-
-	--type tile is array (3 downto 0) of STD_LOGIC; 
 	type GM_type is array (0 to 31, 0 to 31) of STD_LOGIC_VECTOR(3 downto 0); --Y X.  Indexerad först på Y, sen X
-	signal mem : GM_type;
+	signal mem : GM_type := (
+		15 => (
+			15 => "1111",
+			others => "0000"
+		),
+		others => (
+			others => "0000"
+		)
+	); --en färgad cell i mitten nånstans
 	
 	
 begin
@@ -52,7 +53,7 @@ begin
 			end if;
 		end if;
 	end process;
-	dbus_out <= "ZZZZZZZZZZZZZZZZ";
+	dbus_out <= "ZZZZZZZZZZZZZZZZ"; --känns lite dumt
 	tile_type_out <= mem(	conv_integer(read_adr(9 downto 5)),
 				conv_integer(read_adr(4 downto 0)));
 	--GPU: gpu port map (clk, rst, mem(read_adr(9 downto 5), read_adr(4 downto 0)), read_adr);
