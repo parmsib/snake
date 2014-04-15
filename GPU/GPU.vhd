@@ -88,15 +88,17 @@ begin
 			end if;
 		end if;
 	end process;
-	vga_clock <=	'1' when clock_ctr = "11" else
+	vga_clock <=	'1' when clock_ctr = "00" else
 					'0';
 					
+					
 	--pxX counter
-	process(clk, vga_clock) begin
+	--process(clk, vga_clock) begin
+	process(clk) begin
 		if rising_edge(clk) and rst = '1' then
 			pxX <= B"00_0000_0000";
 		else
-			if rising_edge(clk) and vga_clock = '1' then
+			if rising_edge(clk) and clock_ctr = "11" then
 				if pxX = 799 then
 					pxX <= B"00_0000_0000";
 				else
@@ -107,11 +109,12 @@ begin
 	end process;
 	
 	--pxY counter
-	process(clk, vga_clock) begin
+	--process(clk, vga_clock) begin
+		process (clk) begin
 		if rising_edge(clk) and rst = '1' then
 			pxY <= B"00_0000_0000";
 		else
-			if rising_edge(clk) and vga_clock = '1' then
+			if rising_edge(clk) and clock_ctr = "00" then
 				if pxY = 520 and pxX = 799 then
 					pxY <= B"00_0000_0000";
 				elsif pxX = 799 then
@@ -122,9 +125,9 @@ begin
 	end process;
 	
 	--kombinatoriskt nät
-	hsync_pre <=	'0' when pxX >= 655 and pxX < 752 else
+	hsync_pre <=	'0' when pxX > 656 and pxX <= 752 else
 				'1';
-	vsync_pre <=	'0' when (pxY >= 489 and pxY < 492) else -- or (pxX = 799 and pxY = 490) else
+	vsync_pre <=	'0' when pxY > 490 and pxY <= 492 else -- or (pxX = 799 and pxY = 490) else
 				'1';
 	gmem_adr <= pxX(7 downto 3) & pxY(7 downto 3);
 	
