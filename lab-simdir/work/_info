@@ -1,0 +1,136 @@
+m255
+K3
+13
+cModel Technology
+Z0 d/edu/tobhu543/TSEA83/projekt/lab-simdir
+T_opt
+VNZBWS4Do`_U^]ODIRhaSP1
+Z1 04 6 4 work gpu_tb behv 1
+Z2 =1--534d1972-73172-1a07
+Z3 o-quiet -auto_acc_if_foreign -work work
+Z4 n@_opt
+Z5 OE;O;6.5c;42
+Egm
+Z6 w1397558375
+Z7 DPx4 ieee 15 std_logic_arith 0 22 GJbAT?7@hRQU9IQ702DT]2
+Z8 DPx4 ieee 18 std_logic_unsigned 0 22 hEMVMlaNCR^<OOoVNV;m90
+Z9 DPx4 ieee 11 numeric_std 0 22 =NSdli^?T5OD8;4F<blj<3
+Z10 DPx4 ieee 14 std_logic_1164 0 22 GH1=`jDDBJ=`LM;:Ak`kf2
+Z11 8../GMEM/GMEM.vhd
+Z12 F../GMEM/GMEM.vhd
+l0
+L8
+Z13 V0XfBl3h=8G>OChTGgm4>A0
+Z14 OE;C;6.5c;42
+32
+o+acc
+Z15 tExplicit 1
+Z16 !s100 Hl`Wc2gP8OeHkn=eQ8>mj2
+Agmbehv
+R7
+R8
+R9
+R10
+Z17 DEx4 work 2 gm 0 22 0XfBl3h=8G>OChTGgm4>A0
+l38
+L25
+Z18 VI9al[YfR?J=eBd_2_c34H3
+R14
+32
+Z19 Mx4 4 ieee 14 std_logic_1164
+Z20 Mx3 4 ieee 11 numeric_std
+Z21 Mx2 4 ieee 18 std_logic_unsigned
+Z22 Mx1 4 ieee 15 std_logic_arith
+o+acc
+R15
+Z23 !s100 h]hEeaNB84R6I3i:aPjUo1
+Egpu
+Z24 w1397561565
+R7
+R8
+R9
+R10
+Z25 8../GPU/GPU.vhd
+Z26 F../GPU/GPU.vhd
+l0
+L8
+Z27 V5<RoI2TS3SXmll7CFiSLI0
+R14
+32
+o+acc
+R15
+Z28 !s100 W@nUF;CAiCC0^AHJk1Kd@2
+Abehv
+R7
+R8
+R9
+R10
+Z29 DEx4 work 3 gpu 0 22 5<RoI2TS3SXmll7CFiSLI0
+l65
+L22
+Z30 VRdiCLVGN5hP7em8>AbDI22
+R14
+32
+R19
+R20
+R21
+R22
+o+acc
+R15
+Z31 !s100 ]MTbzb@YSZeg3oX8gY7=[0
+Egpu_tb
+Z32 w1397559948
+R9
+R10
+Z33 8../GPU_tb.vhd
+Z34 F../GPU_tb.vhd
+l0
+L5
+Z35 V0_n[:NjWLW@Qb@:EBB36f2
+R14
+32
+o+acc
+R15
+Z36 !s100 jeJC[Hf?lAi9SV3V:E>_02
+Abehv
+R9
+R10
+Z37 DEx4 work 6 gpu_tb 0 22 0_n[:NjWLW@Qb@:EBB36f2
+l56
+L8
+Z38 V8?P8zPekJOkQF9V8nVf_W0
+R14
+32
+Z39 Mx2 4 ieee 14 std_logic_1164
+Z40 Mx1 4 ieee 11 numeric_std
+o+acc
+R15
+Z41 !s100 JzYR[jgQ<h4_;EnOA9`>R2
+Eleddriver
+Z42 w1397560042
+R9
+R10
+Z43 8../leddriver.vhd
+Z44 F../leddriver.vhd
+l0
+L13
+Z45 V`m=f3::T7NU0@5_O]aebD2
+R14
+32
+o+acc
+R15
+Z46 !s100 b=fb4j6mk:9D_M?D[29e61
+Abehavioral
+R9
+R10
+Z47 DEx4 work 9 leddriver 0 22 `m=f3::T7NU0@5_O]aebD2
+l25
+L20
+Z48 V]JOQ`z5RQQSI7cc?L72Re3
+R14
+32
+R39
+R40
+o+acc
+R15
+Z49 !s100 o4_XB0kfTR2`VNUPRUclC2

@@ -14,11 +14,21 @@ entity GPU is
 		vgaGreen : out STD_LOGIC_VECTOR(2 downto 0);
 		vgaBlue : out STD_LOGIC_VECTOR(2 downto 1);
 		Hsync :out STD_LOGIC;
-		Vsync : out STD_LOGIC);
+		Vsync : out STD_LOGIC;
+                seg : out STD_LOGIC_VECTOR(7 downto 0);
+                an : out STD_LOGIC_VECTOR(3 downto 0));
 end GPU;
 
 architecture behv of GPU is
-	
+        component leddriver
+          port (
+            clk, rst : in  std_logic;
+            seg      : out std_logic_vector(7 downto 0);
+            an       : out std_logic_vector(3 downto 0);
+            value    : in  std_logic_vector(15 downto 0));
+        end component;
+
+  
 	type color is record
 		red: std_logic_vector(2 downto 0);
 		green: std_logic_vector(2 downto 0);
@@ -49,6 +59,9 @@ architecture behv of GPU is
 	signal vga_clock : STD_LOGIC;
 	-- signal tile_X : STD_LOGIC_VECTOR (7 downto 0);
 	-- signal tile_Y : STD_LOGIC_VECTOR (7 downto 0);
+
+        signal test_clk : std_logic_vector(25 downto 0) := "00000000000000000000000000";
+        signal pxX_led : std_logic_vector(15 downto 0) := "0000000000000000";
 begin
 	--reset
 	--process(clk) begin
@@ -121,15 +134,26 @@ begin
 	
 	--kombinatorik som kopplar tiletyp till färg
 	vgaRed   <=	tile_colors(conv_integer(tile_type)).red when pxX < 256 and pxY < 256 else --innanför
-					"111" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
+					"000" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
 					"010"; --fylla med random färg
 	vgaGreen <=	tile_colors(conv_integer(tile_type)).green when pxX < 256 and pxY < 256 else --innanför
-					"111" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
+					"000" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
 					"010"; --fylla med random färg
 	vgaBlue  <=	tile_colors(conv_integer(tile_type)).blue when pxX < 256 and pxY < 256 else --innanför
-					"11" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
+					"00" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
 					"10"; --fylla med random färg
-	
+
+
+        process(clk)
+          begin
+            test_clk <= test_clk + 1;
+            if test_clk = "00000000000000000000000000" then
+              pxX_led <= pxX_led + 1;
+            end if;
+          end process;
+          
+
+        led : leddriver port map (clk, rst, seg, an, pxX_led);
 end behv;
 
 

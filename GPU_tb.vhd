@@ -14,7 +14,10 @@ architecture behv of GPU_tb is
 				vgaGreen : out STD_LOGIC_VECTOR(2 downto 0);
 				vgaBlue : out STD_LOGIC_VECTOR(2 downto 1);
 				Hsync :out STD_LOGIC;
-				Vsync : out STD_LOGIC);
+				Vsync : out STD_LOGIC;
+                                seg : out std_logic_vector(7 downto 0);
+                                an : out std_logic_vector(3 downto 0));
+                              
 	end component;
 
 --	component GMEM is
@@ -46,7 +49,10 @@ architecture behv of GPU_tb is
   signal Hsync, Vsync : STD_LOGIC;
 
   signal tb_running : boolean := true;
-  
+
+        signal seg : std_logic_vector(7 downto 0);
+        signal an : std_logic_vector(3 downto 0);
+        
 begin
 
 	uut: GPU port map (clk => clk,
@@ -56,7 +62,9 @@ begin
 				vgaBlue => vgaBlue,
 				vgaGreen => vgaGreen,
 				Hsync => Hsync,
-				Vsync => Vsync);
+				Vsync => Vsync,
+                           seg => seg,
+                           an => an);
 				--gmem_adr => tile_adr);
 --	testmem: GMEM port map ( 	clk, rst, 
 --					B"0000_0000_0000_0000",

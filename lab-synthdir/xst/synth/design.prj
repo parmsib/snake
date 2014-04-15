@@ -1,0 +1,3 @@
+vhdl work "../../../GPU/GPU.vhd"
+vhdl work "../../../GMEM/GMEM.vhd"
+vhdl work "../../../leddriver.vhd"
