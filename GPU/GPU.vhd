@@ -112,7 +112,7 @@ begin
 			pxY <= B"00_0000_0000";
 		else
 			if rising_edge(clk) and vga_clock = '1' then
-				if pxY = 520 and pxX = 799 then
+				if pxY = 524 and pxX = 799 then
 					pxY <= B"00_0000_0000";
 				elsif pxX = 799 then
 					pxY <= pxY + 1;
@@ -124,7 +124,7 @@ begin
 	--kombinatoriskt nät
 	hsync_pre <=	'0' when pxX >= 655 and pxX < 752 else
 				'1';
-	vsync_pre <=	'0' when (pxY >= 489 and pxY < 492) else -- or (pxX = 799 and pxY = 490) else
+	vsync_pre <=	'0' when (pxY >= 489 and pxY < 491) else -- or (pxX = 799 and pxY = 490) else
 				'1';
 	gmem_adr <= pxX(7 downto 3) & pxY(7 downto 3);
 	

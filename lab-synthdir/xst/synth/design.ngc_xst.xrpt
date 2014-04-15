@@ -5,7 +5,7 @@
     The structure and the elements are likely to change over the next few releases.
     This means code written to parse this file will need to be revisited each subsequent release.-->
 
-  <application stringID="Xst" timeStamp="Tue Apr 15 13:33:04 2014">
+  <application stringID="Xst" timeStamp="Tue Apr 15 14:37:59 2014">
     <section stringID="User_Env">
       <table stringID="User_EnvVar">
         <column stringID="variable"/>
@@ -62,7 +62,9 @@
         <item dataType="int" stringID="XST_4BIT_REGISTER" value="1"/>
         <item dataType="int" stringID="XST_7BIT_REGISTER" value="1"/>
       </item>
-      <item dataType="int" stringID="XST_COMPARATORS" value="8"></item>
+      <item dataType="int" stringID="XST_COMPARATORS" value="8">
+        <item dataType="int" stringID="XST_10BIT_COMPARATOR_LESSEQUAL" value="2"/>
+      </item>
       <item dataType="int" stringID="XST_MULTIPLEXERS" value="7">
         <item dataType="int" stringID="XST_1BIT_4TO1_MULTIPLEXER" value="4"/>
         <item dataType="int" stringID="XST_2BIT_2TO1_MULTIPLEXER" value="1"/>
@@ -78,7 +80,9 @@
       <item dataType="int" stringID="XST_REGISTERS" value="31">
         <item dataType="int" stringID="XST_FLIPFLOPS" value="31"/>
       </item>
-      <item dataType="int" stringID="XST_COMPARATORS" value="8"></item>
+      <item dataType="int" stringID="XST_COMPARATORS" value="8">
+        <item dataType="int" stringID="XST_10BIT_COMPARATOR_LESSEQUAL" value="2"/>
+      </item>
       <item dataType="int" stringID="XST_MULTIPLEXERS" value="7">
         <item dataType="int" stringID="XST_1BIT_4TO1_MULTIPLEXER" value="4"/>
         <item dataType="int" stringID="XST_2BIT_2TO1_MULTIPLEXER" value="1"/>

@@ -5,7 +5,7 @@
     The structure and the elements are likely to change over the next few releases.
     This means code written to parse this file will need to be revisited each subsequent release.-->
 
-  <application stringID="par" timeStamp="Tue Apr 15 13:33:29 2014">
+  <application stringID="par" timeStamp="Tue Apr 15 14:38:17 2014">
     <section stringID="User_Env">
       <table stringID="User_EnvVar">
         <column stringID="variable"/>
@@ -79,16 +79,16 @@
             <item label="Resource" stringID="RESOURCE" value="BUFGMUX_X3Y13"/>
             <item label="Locked" stringID="LOCKED" value="No"/>
             <item dataType="float" label="Fanout" stringID="FANOUT" value="16.000000"/>
-            <item dataType="float" label="Net Skew(ns)" stringID="NET_SKEW" value="0.482000"/>
+            <item dataType="float" label="Net Skew(ns)" stringID="NET_SKEW" value="0.484000"/>
             <item dataType="float" label="Max Delay(ns)" stringID="MAX_DELAY" value="1.379000"/>
           </row>
           <row stringID="row" value="2">
-            <item label="Clock Net" stringID="CLOCK_NET" value="test_clk[25]_GND_6_o_equal_67_o"/>
+            <item label="Clock Net" stringID="CLOCK_NET" value="test_clk[25]_GND_6_o_equal_65_o"/>
             <item label="Routed" stringID="ROUTED" value="ROUTED"/>
             <item label="Resource" stringID="RESOURCE" value="Local"/>
             <item dataType="float" label="Fanout" stringID="FANOUT" value="4.000000"/>
-            <item dataType="float" label="Net Skew(ns)" stringID="NET_SKEW" value="0.546000"/>
-            <item dataType="float" label="Max Delay(ns)" stringID="MAX_DELAY" value="1.039000"/>
+            <item dataType="float" label="Net Skew(ns)" stringID="NET_SKEW" value="0.345000"/>
+            <item dataType="float" label="Max Delay(ns)" stringID="MAX_DELAY" value="0.830000"/>
           </row>
         </table>
       </section>
@@ -100,7 +100,7 @@
     </task>
   </application>
 
-  <application stringID="Par" timeStamp="Tue Apr 15 13:33:29 2014">
+  <application stringID="Par" timeStamp="Tue Apr 15 14:38:17 2014">
     <section stringID="User_Env">
       <table stringID="User_EnvVar">
         <column stringID="variable"/>
@@ -171,10 +171,10 @@
           <item dataType="int" stringID="PAR_NUM_LUT_RT_DRIVES_CARRY4" value="3"/>
           <item dataType="int" stringID="PAR_NUM_LUT_RT_DRIVES_OTHERS" value="0"/>
         </item>
-        <item AVAILABLE="2278" dataType="int" stringID="PAR_OCCUPIED_SLICES" value="26">
+        <item AVAILABLE="2278" dataType="int" stringID="PAR_OCCUPIED_SLICES" value="27">
           <item AVAILABLE="595" dataType="int" stringID="PAR_NUM_SLICEL" value="16"/>
           <item AVAILABLE="544" dataType="int" stringID="PAR_NUM_SLICEM" value="0"/>
-          <item AVAILABLE="1139" dataType="int" stringID="PAR_NUM_SLICEX" value="10"/>
+          <item AVAILABLE="1139" dataType="int" stringID="PAR_NUM_SLICEX" value="11"/>
         </item>
         <item dataType="int" stringID="PAR_OCCUPIED_LUT_AND_FF" value="81">
           <item dataType="int" stringID="PAR_OCCUPIED_LUT_ONLY" value="47"/>

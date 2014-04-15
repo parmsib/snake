@@ -1,7 +1,7 @@
 Release 12.4 par M.81d (lin64)
 Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
 
-mux2-09.edu.isy.liu.se::  Tue Apr 15 13:33:26 2014
+mux2-09.edu.isy.liu.se::  Tue Apr 15 14:38:14 2014
 
 par -nopad -w -ol high design_map.ncd design.ncd design.pcf 
 
@@ -39,7 +39,7 @@ Slice Logic Utilization:
       Number with other load:                    0
 
 Slice Logic Distribution:
-  Number of occupied Slices:                    26 out of   2,278    1%
+  Number of occupied Slices:                    27 out of   2,278    1%
   Number of LUT Flip Flop pairs used:           81
     Number with an unused Flip Flop:            47 out of      81   58%
     Number with an unused LUT:                   0 out of      81    0%
@@ -100,9 +100,9 @@ Phase  1  : 295 unrouted;      REAL time: 3 secs
 
 Phase  2  : 217 unrouted;      REAL time: 3 secs 
 
-Phase  3  : 47 unrouted;      REAL time: 5 secs 
+Phase  3  : 55 unrouted;      REAL time: 5 secs 
 
-Phase  4  : 47 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 6 secs 
+Phase  4  : 55 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 5 secs 
 
 Updating file: design.ncd with current fully routed design.
 
@@ -136,10 +136,10 @@ Generating Clock Report
 +---------------------+--------------+------+------+------------+-------------+
 |        Clock Net    |   Resource   |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
 +---------------------+--------------+------+------+------------+-------------+
-|           clk_BUFGP | BUFGMUX_X3Y13| No   |   16 |  0.482     |  1.379      |
+|           clk_BUFGP | BUFGMUX_X3Y13| No   |   16 |  0.484     |  1.379      |
 +---------------------+--------------+------+------+------------+-------------+
 |test_clk[25]_GND_6_o |              |      |      |            |             |
-|         _equal_67_o |         Local|      |    4 |  0.546     |  1.039      |
+|         _equal_65_o |         Local|      |    4 |  0.345     |  0.830      |
 +---------------------+--------------+------+------+------------+-------------+
 
 * Net Skew is the difference between the minimum and maximum routing
@@ -156,8 +156,8 @@ Asterisk (*) preceding a constraint indicates it was not met.
   Constraint                                |    Check    | Worst Case |  Best Case | Timing |   Timing   
                                             |             |    Slack   | Achievable | Errors |    Score   
 ----------------------------------------------------------------------------------------------------------
-  TS_sys_clk_pin = PERIOD TIMEGRP "sys_clk_ | SETUP       |     5.694ns|     4.306ns|       0|           0
-  pin" 100 MHz HIGH 50%                     | HOLD        |     0.504ns|            |       0|           0
+  TS_sys_clk_pin = PERIOD TIMEGRP "sys_clk_ | SETUP       |     5.724ns|     4.276ns|       0|           0
+  pin" 100 MHz HIGH 50%                     | HOLD        |     0.529ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
 
 

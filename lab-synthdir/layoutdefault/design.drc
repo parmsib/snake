@@ -1,12 +1,12 @@
 Release 12.4 Drc M.81d (lin64)
 Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
 
-Tue Apr 15 13:33:35 2014
+Tue Apr 15 14:38:22 2014
 
 drc -z design.ncd design.pcf
 
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   test_clk[25]_GND_6_o_equal_67_o is sourced by a combinatorial pin. This is
+   test_clk[25]_GND_6_o_equal_65_o is sourced by a combinatorial pin. This is
    not good design practice. Use the CE pin to control the loading of data into
    the flip-flop.
 WARNING:PhysDesignRules:367 - The signal <rst_IBUF> is incomplete. The signal

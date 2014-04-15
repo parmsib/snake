@@ -5,7 +5,7 @@ Parameter TMPDIR set to tmpdir
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.08 secs
+Total CPU time to Xst completion: 0.07 secs
  
 --> 
 
@@ -87,7 +87,7 @@ Synthesizing Unit <GPU>.
     Found 10-bit register for signal <pxX>.
     Found 10-bit register for signal <pxY>.
     Found 26-bit adder for signal <test_clk> created at line 149.
-    Found 16-bit adder for signal <pxX_led[15]_GND_6_o_add_67_OUT> created at line 151.
+    Found 16-bit adder for signal <pxX_led[15]_GND_6_o_add_65_OUT> created at line 151.
 WARNING:Xst:737 - Found 1-bit latch for signal <pxX_led<15>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <pxX_led<14>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <pxX_led<13>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
@@ -104,14 +104,14 @@ WARNING:Xst:737 - Found 1-bit latch for signal <pxX_led<3>>. Latches may be gene
 WARNING:Xst:737 - Found 1-bit latch for signal <pxX_led<2>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <pxX_led<1>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <pxX_led<0>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-    Found 10-bit comparator greater for signal <PWR_6_o_pxX[9]_LessThan_26_o> created at line 125
+    Found 10-bit comparator lessequal for signal <n0005> created at line 125
     Found 10-bit comparator greater for signal <pxX[9]_PWR_6_o_LessThan_27_o> created at line 125
-    Found 10-bit comparator greater for signal <GND_6_o_pxY[9]_LessThan_28_o> created at line 127
+    Found 10-bit comparator lessequal for signal <n0010> created at line 127
     Found 10-bit comparator greater for signal <pxY[9]_GND_6_o_LessThan_29_o> created at line 127
-    Found 10-bit comparator greater for signal <pxX[9]_GND_6_o_LessThan_33_o> created at line 136
-    Found 10-bit comparator greater for signal <pxY[9]_GND_6_o_LessThan_34_o> created at line 136
-    Found 10-bit comparator greater for signal <PWR_6_o_pxX[9]_LessThan_36_o> created at line 137
-    Found 10-bit comparator greater for signal <GND_6_o_pxY[9]_LessThan_38_o> created at line 137
+    Found 10-bit comparator greater for signal <pxX[9]_GND_6_o_LessThan_31_o> created at line 136
+    Found 10-bit comparator greater for signal <pxY[9]_GND_6_o_LessThan_32_o> created at line 136
+    Found 10-bit comparator greater for signal <PWR_6_o_pxX[9]_LessThan_34_o> created at line 137
+    Found 10-bit comparator greater for signal <GND_6_o_pxY[9]_LessThan_36_o> created at line 137
     Summary:
 	inferred   2 Adder/Subtractor(s).
 	inferred  20 D-type flip-flop(s).
@@ -139,7 +139,7 @@ WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and lef
 	inferred  29 D-type flip-flop(s).
 	inferred   4 Multiplexer(s).
 Unit <leddriver> synthesized.
-RTL-Simplification CPUSTAT: 0.01 
+RTL-Simplification CPUSTAT: 0.02 
 RTL-BasicInf CPUSTAT: 0.12 
 RTL-BasicOpt CPUSTAT: 0.00 
 RTL-Remain-Bus CPUSTAT: 0.00 
@@ -163,7 +163,8 @@ Macro Statistics
 # Latches                                              : 16
  1-bit latch                                           : 16
 # Comparators                                          : 8
- 10-bit comparator greater                             : 8
+ 10-bit comparator greater                             : 6
+ 10-bit comparator lessequal                           : 2
 # Multiplexers                                         : 7
  1-bit 4-to-1 multiplexer                              : 4
  2-bit 2-to-1 multiplexer                              : 1
@@ -217,7 +218,8 @@ Macro Statistics
 # Registers                                            : 31
  Flip-Flops                                            : 31
 # Comparators                                          : 8
- 10-bit comparator greater                             : 8
+ 10-bit comparator greater                             : 6
+ 10-bit comparator lessequal                           : 2
 # Multiplexers                                         : 7
  1-bit 4-to-1 multiplexer                              : 4
  2-bit 2-to-1 multiplexer                              : 1
@@ -248,7 +250,7 @@ WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <pxX_3> (without ini
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <pxX_2> (without init value) has a constant value of 0 in block <GPU>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <pxX_1> (without init value) has a constant value of 0 in block <GPU>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <pxX_0> (without init value) has a constant value of 0 in block <GPU>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: Madd_test_clk_cy<6>, Madd_test_clk_cy<0>, Madd_test_clk_cy<16>, Madd_test_clk_cy<4>, Madd_test_clk_cy<1>, Madd_test_clk_cy<10>, Madd_test_clk_cy<9>, Madd_test_clk_cy<18>, Madd_test_clk_cy<20>, Madd_test_clk_cy<23>, Madd_test_clk_cy<2>, test_clk<0>, Madd_test_clk_lut<0>, Madd_test_clk_cy<12>, Madd_test_clk_cy<5>, Madd_test_clk_cy<15>, Madd_test_clk_cy<17>, test_clk<25>, test_clk[25]_GND_6_o_equal_67_o, Madd_test_clk_cy<13>, Madd_test_clk_cy<22>, Madd_test_clk_cy<24>, Madd_test_clk_cy<19>, Madd_test_clk_cy<11>, Madd_test_clk_cy<3>, Madd_test_clk_cy<8>, Madd_test_clk_cy<21>, Madd_test_clk_cy<7>, Madd_test_clk_cy<14>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: Madd_test_clk_cy<22>, Madd_test_clk_cy<24>, Madd_test_clk_cy<20>, Madd_test_clk_cy<17>, Madd_test_clk_cy<18>, Madd_test_clk_cy<8>, Madd_test_clk_cy<13>, Madd_test_clk_cy<2>, Madd_test_clk_cy<3>, Madd_test_clk_lut<0>, Madd_test_clk_cy<4>, Madd_test_clk_cy<21>, Madd_test_clk_cy<19>, Madd_test_clk_cy<7>, test_clk<0>, test_clk<25>, Madd_test_clk_cy<6>, test_clk[25]_GND_6_o_equal_65_o, Madd_test_clk_cy<10>, Madd_test_clk_cy<15>, Madd_test_clk_cy<5>, Madd_test_clk_cy<14>, Madd_test_clk_cy<16>, Madd_test_clk_cy<12>, Madd_test_clk_cy<9>, Madd_test_clk_cy<1>, Madd_test_clk_cy<11>, Madd_test_clk_cy<23>, Madd_test_clk_cy<0>.
 WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<25>.
 
 Optimizing unit <GPU> ...
@@ -256,30 +258,30 @@ Optimizing unit <GPU> ...
 Optimizing unit <leddriver> ...
 
 Mapping all equations...
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<10>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<11>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<12>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<14>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<18>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<19>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<17>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<20>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<21>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<22>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<9>.
 WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<7>.
 WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<8>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<24>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<1>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<2>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<9>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<10>.
 WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<3>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<24>.
 WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<4>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<6>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<1>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<11>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<13>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<5>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<14>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<20>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<22>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<2>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<12>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<23>.
 WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<15>.
 WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<16>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<5>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<13>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<6>.
-WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<23>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<17>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<18>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<19>.
+WARNING:Xst:2170 - Unit GPU : the following signal(s) form a combinatorial loop: test_clk<21>.
 Building and optimizing final netlist ...
 Found area constraint ratio of 100 (+ 0) on block GPU, actual ratio is 1.
 
@@ -379,7 +381,7 @@ Clock Information:
 -----------------------------------------------------------------------+------------------------+-------+
 Clock Signal                                                           | Clock buffer(FF name)  | Load  |
 -----------------------------------------------------------------------+------------------------+-------+
-test_clk[25]_GND_6_o_equal_67_o(test_clk[25]_GND_6_o_equal_67_o<25>5:O)| NONE(*)(pxX_led_14)    | 16    |
+test_clk[25]_GND_6_o_equal_65_o(test_clk[25]_GND_6_o_equal_65_o<25>5:O)| NONE(*)(pxX_led_14)    | 16    |
 clk                                                                    | BUFGP                  | 29    |
 -----------------------------------------------------------------------+------------------------+-------+
 (*) This 1 clock signal(s) are generated by combinatorial logic,
@@ -405,38 +407,38 @@ Timing Details:
 All values displayed in nanoseconds (ns)
 
 =========================================================================
-Timing constraint: Default period analysis for Clock 'test_clk[25]_GND_6_o_equal_67_o'
+Timing constraint: Default period analysis for Clock 'test_clk[25]_GND_6_o_equal_65_o'
   Clock period: 1.975ns (frequency: 506.265MHz)
   Total number of paths / destination ports: 136 / 16
 -------------------------------------------------------------------------
 Delay:               1.975ns (Levels of Logic = 17)
   Source:            pxX_led_0 (LATCH)
   Destination:       pxX_led_15 (LATCH)
-  Source Clock:      test_clk[25]_GND_6_o_equal_67_o falling
-  Destination Clock: test_clk[25]_GND_6_o_equal_67_o falling
+  Source Clock:      test_clk[25]_GND_6_o_equal_65_o falling
+  Destination Clock: test_clk[25]_GND_6_o_equal_65_o falling
 
   Data Path: pxX_led_0 to pxX_led_15
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      LD:G->Q               2   0.498   0.616  pxX_led_0 (pxX_led_0)
-     INV:I->O              1   0.206   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_lut<0>_INV_0 (Madd_pxX_led[15]_GND_6_o_add_67_OUT_lut<0>)
-     MUXCY:S->O            1   0.172   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<0> (Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<0>)
-     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<1> (Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<1>)
-     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<2> (Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<2>)
-     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<3> (Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<3>)
-     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<4> (Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<4>)
-     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<5> (Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<5>)
-     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<6> (Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<6>)
-     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<7> (Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<7>)
-     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<8> (Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<8>)
-     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<9> (Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<9>)
-     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<10> (Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<10>)
-     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<11> (Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<11>)
-     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<12> (Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<12>)
-     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<13> (Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<13>)
-     MUXCY:CI->O           0   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<14> (Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<14>)
-     XORCY:CI->O           1   0.180   0.000  Madd_pxX_led[15]_GND_6_o_add_67_OUT_xor<15> (pxX_led[15]_GND_6_o_add_67_OUT<15>)
+     INV:I->O              1   0.206   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_lut<0>_INV_0 (Madd_pxX_led[15]_GND_6_o_add_65_OUT_lut<0>)
+     MUXCY:S->O            1   0.172   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<0> (Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<0>)
+     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<1> (Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<1>)
+     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<2> (Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<2>)
+     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<3> (Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<3>)
+     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<4> (Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<4>)
+     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<5> (Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<5>)
+     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<6> (Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<6>)
+     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<7> (Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<7>)
+     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<8> (Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<8>)
+     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<9> (Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<9>)
+     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<10> (Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<10>)
+     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<11> (Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<11>)
+     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<12> (Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<12>)
+     MUXCY:CI->O           1   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<13> (Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<13>)
+     MUXCY:CI->O           0   0.019   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<14> (Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<14>)
+     XORCY:CI->O           1   0.180   0.000  Madd_pxX_led[15]_GND_6_o_add_65_OUT_xor<15> (pxX_led[15]_GND_6_o_add_65_OUT<15>)
      LD:D                      0.037          pxX_led_15
     ----------------------------------------
     Total                      1.975ns (1.359ns logic, 0.616ns route)
@@ -497,7 +499,7 @@ Delay:               5.574ns (Levels of Logic = 3)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      IBUF:I->O             5   1.222   0.962  tile_type_3_IBUF (tile_type_3_IBUF)
-     LUT4:I0->O            2   0.203   0.616  _n0114<1>1 (vgaRed_1_OBUF)
+     LUT4:I0->O            2   0.203   0.616  _n0104<1>1 (vgaRed_1_OBUF)
      OBUF:I->O                 2.571          vgaRed_1_OBUF (vgaRed<1>)
     ----------------------------------------
     Total                      5.574ns (3.996ns logic, 1.578ns route)
@@ -514,21 +516,21 @@ Clock to Setup on destination clock clk
 Source Clock                   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 -------------------------------+---------+---------+---------+---------+
 clk                            |    2.909|         |         |         |
-test_clk[25]_GND_6_o_equal_67_o|         |    3.008|         |         |
+test_clk[25]_GND_6_o_equal_65_o|         |    3.008|         |         |
 -------------------------------+---------+---------+---------+---------+
 
-Clock to Setup on destination clock test_clk[25]_GND_6_o_equal_67_o
+Clock to Setup on destination clock test_clk[25]_GND_6_o_equal_65_o
 -------------------------------+---------+---------+---------+---------+
                                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock                   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 -------------------------------+---------+---------+---------+---------+
-test_clk[25]_GND_6_o_equal_67_o|         |         |    1.975|         |
+test_clk[25]_GND_6_o_equal_65_o|         |         |    1.975|         |
 -------------------------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
-Total REAL time to Xst completion: 4.00 secs
+Total REAL time to Xst completion: 3.00 secs
 Total CPU time to Xst completion: 3.04 secs
  
 --> 

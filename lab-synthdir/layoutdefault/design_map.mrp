@@ -9,7 +9,7 @@ Target Device  : xc6slx16
 Target Package : csg324
 Target Speed   : -3
 Mapper Version : spartan6 -- $Revision: 1.52.76.2 $
-Mapped Date    : Tue Apr 15 13:33:15 2014
+Mapped Date    : Tue Apr 15 14:38:06 2014
 
 Design Summary
 --------------
@@ -34,7 +34,7 @@ Slice Logic Utilization:
       Number with other load:                    0
 
 Slice Logic Distribution:
-  Number of occupied Slices:                    26 out of   2,278    1%
+  Number of occupied Slices:                    27 out of   2,278    1%
   Number of LUT Flip Flop pairs used:           81
     Number with an unused Flip Flop:            47 out of      81   58%
     Number with an unused LUT:                   0 out of      81    0%
@@ -84,7 +84,7 @@ Specific Feature Utilization:
 Average Fanout of Non-Clock Nets:                1.75
 
 Peak Memory Usage:  571 MB
-Total REAL time to MAP completion:  9 secs 
+Total REAL time to MAP completion:  7 secs 
 Total CPU time to MAP completion:   6 secs 
 
 Table of Contents
@@ -109,7 +109,7 @@ Section 1 - Errors
 Section 2 - Warnings
 --------------------
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   test_clk[25]_GND_6_o_equal_67_o is sourced by a combinatorial pin. This is
+   test_clk[25]_GND_6_o_equal_65_o is sourced by a combinatorial pin. This is
    not good design practice. Use the CE pin to control the loading of data into
    the flip-flop.
 WARNING:PhysDesignRules:367 - The signal <rst_IBUF> is incomplete. The signal
@@ -148,20 +148,20 @@ VCC 		XST_VCC
 
 Redundant Block(s):
 TYPE 		BLOCK
-LUT1 		Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<1>_rt
-LUT1 		Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<2>_rt
-LUT1 		Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<3>_rt
-LUT1 		Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<4>_rt
-LUT1 		Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<5>_rt
-LUT1 		Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<6>_rt
-LUT1 		Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<7>_rt
-LUT1 		Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<8>_rt
-LUT1 		Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<9>_rt
-LUT1 		Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<10>_rt
-LUT1 		Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<11>_rt
-LUT1 		Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<12>_rt
-LUT1 		Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<13>_rt
-LUT1 		Madd_pxX_led[15]_GND_6_o_add_67_OUT_cy<14>_rt
+LUT1 		Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<1>_rt
+LUT1 		Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<2>_rt
+LUT1 		Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<3>_rt
+LUT1 		Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<4>_rt
+LUT1 		Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<5>_rt
+LUT1 		Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<6>_rt
+LUT1 		Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<7>_rt
+LUT1 		Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<8>_rt
+LUT1 		Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<9>_rt
+LUT1 		Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<10>_rt
+LUT1 		Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<11>_rt
+LUT1 		Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<12>_rt
+LUT1 		Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<13>_rt
+LUT1 		Madd_pxX_led[15]_GND_6_o_add_65_OUT_cy<14>_rt
 LUT1 		Madd_test_clk_cy<1>_rt
 LUT1 		Madd_test_clk_cy<2>_rt
 LUT1 		Madd_test_clk_cy<3>_rt
@@ -202,7 +202,7 @@ LUT1 		led/Mcount_counter_r_cy<4>_rt
 LUT1 		led/Mcount_counter_r_cy<3>_rt
 LUT1 		led/Mcount_counter_r_cy<2>_rt
 LUT1 		led/Mcount_counter_r_cy<1>_rt
-LUT1 		Madd_pxX_led[15]_GND_6_o_add_67_OUT_xor<15>_rt
+LUT1 		Madd_pxX_led[15]_GND_6_o_add_65_OUT_xor<15>_rt
 LUT1 		Madd_test_clk_xor<25>_rt
 LUT1 		led/Mcount_counter_r_xor<17>_rt
 
@@ -299,7 +299,7 @@ Section 12 - Control Set Information
 +------------------------------------------------------------------------------------------------------------------+
 | clk_BUFGP                        |              |            |               | 5                | 18             |
 +------------------------------------------------------------------------------------------------------------------+
-| ~test_clk[25]_GND_6_o_equal_67_o |              |            |               | 4                | 16             |
+| ~test_clk[25]_GND_6_o_equal_65_o |              |            |               | 4                | 16             |
 +------------------------------------------------------------------------------------------------------------------+
 
 Section 13 - Utilization by Hierarchy
@@ -307,7 +307,7 @@ Section 13 - Utilization by Hierarchy
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Module             | Partition | Slices*       | Slice Reg     | LUTs          | LUTRAM        | BRAM/FIFO | DSP48A1 | BUFG  | BUFIO | BUFR  | DCM   | PLL_ADV   | Full Hierarchical  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| GPU/               |           | 17/27         | 16/34         | 10/24         | 0/0           | 0/0       | 0/0     | 1/1   | 0/0   | 0/0   | 0/0   | 0/0       | GPU                |
+| GPU/               |           | 18/28         | 16/34         | 10/24         | 0/0           | 0/0       | 0/0     | 1/1   | 0/0   | 0/0   | 0/0   | 0/0       | GPU                |
 | +led               |           | 10/10         | 18/18         | 14/14         | 0/0           | 0/0       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | GPU/led            |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
