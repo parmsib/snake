@@ -5,7 +5,7 @@ Loading device for application Rf_Device from file '6slx16.nph' in environment
    "GPU" is an NCD, version 3.2, device xc6slx16, package csg324, speed -3
 Opened constraints file design.pcf.
 
-Tue Apr 15 16:34:40 2014
+Tue Apr 15 17:36:49 2014
 
 /sw/xilinx/ise_12.4i/ISE_DS/ISE/bin/lin64/unwrapped/bitgen -w design.ncd 
 

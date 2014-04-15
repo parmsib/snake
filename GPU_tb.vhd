@@ -57,10 +57,10 @@ architecture behv of GPU_tb is
         
 begin
   tile_stat <= "0000";
-  tile_type <= "0000";
+  --tile_type <= "0000";
 	uut: GPU port map (clk => clk,
 							rst => rst,
-				tile_type => tile_type,
+				tile_type => tile_stat,
 				vgaRed => vgaRed,
 				vgaBlue => vgaBlue,
 				vgaGreen => vgaGreen,

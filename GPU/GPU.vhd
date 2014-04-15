@@ -16,10 +16,15 @@ entity GPU is
 		Hsync :out STD_LOGIC;
 		Vsync : out STD_LOGIC;
                 seg : out STD_LOGIC_VECTOR(7 downto 0);
-                an : out STD_LOGIC_VECTOR(3 downto 0));
+                an : out STD_LOGIC_VECTOR(3 downto 0);
+		--FLYTTA TILL SNAKE SEN
+		sw : in STD_LOGIC_VECTOR(7 downto 0)	
+		----------------------
+		);
 end GPU;
 
 architecture behv of GPU is
+
         component leddriver
           port (
             clk, rst : in  std_logic;
@@ -53,6 +58,7 @@ architecture behv of GPU is
                 14 => ("000", "011", "01"),
                 15 => ("000", "011", "01")
 		);
+
 	
 	signal pxX, pxY : STD_LOGIC_VECTOR (9 downto 0);
 	signal hsync_pre, vsync_pre: STD_LOGIC;
@@ -172,13 +178,13 @@ begin
 	--kombinatorik som kopplar tiletyp till färg
 	vgaRed   <=	tile_colors(tile_int).red when pxX < 256 and pxY < 256 else --innanför
 					"000" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
-					"000"; --fylla med random färg
+					sw(7 downto 5); --fylla med random färg
 	vgaGreen <=	tile_colors(tile_int).green when pxX < 256 and pxY < 256 else --innanför
 					"000" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
-					"000"; --fylla med random färg
+					sw(4 downto 2); --fylla med random färg
 	vgaBlue  <=	tile_colors(tile_int).blue when pxX < 256 and pxY < 256 else --innanför
 					"00" when pxX = 0 or pxX > 639 or pxY = 0 or pxY > 479 else --ram runt
-					"10"; --fylla med random färg
+					sw(1 downto 0); --fylla med random färg
 
 
        -- process(clk)

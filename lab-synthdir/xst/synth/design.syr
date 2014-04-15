@@ -5,7 +5,7 @@ Parameter TMPDIR set to tmpdir
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.07 secs
+Total CPU time to Xst completion: 0.08 secs
  
 --> 
 
@@ -55,13 +55,13 @@ Optimization Goal                  : SPEED
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
-Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../GPU/GPU.vhd" into library work
+Parsing VHDL file "/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../GPU/GPU.vhd" into library work
 Parsing entity <GPU>.
 Parsing architecture <behv> of entity <gpu>.
-Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../GMEM/GMEM.vhd" into library work
+Parsing VHDL file "/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../GMEM/GMEM.vhd" into library work
 Parsing entity <GM>.
 Parsing architecture <GMbehv> of entity <gm>.
-Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../leddriver.vhd" into library work
+Parsing VHDL file "/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../leddriver.vhd" into library work
 Parsing entity <leddriver>.
 Parsing architecture <Behavioral> of entity <leddriver>.
 
@@ -70,7 +70,7 @@ Parsing architecture <Behavioral> of entity <leddriver>.
 =========================================================================
 
 Elaborating entity <GPU> (architecture <behv>) from library <work>.
-WARNING:HDLCompiler:1127 - "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../GPU/GPU.vhd" Line 96: Assignment to vga_clock ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../GPU/GPU.vhd" Line 102: Assignment to vga_clock ignored, since the identifier is never used
 
 Elaborating entity <leddriver> (architecture <Behavioral>) from library <work>.
 
@@ -79,28 +79,28 @@ Elaborating entity <leddriver> (architecture <Behavioral>) from library <work>.
 =========================================================================
 
 Synthesizing Unit <GPU>.
-    Related source file is "/edu/tobhu543/TSEA83/projekt/GPU/GPU.vhd".
+    Related source file is "/edu/sebpa096/snake/GPU/GPU.vhd".
     Found 10-bit register for signal <pxX>.
     Found 1-bit register for signal <Hsync>.
     Found 10-bit register for signal <pxY>.
     Found 1-bit register for signal <Vsync>.
     Found 2-bit register for signal <clock_ctr>.
-    Found 2-bit adder for signal <clock_ctr[1]_GND_6_o_add_1_OUT> created at line 91.
-    Found 10-bit adder for signal <pxX[9]_GND_6_o_add_8_OUT> created at line 111.
-    Found 10-bit adder for signal <pxY[9]_GND_6_o_add_18_OUT> created at line 132.
-    Found 10-bit comparator greater for signal <pxX[9]_GND_6_o_LessThan_28_o> created at line 173
-    Found 10-bit comparator greater for signal <pxY[9]_GND_6_o_LessThan_29_o> created at line 173
-    Found 10-bit comparator greater for signal <PWR_6_o_pxX[9]_LessThan_51_o> created at line 180
-    Found 10-bit comparator greater for signal <GND_6_o_pxY[9]_LessThan_53_o> created at line 180
+    Found 2-bit adder for signal <clock_ctr[1]_GND_6_o_add_1_OUT> created at line 97.
+    Found 10-bit adder for signal <pxX[9]_GND_6_o_add_8_OUT> created at line 117.
+    Found 10-bit adder for signal <pxY[9]_GND_6_o_add_18_OUT> created at line 138.
+    Found 10-bit comparator greater for signal <pxX[9]_GND_6_o_LessThan_28_o> created at line 179
+    Found 10-bit comparator greater for signal <pxY[9]_GND_6_o_LessThan_29_o> created at line 179
+    Found 10-bit comparator greater for signal <PWR_6_o_pxX[9]_LessThan_31_o> created at line 180
+    Found 10-bit comparator greater for signal <GND_6_o_pxY[9]_LessThan_33_o> created at line 180
     Summary:
 	inferred   3 Adder/Subtractor(s).
 	inferred  24 D-type flip-flop(s).
 	inferred   4 Comparator(s).
-	inferred   3 Multiplexer(s).
+	inferred   6 Multiplexer(s).
 Unit <GPU> synthesized.
 
 Synthesizing Unit <leddriver>.
-    Related source file is "/edu/tobhu543/TSEA83/projekt/leddriver.vhd".
+    Related source file is "/edu/sebpa096/snake/leddriver.vhd".
 WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found 7-bit register for signal <segments>.
     Found 4-bit register for signal <an>.
@@ -119,7 +119,7 @@ WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and lef
 	inferred   4 Multiplexer(s).
 Unit <leddriver> synthesized.
 RTL-Simplification CPUSTAT: 0.02 
-RTL-BasicInf CPUSTAT: 0.13 
+RTL-BasicInf CPUSTAT: 0.14 
 RTL-BasicOpt CPUSTAT: 0.00 
 RTL-Remain-Bus CPUSTAT: 0.00 
 
@@ -143,10 +143,10 @@ Macro Statistics
  7-bit register                                        : 1
 # Comparators                                          : 4
  10-bit comparator greater                             : 4
-# Multiplexers                                         : 7
+# Multiplexers                                         : 10
  1-bit 4-to-1 multiplexer                              : 4
- 2-bit 2-to-1 multiplexer                              : 1
- 3-bit 2-to-1 multiplexer                              : 2
+ 2-bit 2-to-1 multiplexer                              : 2
+ 3-bit 2-to-1 multiplexer                              : 4
 
 =========================================================================
 
@@ -202,10 +202,10 @@ Macro Statistics
  Flip-Flops                                            : 13
 # Comparators                                          : 4
  10-bit comparator greater                             : 4
-# Multiplexers                                         : 7
+# Multiplexers                                         : 10
  1-bit 4-to-1 multiplexer                              : 4
- 2-bit 2-to-1 multiplexer                              : 1
- 3-bit 2-to-1 multiplexer                              : 2
+ 2-bit 2-to-1 multiplexer                              : 2
+ 3-bit 2-to-1 multiplexer                              : 4
 
 =========================================================================
 
@@ -220,8 +220,6 @@ Optimizing unit <leddriver> ...
 Mapping all equations...
 Building and optimizing final netlist ...
 Found area constraint ratio of 100 (+ 0) on block GPU, actual ratio is 1.
-FlipFlop clock_ctr_0 has been replicated 1 time(s)
-FlipFlop clock_ctr_1 has been replicated 1 time(s)
 
 Final Macro Processing ...
 
@@ -229,8 +227,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 55
- Flip-Flops                                            : 55
+# Registers                                            : 53
+ Flip-Flops                                            : 53
 
 =========================================================================
 
@@ -253,25 +251,25 @@ Top Level Output File Name         : design.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 191
+# BELS                             : 178
 #      GND                         : 1
 #      INV                         : 4
 #      LUT1                        : 35
-#      LUT2                        : 11
-#      LUT3                        : 3
-#      LUT4                        : 14
-#      LUT5                        : 9
-#      LUT6                        : 40
+#      LUT2                        : 7
+#      LUT3                        : 5
+#      LUT4                        : 29
+#      LUT5                        : 5
+#      LUT6                        : 18
 #      MUXCY                       : 35
 #      VCC                         : 1
 #      XORCY                       : 38
-# FlipFlops/Latches                : 55
+# FlipFlops/Latches                : 53
 #      FD                          : 51
-#      FDR                         : 4
+#      FDR                         : 2
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
-# IO Buffers                       : 37
-#      IBUF                        : 5
+# IO Buffers                       : 45
+#      IBUF                        : 13
 #      OBUF                        : 32
 
 Device utilization summary:
@@ -281,20 +279,20 @@ Selected Device : 6slx16csg324-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:              55  out of  18224     0%  
- Number of Slice LUTs:                  116  out of   9112     1%  
-    Number used as Logic:               116  out of   9112     1%  
+ Number of Slice Registers:              53  out of  18224     0%  
+ Number of Slice LUTs:                  103  out of   9112     1%  
+    Number used as Logic:               103  out of   9112     1%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    118
-   Number with an unused Flip Flop:      63  out of    118    53%  
-   Number with an unused LUT:             2  out of    118     1%  
-   Number of fully used LUT-FF pairs:    53  out of    118    44%  
+ Number of LUT Flip Flop pairs used:    103
+   Number with an unused Flip Flop:      50  out of    103    48%  
+   Number with an unused LUT:             0  out of    103     0%  
+   Number of fully used LUT-FF pairs:    53  out of    103    51%  
    Number of unique control sets:         2
 
 IO Utilization: 
- Number of IOs:                          38
- Number of bonded IOBs:                  38  out of    232    16%  
+ Number of IOs:                          46
+ Number of bonded IOBs:                  46  out of    232    19%  
 
 Specific Feature Utilization:
  Number of BUFG/BUFGCTRLs:                1  out of     16     6%  
@@ -320,7 +318,7 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-clk                                | BUFGP                  | 55    |
+clk                                | BUFGP                  | 53    |
 -----------------------------------+------------------------+-------+
 
 Asynchronous Control Signals Information:
@@ -331,10 +329,10 @@ Timing Summary:
 ---------------
 Speed Grade: -3
 
-   Minimum period: 3.984ns (Maximum Frequency: 251.032MHz)
-   Minimum input arrival time before clock: 4.087ns
-   Maximum output required time after clock: 7.271ns
-   Maximum combinational path delay: 6.652ns
+   Minimum period: 4.581ns (Maximum Frequency: 218.283MHz)
+   Minimum input arrival time before clock: 3.668ns
+   Maximum output required time after clock: 7.950ns
+   Maximum combinational path delay: 6.641ns
 
 Timing Details:
 ---------------
@@ -342,90 +340,92 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk'
-  Clock period: 3.984ns (frequency: 251.032MHz)
-  Total number of paths / destination ports: 852 / 59
+  Clock period: 4.581ns (frequency: 218.283MHz)
+  Total number of paths / destination ports: 844 / 55
 -------------------------------------------------------------------------
-Delay:               3.984ns (Levels of Logic = 3)
-  Source:            pxX_1 (FF)
-  Destination:       pxY_2 (FF)
+Delay:               4.581ns (Levels of Logic = 4)
+  Source:            pxX_5 (FF)
+  Destination:       pxY_1 (FF)
   Source Clock:      clk rising
   Destination Clock: clk rising
 
-  Data Path: pxX_1 to pxY_2
+  Data Path: pxX_5 to pxY_1
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q               5   0.447   1.059  pxX_1 (pxX_1)
-     LUT5:I0->O            3   0.203   0.651  GND_6_o_GND_6_o_equal_8_o<9>_SW0 (N15)
-     LUT6:I5->O           11   0.205   1.111  GND_6_o_GND_6_o_equal_8_o<9> (GND_6_o_GND_6_o_equal_8_o)
-     LUT6:I3->O            1   0.205   0.000  pxY_9_rstpot (pxY_9_rstpot)
-     FD:D                      0.102          pxY_9
+     FD:C->Q               6   0.447   1.089  pxX_5 (pxX_5)
+     LUT5:I0->O            3   0.203   0.651  Mcount_pxX_val1_SW0 (N13)
+     LUT6:I5->O            2   0.205   0.617  Mcount_pxX_val1 (N2)
+     LUT4:I3->O           10   0.205   0.857  Mcount_pxX_val2 (Mcount_pxX_val)
+     LUT4:I3->O            1   0.205   0.000  pxX_3_rstpot (pxX_3_rstpot)
+     FD:D                      0.102          pxX_3
     ----------------------------------------
-    Total                      3.984ns (1.162ns logic, 2.822ns route)
-                                       (29.2% logic, 70.8% route)
+    Total                      4.581ns (1.367ns logic, 3.214ns route)
+                                       (29.8% logic, 70.2% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
-  Total number of paths / destination ports: 64 / 33
+  Total number of paths / destination ports: 52 / 31
 -------------------------------------------------------------------------
-Offset:              4.087ns (Levels of Logic = 3)
+Offset:              3.668ns (Levels of Logic = 3)
   Source:            rst (PAD)
-  Destination:       pxX_0 (FF)
+  Destination:       pxY_1 (FF)
   Destination Clock: clk rising
 
-  Data Path: rst to pxX_0
+  Data Path: rst to pxY_1
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O            22   1.222   1.498  rst_IBUF (rst_IBUF)
-     LUT6:I0->O           10   0.203   0.857  Mcount_pxX_val1 (Mcount_pxX_val)
-     LUT5:I4->O            1   0.205   0.000  pxX_0_rstpot (pxX_0_rstpot)
-     FD:D                      0.102          pxX_0
+     IBUF:I->O             5   1.222   1.079  rst_IBUF (rst_IBUF)
+     LUT6:I0->O           10   0.203   0.857  Mcount_pxY_val1 (Mcount_pxY_val)
+     LUT4:I3->O            1   0.205   0.000  pxY_1_rstpot (pxY_1_rstpot)
+     FD:D                      0.102          pxY_1
     ----------------------------------------
-    Total                      4.087ns (1.732ns logic, 2.355ns route)
-                                       (42.4% logic, 57.6% route)
+    Total                      3.668ns (1.732ns logic, 1.936ns route)
+                                       (47.2% logic, 52.8% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
-  Total number of paths / destination ports: 86 / 31
+  Total number of paths / destination ports: 291 / 31
 -------------------------------------------------------------------------
-Offset:              7.271ns (Levels of Logic = 4)
-  Source:            pxY_9 (FF)
-  Destination:       vgaBlue<2> (PAD)
+Offset:              7.950ns (Levels of Logic = 5)
+  Source:            pxY_4 (FF)
+  Destination:       vgaGreen<1> (PAD)
   Source Clock:      clk rising
 
-  Data Path: pxY_9 to vgaBlue<2>
+  Data Path: pxY_4 to vgaGreen<1>
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q              19   0.447   1.176  pxY_9 (pxY_9)
-     LUT4:I2->O            5   0.203   1.079  pxX[9]_pxY[9]_AND_5_o1 (vgaBlue_1_OBUF)
-     LUT6:I0->O            1   0.203   0.808  Mmux_vgaBlue22 (Mmux_vgaBlue21)
-     LUT5:I2->O            1   0.205   0.579  Mmux_vgaBlue27 (vgaBlue_2_OBUF)
-     OBUF:I->O                 2.571          vgaBlue_2_OBUF (vgaBlue<2>)
+     FD:C->Q               5   0.447   0.943  pxY_4 (pxY_4)
+     LUT3:I0->O            1   0.205   0.580  GND_6_o_GND_6_o_OR_14_o2_SW0 (N11)
+     LUT6:I5->O            2   0.205   0.845  GND_6_o_GND_6_o_OR_14_o2 (N5)
+     LUT6:I3->O            8   0.205   1.167  GND_6_o_GND_6_o_OR_14_o4 (GND_6_o_GND_6_o_OR_14_o)
+     LUT6:I0->O            1   0.203   0.579  Mmux_vgaGreen21 (vgaGreen_1_OBUF)
+     OBUF:I->O                 2.571          vgaGreen_1_OBUF (vgaGreen<1>)
     ----------------------------------------
-    Total                      7.271ns (3.629ns logic, 3.642ns route)
-                                       (49.9% logic, 50.1% route)
+    Total                      7.950ns (3.836ns logic, 4.114ns route)
+                                       (48.3% logic, 51.7% route)
 
 =========================================================================
 Timing constraint: Default path analysis
-  Total number of paths / destination ports: 20 / 5
+  Total number of paths / destination ports: 28 / 8
 -------------------------------------------------------------------------
-Delay:               6.652ns (Levels of Logic = 4)
-  Source:            tile_type<3> (PAD)
+Delay:               6.641ns (Levels of Logic = 4)
+  Source:            tile_type<0> (PAD)
   Destination:       vgaRed<2> (PAD)
 
-  Data Path: tile_type<3> to vgaRed<2>
+  Data Path: tile_type<0> to vgaRed<2>
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             8   1.222   1.050  tile_type_3_IBUF (tile_type_3_IBUF)
-     LUT4:I0->O            2   0.203   0.721  _n0233<3>1 (_n0233)
-     LUT5:I3->O            4   0.203   0.683  vgaRed<0>1 (vgaRed_0_OBUF)
-     OBUF:I->O                 2.571          vgaRed_2_OBUF (vgaRed<2>)
+     IBUF:I->O             8   1.222   1.147  tile_type_0_IBUF (tile_type_0_IBUF)
+     LUT5:I0->O            5   0.203   0.715  Mmux_vgaBlue221 (N1)
+     LUT4:I3->O            1   0.205   0.579  Mmux_vgaBlue21 (vgaBlue_2_OBUF)
+     OBUF:I->O                 2.571          vgaBlue_2_OBUF (vgaBlue<2>)
     ----------------------------------------
-    Total                      6.652ns (4.199ns logic, 2.453ns route)
-                                       (63.1% logic, 36.9% route)
+    Total                      6.641ns (4.201ns logic, 2.440ns route)
+                                       (63.3% logic, 36.7% route)
 
 =========================================================================
 
@@ -437,19 +437,19 @@ Clock to Setup on destination clock clk
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-clk            |    3.984|         |         |         |
+clk            |    4.581|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
 Total REAL time to Xst completion: 4.00 secs
-Total CPU time to Xst completion: 3.25 secs
+Total CPU time to Xst completion: 3.12 secs
  
 --> 
 
 
-Total memory usage is 461228 kilobytes
+Total memory usage is 461196 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    3 (   0 filtered)

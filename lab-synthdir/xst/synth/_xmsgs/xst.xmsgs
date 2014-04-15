@@ -5,7 +5,7 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="HDLCompiler" num="1127" delta="new" >"/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../GPU/GPU.vhd" Line 96: Assignment to <arg fmt="%s" index="1">vga_clock</arg> ignored, since the identifier is never used
+<msg type="warning" file="HDLCompiler" num="1127" delta="new" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../GPU/GPU.vhd" Line 102: Assignment to <arg fmt="%s" index="1">vga_clock</arg> ignored, since the identifier is never used
 </msg>
 
 <msg type="warning" file="Xst" num="647" delta="new" >Input &lt;<arg fmt="%s" index="1">rst</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
