@@ -122,7 +122,7 @@ begin
 	end process;
 	
 	--kombinatoriskt nät
-	hsync_pre <=	'0' when pxX > 655 and pxX < 753 else
+	hsync_pre <=	'0' when pxX > 655 and pxX < 751 else
 				'1';
 	vsync_pre <=	'0' when (pxY > 489 and pxY < 491) else -- or (pxX = 799 and pxY = 490) else
 				'1';
