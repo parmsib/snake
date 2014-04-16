@@ -10,7 +10,7 @@ entity UART is
 		uart_in : in STD_LOGIC;
 		uart_word_ready: out STD_LOGIC; --aktivt låg!
 		to_bus: out STD_LOGIC_VECTOR(n-1 downto 0);
-		should_write_bus: in STD_LOGIC;)
+		should_write_bus: in STD_LOGIC);
 end UART;
 
 architecture behav of UART is
@@ -21,7 +21,7 @@ architecture behav of UART is
 				load : in STD_LOGIC;
 				store : in STD_LOGIC;
 				shiftdir : in STD_LOGIC;
-				output : out STD_LOGIC_VECTOR(n-1 downto 0);)
+				output : out STD_LOGIC_VECTOR(n-1 downto 0));
 	end component;
 	
 	component regi
@@ -29,7 +29,7 @@ architecture behav of UART is
 				input : in STD_LOGIC_VECTOR( (n/2) - 1 downto 0);
 				load : in STD_LOGIC;
 				store : in STD_LOGIC;
-				output : out STD_LOGIC_VECTOR( (n/2) - 1 downto 0);)
+				output : out STD_LOGIC_VECTOR( (n/2) - 1 downto 0));
 	end component;
 
 	--värde på klockan när uart är idle
@@ -62,7 +62,7 @@ begin
 	--räknaren
 	process(clk) begin
 		if rising_edge(clk) then
-			if rst = '1' the
+			if rst = '1' then
 				count <= idle;
 				cur_byte <= '0';
 				uart_word_flipflop <= '1';
@@ -72,12 +72,12 @@ begin
 					count <= "0";
 					
 				--inga fler bitar, men vi måste fixa lite signaler
-				elsif count = 10#8250# then
-					cur_byte = cur_byte xor '1'; --toggla
+				elsif count = 825 then
+					cur_byte <= cur_byte xor '1'; --toggla
 					uart_word_flipflop <= cur_byte xor '1'; --sätts låg när cur_byte blir 0.
 					
 				--slut på en uart-byte. gå till idle state
-				elsif count = 10#8300# then
+				elsif count = 8300 then
 					count <= idle;
 					
 				else
@@ -111,31 +111,34 @@ begin
 				'0';
 				
 	uart_word_ready <=	uart_word_flipflop;--outputta värdet av vippan
-	
+
+
 	shiftreg : shiftregi port map (	
-		clk,
-		rst,
-		uart2, --input
-		shift,
-		'1', --store
-		'1', --shiftdir
-		shiftreg_out);
-		
-	
+		clk => clk,
+		rst => rst,
+		should_shift => shift,
+		should_write_output => '1',
+		shiftdir => '1',
+		input => uart2,
+		output => shiftreg_out
+		);
 			
 	regi1 : regi generic map (n/2) port map (
-		clk,
-		rst,
-		shiftreg_out, --input
-		load1,
-		regi1_out);
+		clk => clk,
+		rst => rst,
+		should_read_input => load1,
+		should_write_output => '1',
+		input => shiftreg_out,
+		output => regi1_out);
 		
 	regi2 : regi generic map (n/2) port map (
-		clk,
-		rst,
-		shiftreg_out, --input
-		load2,
-		regi2_out);
+		clk => clk,
+		rst => rst,
+		should_read_input => load2,
+		should_write_output => '1',
+		input => shiftreg_out,
+		output => regi2_out);
+
 		
 	to_bus <=	regi1_out & regi2_out when should_write_bus = '1' else
 				"ZZZZZZZZZZZZZZZZ";

@@ -16,13 +16,26 @@ entity snake is
 		an : out STD_LOGIC_VECTOR(3 downto 0); --mux-variabel över vilken 7segment (tror jag)
                 seg : out std_logic_vector(7 downto 0);
 		--
+		uart_in: in STD_LOGIC;
+		--
 		sw : in STD_LOGIC_VECTOR(7 downto 0)); --spakar på kortet (kontrollerar bakgrundsfärg)
+		
 end snake;
 
 
 
 
 architecture behv of snake is
+
+	component UART is
+		generic ( N : natural);
+		Port ( 	
+			clk, rst : in STD_LOGIC;
+			uart_in : in STD_LOGIC;
+			uart_word_ready: out STD_LOGIC; --aktivt låg!
+			to_bus: out STD_LOGIC_VECTOR(n-1 downto 0);
+			should_write_bus: in STD_LOGIC);
+	end component;
 
 	component GPU is
 		port (	clk, rst : in STD_LOGIC;
@@ -60,19 +73,26 @@ architecture behv of snake is
             an       : out std_logic_vector(3 downto 0);
             value    : in  std_logic_vector(15 downto 0));
         end component;
-
-	--(tex ALU, alla register, minne, Gminne, uart, adress till Gminne etc)
-	--signal ALLA SIGNALER MELLAN <DE KOMPONENTER SOM SKA LIGGA PÅ BUSSEN>
-	--(tex from_bus, to_bus, om uart har ny data etc)
-	--vi kan se hela datorn som en entity (eller komponent), och då är det naturligt att
-	--lista signalerna mellan dess beståndsdelar här, eftersom de är datorns interna signaler.
 	
-	signal dbus : STD_LOGIC_VECTOR(15 downto 0) := X"0000"; --exempel på intern buss
 
+	--interna signaler mellan komponenterna
+	signal dbus : STD_LOGIC_VECTOR(15 downto 0) := X"0000"; --buss
+
+	signal uart_word_ready : STD_LOGIC;
+	signal uart_should_write_bus : STD_LOGIC;
 	signal gpu_read_adr : STD_LOGIC_VECTOR(9 downto 0); -- read-adress till gmem fr gpu
 	signal gmem_tile_type_out : STD_LOGIC_VECTOR(3 downto 0); --tile ut fr gmem till gpu
 
 begin
+
+	uart_inst : UART generic map(16) port map(
+		clk => clk,
+		rst => rst,
+		uart_in => uart_in,
+		uart_word_ready => uart_word_ready,
+		to_bus => dbus,
+		should_write_bus => uart_should_write_bus
+		);
 	
 	gmem_inst : GMEM port map( 
 		clk => clk,

@@ -4,28 +4,59 @@ use ieee.std_logic_unsigned.all;
 
 entity shiftregi is 
 	generic (N : natural := 16);
-	port( 	input : in std_logic;
-			clk : in std_logic;
-			load : in std_logic;
-			shiftdir : in std_logic;
-			output : out std_logic_vector(n-1 downto 0)
-			);
+	port(	clk, rst : in std_logic;
+		should_shift : in std_logic;		
+		should_write_output : in std_logic;
+		shiftdir : in std_logic;
+	 	input : in std_logic;		
+		output : out std_logic_vector(n-1 downto 0)
+		);
 end shiftregi;
 
 architecture behav of shiftregi is
-	signal out_tmp : std_logic_vector(n-1 downto 0);
+	signal regi : std_logic_vector(n-1 downto 0);
 begin
-	process(clk, load, input)
-	begin
-		if clock'event and clock='1' then
-			if load='1' then
+	process(clk) begin
+		if rising_edge(clk) then
+			if rst = '1' then
+				regi <= (regi'range => 0);
+			elsif should_shift = '1' then
 				if shiftdir='1' then
-					out_tmp <= input & out_tmp(n-1 downto 1);
+					regi <= input & regi(n-1 downto 1);
 				else
-					out_tmp <= out_tmp(n-2 downto 0) & input;
+					regi <= regi(n-2 downto 0) & input;
 				end if;
 			end if;
 		end if;
 	end process;
-	output <= out_tmp;
+
+	--kombinatoriskt output-nät
+	process(regi, should_write_output) begin
+		if should_write_output then
+			output <= regi;
+		else
+			for i in (N1 downto 0) loop
+				output(i) <= 'Z';
+			end loop;
+		end if;
+	end process;
+
 end behav;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
