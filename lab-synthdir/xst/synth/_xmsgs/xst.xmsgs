@@ -5,56 +5,28 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="HDLCompiler" num="946" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../snake.vhd" Line 127: Actual for formal port <arg fmt="%s" index="1">value</arg> is neither a static name nor a globally static expression
+<msg type="warning" file="Xst" num="647" delta="new" >Input &lt;<arg fmt="%s" index="1">sw&lt;7:0&gt;</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="9" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 75: Found <arg fmt="%d" index="1">0</arg> definitions for operator <arg fmt="%s" index="2">&quot;=&quot;</arg>.
+<msg type="info" file="Xst" num="3010" delta="new" >&quot;<arg fmt="%s" index="1">/edu/tobhu543/TSEA83/projekt/snake.vhd</arg>&quot; line <arg fmt="%d" index="2">110</arg>: Output port &lt;<arg fmt="%s" index="3">frombus</arg>&gt; of the instance &lt;<arg fmt="%s" index="4">spi_inst</arg>&gt; is unconnected or connected to loadless signal.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="9" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 80: Found <arg fmt="%d" index="1">0</arg> definitions for operator <arg fmt="%s" index="2">&quot;=&quot;</arg>.
+<msg type="warning" file="Xst" num="2563" delta="new" >Inout &lt;<arg fmt="%s" index="1">buss</arg>&gt; is never assigned. Tied to value <arg fmt="%s" index="2">Z</arg>.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="9" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 85: Found <arg fmt="%d" index="1">0</arg> definitions for operator <arg fmt="%s" index="2">&quot;+&quot;</arg>.
+<msg type="warning" file="Xst" num="653" delta="new" >Signal &lt;<arg fmt="%s" index="1">frombus</arg>&gt; is used but never assigned. This sourceless signal will be automatically connected to value <arg fmt="%s" index="2">GND</arg>.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="841" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 89: Expecting type <arg fmt="%s" index="2">boolean</arg> for &lt;<arg fmt="%s" index="1">should_write_bus</arg>&gt;.
+<msg type="warning" file="Xst" num="647" delta="new" >Input &lt;<arg fmt="%s" index="1">rst</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="806" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 96: Syntax error near &quot;<arg fmt="%s" index="1">=&gt;</arg>&quot;.
+<msg type="info" file="Xst" num="3048" delta="new" >The small RAM &lt;<arg fmt="%s" index="1">Mram_v[3]_GND_8_o_wide_mux_3_OUT</arg>&gt; will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="9" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 108: Found <arg fmt="%d" index="1">0</arg> definitions for operator <arg fmt="%s" index="2">&quot;=&quot;</arg>.
+<msg type="info" file="Xst" num="3048" delta="new" >The small RAM &lt;<arg fmt="%s" index="1">Mram_counter_r[17]_PWR_8_o_wide_mux_4_OUT</arg>&gt; will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="9" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 110: Found <arg fmt="%d" index="1">0</arg> definitions for operator <arg fmt="%s" index="2">&quot;=&quot;</arg>.
-</msg>
-
-<msg type="error" file="HDLCompiler" num="1314" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 119: Formal port/generic &lt;<arg fmt="%s" index="1">should_shift</arg>&gt; is not declared in &lt;<arg fmt="%s" index="2">shiftregi</arg>&gt;
-</msg>
-
-<msg type="error" file="HDLCompiler" num="432" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 116: Formal &lt;<arg fmt="%s" index="1">input</arg>&gt; has no actual or default value.
-</msg>
-
-<msg type="error" file="HDLCompiler" num="26" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 126: <arg fmt="%s" index="1">regi</arg> has only <arg fmt="%d" index="2">0</arg> generics
-</msg>
-
-<msg type="error" file="HDLCompiler" num="1314" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 129: Formal port/generic &lt;<arg fmt="%s" index="1">should_read_input</arg>&gt; is not declared in &lt;<arg fmt="%s" index="2">regi</arg>&gt;
-</msg>
-
-<msg type="error" file="HDLCompiler" num="432" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 126: Formal &lt;<arg fmt="%s" index="1">input</arg>&gt; has no actual or default value.
-</msg>
-
-<msg type="error" file="HDLCompiler" num="26" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 134: <arg fmt="%s" index="1">regi</arg> has only <arg fmt="%d" index="2">0</arg> generics
-</msg>
-
-<msg type="error" file="HDLCompiler" num="1314" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 137: Formal port/generic &lt;<arg fmt="%s" index="1">should_read_input</arg>&gt; is not declared in &lt;<arg fmt="%s" index="2">regi</arg>&gt;
-</msg>
-
-<msg type="error" file="HDLCompiler" num="432" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 134: Formal &lt;<arg fmt="%s" index="1">input</arg>&gt; has no actual or default value.
-</msg>
-
-<msg type="error" file="HDLCompiler" num="854" delta="old" >"/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../UART/UART.vhd" Line 16: Unit &lt;<arg fmt="%s" index="1">behav</arg>&gt; ignored due to previous errors.
-</msg>
+<msg type="warning" file="Xst" num="2042" delta="new" >Unit <arg fmt="%s" index="1">spi</arg>: <arg fmt="%d" index="2">16</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
 
 </messages>
 

@@ -44,7 +44,8 @@ architecture behv of GPU is
                 12 => ("000", "011", "01"),
                 13 => ("000", "011", "01"),
                 14 => ("000", "011", "01"),
-                15 => (sw(7 downto 5), sw(4 downto 2), sw(1 downto 0))
+		15 => ("000", "011", "01")
+                --15 => (bg_color(7 downto 5), bg_color(4 downto 2), bg_color(1 downto 0))
 		);
 
 	

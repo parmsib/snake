@@ -16,9 +16,13 @@ entity snake is
 		an : out STD_LOGIC_VECTOR(3 downto 0); --mux-variabel över vilken 7segment (tror jag)
                 seg : out std_logic_vector(7 downto 0);
 		--
-		uart_in: in STD_LOGIC;
+		--uart_in: in STD_LOGIC;
 		--
-		sw : in STD_LOGIC_VECTOR(7 downto 0)); --spakar på kortet (kontrollerar bakgrundsfärg)
+		sw : in STD_LOGIC_VECTOR(7 downto 0); --spakar på kortet (kontrollerar bakgrundsfärg);
+		ss, mosi, sclk : out STD_LOGIC;
+		miso : in STD_LOGIC
+		);
+            
 		
 end snake;
 
@@ -27,14 +31,26 @@ end snake;
 
 architecture behv of snake is
 
-	component UART is
-		generic ( N : natural);
-		Port ( 	
-			clk, rst : in STD_LOGIC;
-			uart_in : in STD_LOGIC;
-			uart_word_ready: out STD_LOGIC; --aktivt låg!
-			to_bus: out STD_LOGIC_VECTOR(n-1 downto 0);
-			should_write_bus: in STD_LOGIC);
+--	component UART is
+--		generic ( N : natural);
+--		Port ( 	
+--			clk, rst : in STD_LOGIC;
+--			uart_in : in STD_LOGIC;
+--			uart_word_ready: out STD_LOGIC; --aktivt låg!
+--			to_bus: out STD_LOGIC_VECTOR(n-1 downto 0);
+--			should_write_bus: in STD_LOGIC);
+--	end component;
+
+	component SPI is
+		port ( 	clk : in std_logic;
+			buss : inout std_logic_vector(15 downto 0);
+			flags : inout std_logic_vector(6 downto 0);
+			frombus : out std_logic_vector(3 downto 0);
+			miso : in std_logic;
+			sclk : out std_logic;
+			mosi : out std_logic;
+			testx : out std_logic_vector(15 downto 0)
+		);
 	end component;
 
 	component GPU is
@@ -77,54 +93,73 @@ architecture behv of snake is
 
 	--interna signaler mellan komponenterna
 	signal dbus : STD_LOGIC_VECTOR(15 downto 0) := X"0000"; --buss
+	signal flags : STD_LOGIC_VECTOR(6 downto 0) := "0000000";
+	signal frombus : STD_LOGIC_VECTOR(3 downto 0) := "0000";
 
 	signal uart_word_ready : STD_LOGIC;
 	signal uart_should_write_bus : STD_LOGIC;
 	signal gpu_read_adr : STD_LOGIC_VECTOR(9 downto 0); -- read-adress till gmem fr gpu
 	signal gmem_tile_type_out : STD_LOGIC_VECTOR(3 downto 0); --tile ut fr gmem till gpu
 
-begin
+	signal miso_tmp : std_logic;
 
-	uart_inst : UART generic map(16) port map(
+	signal spitestx : std_logic_vector(15 downto 0);
+begin
+	ss <= '0';
+--	miso_tmp <= miso;
+	spi_inst : SPI port map(
 		clk => clk,
-		rst => rst,
-		uart_in => uart_in,
-		uart_word_ready => uart_word_ready,
-		to_bus => dbus,
-		should_write_bus => uart_should_write_bus
+		buss => dbus,
+		flags => flags,
+		frombus => frombus,
+		miso => miso,
+		sclk => sclk,
+		mosi => mosi,
+		testx => spitestx
 		);
 	
-	gmem_inst : GMEM port map( 
-		clk => clk,
-		rst => rst,
-		dbus_in => dbus,
-		dbus_out => dbus,
-		should_read_dbus => '0', --FIXA
-		should_write_dbus => '0', --FIXA
-		write_adr => B"00000_00000", --FIXA
-		read_adr => gpu_read_adr,
-		tile_type_out => gmem_tile_type_out
-		);
 
-	gpu_inst : GPU port map(
-		clk => clk,
-		rst => rst,
-		tile_type => gmem_tile_type_out, --fr gmem
-		gmem_adr => gpu_read_adr, --till gmem
-		vgaRed => vgaRed,
-		vgaGreen => vgaGreen,
-		vgaBlue => vgaBlue,
-		Hsync => Hsync,
-		Vsync => Vsync,
-		bg_color => sw --switch-knappar kontrollerar bakgrundsfärg
-		);
+--	uart_inst : UART generic map(16) port map(
+--		clk => clk,
+--		rst => rst,
+--		uart_in => uart_in,
+--		uart_word_ready => uart_word_ready,
+--		to_bus => dbus,
+--		should_write_bus => uart_should_write_bus
+--		);
+	
+--	gmem_inst : GMEM port map( 
+--		clk => clk,
+--		rst => rst,
+--		dbus_in => dbus,
+--		dbus_out => dbus,
+--		should_read_dbus => '0', --FIXA
+--		should_write_dbus => '0', 
+--		write_adr => B"00000_00000", --FIXA
+--		read_adr => gpu_read_adr,
+--		tile_type_out => gmem_tile_type_out
+--		);
+
+--	gpu_inst : GPU port map(
+--		clk => clk,
+--		rst => rst,
+--		tile_type => gmem_tile_type_out, --fr gmem
+--		gmem_adr => gpu_read_adr, --till gmem
+--		vgaRed => vgaRed,
+--		vgaGreen => vgaGreen,
+--		vgaBlue => vgaBlue,
+--		Hsync => Hsync,
+--		Vsync => Vsync,
+--		bg_color => sw --switch-knappar kontrollerar bakgrundsfärg
+--		);
 
 	leddriver_inst : leddriver port map(
 		clk => clk,
 		rst => rst,
 		seg => seg,
 		an => an,
-		value => "0" & sw(7 downto 5) & "0" & sw(4 downto 2) & "00" & sw(1 downto 0) & "000" & rst
+		--value => "0" & sw(7 downto 5) & "0" & sw(4 downto 2) & "00" & sw(1 downto 0) & "000" & rst
+		value => spitestx
 		);
 
 end behv;		
