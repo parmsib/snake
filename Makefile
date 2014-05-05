@@ -36,14 +36,14 @@ PART=xc6slx16-3-csg324
 #riktigt : lab.%: S=snake.vhd GPU/GPU.vhd GMEM/GMEM.vhd CPU/CPU.vhd UART/UART.vhd Common/shiftregister.vhd 
 
 #GPU-test:
-lab.%: S=snake.vhd GPU/GPU.vhd GMEM/GMEM.vhd leddriver.vhd SPI/spi.vhd
+lab.%: S=snake.vhd GPU/GPU.vhd GMEM/GMEM.vhd leddriver.vhd SPI/spi.vhd UART/UART.vhd Common/shiftregister.vhd Common/register.vhd
 lab.%: T=GPU_tb.vhd
 lab.%: U=lab.ucf
 
 #SPI-test:
-spitest.%: S=SPI/spi.vhd
-spitest.%: T=SPI_tb.vhd
-spitest.%: U=lab_spi.ucf
+#spitest.%: S=SPI/spi.vhd
+#spitest.%: T=SPI_tb.vhd
+#spitest.%: U=lab_spi.ucf
 
 # Det här är ett exempel på hur man kan skriva en testbänk som är
 # relevant, även om man kör en simulering i batchläge (make batchlab.simc)

@@ -3,6 +3,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 use IEEE.NUMERIC_STD.ALL;
 
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
 entity UART is
 	generic ( N : natural := 16);
 	Port ( 	
@@ -16,20 +18,22 @@ end UART;
 architecture behav of UART is
 
 	component shiftregi
+		generic (N : natural := 16);		
 		Port (	clk,rst : in STD_LOGIC;
-				input : in STD_LOGIC;
-				load : in STD_LOGIC;
-				store : in STD_LOGIC;
+				should_shift : in STD_LOGIC;
+				should_write_output : in STD_LOGIC;
 				shiftdir : in STD_LOGIC;
+				input : in STD_LOGIC;
 				output : out STD_LOGIC_VECTOR(n-1 downto 0));
 	end component;
 	
 	component regi
+		generic (N : natural := 16);
 		Port ( 	clk, rst : in STD_LOGIC;
-				input : in STD_LOGIC_VECTOR( (n/2) - 1 downto 0);
-				load : in STD_LOGIC;
-				store : in STD_LOGIC;
-				output : out STD_LOGIC_VECTOR( (n/2) - 1 downto 0));
+			should_read_input : in STD_LOGIC;
+			should_write_output : in STD_LOGIC;
+			input : in std_logic_vector(n-1 downto 0);
+			output : out std_logic_vector(n-1 downto 0));
 	end component;
 
 	--värde på klockan när uart är idle
@@ -39,7 +43,7 @@ architecture behav of UART is
 	signal uart1, uart2: STD_LOGIC;
 	signal shift : STD_LOGIC;
 	signal cur_byte : STD_LOGIC;
-	signal shiftreg_out : STD_LOGIC_VECTOR(7 downto 0);
+	signal shiftreg_out : STD_LOGIC_VECTOR(9 downto 0);
 	signal regi1_out, regi2_out : STD_LOGIC_VECTOR( (n/2) - 1 downto 0);
 	signal load1, load2 : STD_LOGIC; --load1 är vänstra byte-registrets load-signal. etc
 	signal uart_word_flipflop : STD_LOGIC;
@@ -69,7 +73,7 @@ begin
 			else
 				--start på uart-byte
 				if count = idle and uart1 = '0' and uart2 = '1' then 
-					count <= "0";
+					count <= (others => '0');
 					
 				--inga fler bitar, men vi måste fixa lite signaler
 				elsif count = 825 then
@@ -86,23 +90,23 @@ begin
 				end if;
 				
 				--om vi har skickat ut ett word på bussen, sätt vippan tillbaks till hög
-				if should_write_bus then
+				if should_write_bus = '1' then
 					uart_word_flipflop <= '1';
 				end if;
 			end if;
 		end if;
 	end process;
 	
-	shift <='1' when => count = 434  else
-			'1' when => count = 1302 else
-			'1' when => count = 2170 else
-			'1' when => count = 3038 else
-			'1' when => count = 3906 else
-			'1' when => count = 4774 else
-			'1' when => count = 5642 else
-			'1' when => count = 6510 else
-			'1' when => count = 7378 else
-			'1' when => count = 8246 else
+	shift <='1' when  count = 434  else
+			'1' when count = 1302 else
+			'1' when count = 2170 else
+			'1' when count = 3038 else
+			'1' when count = 3906 else
+			'1' when count = 4774 else
+			'1' when count = 5642 else
+			'1' when count = 6510 else
+			'1' when count = 7378 else
+			'1' when count = 8246 else
 			'0';
 	
 	load1 <=	'1' when cur_byte = '0' and count = 8250 else
@@ -113,7 +117,7 @@ begin
 	uart_word_ready <=	uart_word_flipflop;--outputta värdet av vippan
 
 
-	shiftreg : shiftregi port map (	
+	shiftreg : shiftregi generic map (10) port map (	
 		clk => clk,
 		rst => rst,
 		should_shift => shift,
@@ -123,20 +127,20 @@ begin
 		output => shiftreg_out
 		);
 			
-	regi1 : regi generic map (n/2) port map (
+	regi1 : regi generic map (8) port map (
 		clk => clk,
 		rst => rst,
 		should_read_input => load1,
 		should_write_output => '1',
-		input => shiftreg_out,
+		input => shiftreg_out(8 downto 1),
 		output => regi1_out);
 		
-	regi2 : regi generic map (n/2) port map (
+	regi2 : regi generic map (8) port map (
 		clk => clk,
 		rst => rst,
 		should_read_input => load2,
 		should_write_output => '1',
-		input => shiftreg_out,
+		input => shiftreg_out(8 downto 1),
 		output => regi2_out);
 
 		

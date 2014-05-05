@@ -18,7 +18,7 @@ begin
 	process(clk) begin
 		if rising_edge(clk) then
 			if rst='1' then
-				regi <= (regi'range => 0);
+				regi <= (regi'range => '0');
 			else
 				if should_read_input='1' then
 					regi <= input;
@@ -28,12 +28,10 @@ begin
 	end process;
 
 	process(regi, should_write_output) begin
-		if should_write_output then
+		if should_write_output = '1' then
 			output <= regi;
 		else	
-			for i in (N-1 downto 0) loop
-				output(i) <= 'Z';
-			end loop;
+			output <= (others => 'Z');
 		end if;
 	end process;
 end behav;
