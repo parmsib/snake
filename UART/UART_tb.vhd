@@ -51,16 +51,112 @@ begin
 	stimuli_generator : process
 	variable i : integer;
 	begin
+		uart_in <= '1';
+		should_write_bus <= '0';
 		--aktivera reset ett litet tag
 		rst <= '1';
 		wait for 500 ns;
 		wait until rising_edge(clk);
 		rst <= '0';
-
-		wait for 500 ns;
-		uart_in <= '1';
-		should_write_bus <= '0';
 		report "Reset released" severity note;
+
+		wait for 8690 ns;
+		uart_in <= '0'; --startbit
+		wait for 8690 ns;
+		uart_in <= '1'; --första riktiga bit
+		wait for 8690 ns;
+		uart_in <= '0';
+		wait for 8690 ns;
+		uart_in <= '1';
+		wait for 8690 ns;
+		uart_in <= '0';
+		wait for 8690 ns;
+		uart_in <= '1';
+		wait for 8690 ns;
+		uart_in <= '0';
+		wait for 8690 ns;
+		uart_in <= '1';
+		wait for 8690 ns;
+		uart_in <= '0'; --sista riktiga bit
+		wait for 8690 ns;
+		uart_in <= '1'; --slutbit
+
+		wait for 20000 ns;
+		uart_in <= '0'; --startbit
+		wait for 8690 ns;
+		uart_in <= '1'; --första riktiga bit
+		wait for 8690 ns;
+		uart_in <= '1';
+		wait for 8690 ns;
+		uart_in <= '0';
+		wait for 8690 ns;
+		uart_in <= '0';
+		wait for 8690 ns;
+		uart_in <= '1';
+		wait for 8690 ns;
+		uart_in <= '1';
+		wait for 8690 ns;
+		uart_in <= '0';
+		wait for 8690 ns;
+		uart_in <= '0'; --sista riktiga bit
+		wait for 8690 ns;
+		uart_in <= '1'; --slutbit
+		
+		wait for 20000 ns;
+		should_write_bus <= '1'; --läs gamla wordet
+		wait for 10 ns;
+		should_write_bus <= '0';
+
+		wait for 20000 ns;
+
+		uart_in <= '0'; --startbit
+		wait for 8690 ns;
+		uart_in <= '1'; --första riktiga bit
+		wait for 8690 ns;
+		uart_in <= '1';
+		wait for 8690 ns;
+		uart_in <= '1';
+		wait for 8690 ns;
+		uart_in <= '0';
+		wait for 8690 ns;
+		uart_in <= '0';
+		wait for 8690 ns;
+		uart_in <= '0';
+		wait for 8690 ns;
+		uart_in <= '1';
+		wait for 8690 ns;
+		uart_in <= '1'; --sista riktiga bit
+		wait for 8690 ns;
+		uart_in <= '1'; --slutbit
+
+		wait for 20000 ns;
+		uart_in <= '0'; --startbit
+		wait for 8690 ns;
+		uart_in <= '1'; --första riktiga bit
+		wait for 8690 ns;
+		uart_in <= '1';
+		wait for 8690 ns;
+		uart_in <= '1';
+		wait for 8690 ns;
+		uart_in <= '1';
+		wait for 8690 ns;
+		uart_in <= '0';
+		wait for 8690 ns;
+		uart_in <= '0';
+		wait for 8690 ns;
+		uart_in <= '0';
+		wait for 8690 ns;
+		uart_in <= '0'; --sista riktiga bit
+		wait for 8690 ns;
+		uart_in <= '1'; --slutbit
+		
+		wait for 20000 ns;
+		should_write_bus <= '1'; --läs gamla wordet
+		wait for 10 ns;
+		should_write_bus <= '0';
+		
+
+
 
 		wait;
 	end process;

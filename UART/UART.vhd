@@ -57,8 +57,13 @@ begin
 				uart1 <= '0';
 				uart2 <= '0';
 			else
-				uart1 <= uart_in;
-				uart2 <= uart1;
+--				if count = 8300 then
+--					uart1 <= '1';
+--					uart2 <= '1';
+--				else
+					uart1 <= uart_in;
+					uart2 <= uart1;
+--				end if;
 			end if;
 		end if;
 	end process;
@@ -76,15 +81,15 @@ begin
 					count <= (others => '0');
 					
 				--inga fler bitar, men vi måste fixa lite signaler
-				elsif count = 825 then
+				elsif count = 8250 then
 					cur_byte <= cur_byte xor '1'; --toggla
 					uart_word_flipflop <= cur_byte xor '1'; --sätts låg när cur_byte blir 0.
+					count <= count + 1;
 					
 				--slut på en uart-byte. gå till idle state
 				elsif count = 8300 then
 					count <= idle;
-					
-				else
+				elsif count /= idle then
 				--alla andra fall. fortsätt räkna
 					count <= count + 1;
 				end if;
@@ -97,7 +102,7 @@ begin
 		end if;
 	end process;
 	
-	shift <='1' when  count = 434  else
+	shift <=	'1' when count = 434  else
 			'1' when count = 1302 else
 			'1' when count = 2170 else
 			'1' when count = 3038 else
