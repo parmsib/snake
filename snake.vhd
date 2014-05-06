@@ -102,6 +102,8 @@ architecture behv of snake is
 	signal gpu_read_adr : STD_LOGIC_VECTOR(9 downto 0); -- read-adress till gmem fr gpu
 	signal gmem_tile_type_out : STD_LOGIC_VECTOR(3 downto 0); --tile ut fr gmem till gpu
 
+	signal baked_value : STD_LOGIC_VECTOR(15 downto 0);
+
 --	signal miso_tmp : std_logic;
 
 --	signal spitestx : std_logic_vector(15 downto 0);
@@ -154,12 +156,14 @@ begin
 		bg_color => sw --switch-knappar kontrollerar bakgrundsfärg
 		);
 
+	
+	baked_value <= "0" & sw(7 downto 5) & "0" & sw(4 downto 2) & "00" & sw(1 downto 0) & "000" & rst;
 	leddriver_inst : leddriver port map(
 		clk => clk,
 		rst => rst,
 		seg => seg,
 		an => an,
-		value => "0" & sw(7 downto 5) & "0" & sw(4 downto 2) & "00" & sw(1 downto 0) & "000" & rst
+		value => baked_value
 		--value => spitestx
 		);
 

@@ -57,6 +57,9 @@ begin
 		wait until rising_edge(clk);
 		rst <= '0';
 
+		wait for 500 ns;
+		uart_in <= '1';
+		should_write_bus <= '0';
 		report "Reset released" severity note;
 
 		wait;
