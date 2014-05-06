@@ -4,7 +4,7 @@ Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
 Parameter TMPDIR set to tmpdir
 
 
-Total REAL time to Xst completion: 3.00 secs
+Total REAL time to Xst completion: 0.00 secs
 Total CPU time to Xst completion: 0.08 secs
  
 --> 
@@ -58,6 +58,7 @@ Optimization Goal                  : SPEED
 Parsing VHDL file "/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../snake.vhd" into library work
 Parsing entity <snake>.
 Parsing architecture <behv> of entity <snake>.
+WARNING:HDLCompiler:946 - "/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../snake.vhd" Line 162: Actual for formal port value is neither a static name nor a globally static expression
 Parsing VHDL file "/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../GPU/GPU.vhd" into library work
 Parsing entity <GPU>.
 Parsing architecture <behv> of entity <gpu>.
@@ -86,8 +87,6 @@ Parsing architecture <behav> of entity <regi>.
 
 Elaborating entity <snake> (architecture <behv>) from library <work>.
 
-Elaborating entity <spi> (architecture <behav>) from library <work>.
-
 Elaborating entity <UART> (architecture <behav>) with generics from library <work>.
 
 Elaborating entity <shiftregi> (architecture <behav>) with generics from library <work>.
@@ -107,36 +106,11 @@ WARNING:HDLCompiler:634 - "/edu/sebpa096/snake/lab-synthdir/xst/synth/../../../s
 
 Synthesizing Unit <snake>.
     Related source file is "/edu/sebpa096/snake/snake.vhd".
-INFO:Xst:3010 - "/edu/sebpa096/snake/snake.vhd" line 110: Output port <frombus> of the instance <spi_inst> is unconnected or connected to loadless signal.
-INFO:Xst:3010 - "/edu/sebpa096/snake/snake.vhd" line 122: Output port <uart_word_ready> of the instance <uart_inst> is unconnected or connected to loadless signal.
+INFO:Xst:3010 - "/edu/sebpa096/snake/snake.vhd" line 123: Output port <uart_word_ready> of the instance <uart_inst> is unconnected or connected to loadless signal.
 WARNING:Xst:653 - Signal <uart_should_write_bus> is used but never assigned. This sourceless signal will be automatically connected to value GND.
     Summary:
 	no macro.
 Unit <snake> synthesized.
-
-Synthesizing Unit <spi>.
-    Related source file is "/edu/sebpa096/snake/SPI/spi.vhd".
-WARNING:Xst:647 - Input <buss<15:0>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:653 - Signal <frombus> is used but never assigned. This sourceless signal will be automatically connected to value GND.
-    Found 5-bit register for signal <count5bit>.
-    Found 1-bit register for signal <sclk_tmp>.
-    Found 16-bit register for signal <xreg>.
-    Found 4-bit register for signal <testx_cnt>.
-    Found 16-bit register for signal <testx_tmp>.
-    Found 3-bit register for signal <count3bit>.
-    Found 3-bit register for signal <count3bit2>.
-    Found 7-bit register for signal <count7bit>.
-    Found 7-bit adder for signal <count7bit[6]_count7bit[6]_mux_40_OUT> created at line 38.
-    Found 5-bit adder for signal <count5bit[4]_GND_7_o_add_3_OUT> created at line 40.
-    Found 4-bit adder for signal <testx_cnt[3]_GND_7_o_add_7_OUT> created at line 45.
-    Found 3-bit adder for signal <count3bit[2]_GND_7_o_add_19_OUT> created at line 54.
-    Found 3-bit adder for signal <count3bit2[2]_GND_7_o_add_21_OUT> created at line 56.
-    Found 5-bit comparator greater for signal <n0005> created at line 41
-    Summary:
-	inferred   5 Adder/Subtractor(s).
-	inferred  55 D-type flip-flop(s).
-	inferred   1 Comparator(s).
-Unit <spi> synthesized.
 
 Synthesizing Unit <UART>.
     Related source file is "/edu/sebpa096/snake/UART/UART.vhd".
@@ -146,7 +120,7 @@ Synthesizing Unit <UART>.
     Found 1-bit register for signal <cur_byte>.
     Found 1-bit register for signal <uart_word_flipflop>.
     Found 1-bit register for signal <uart1>.
-    Found 14-bit adder for signal <count[13]_GND_8_o_add_3_OUT> created at line 89.
+    Found 14-bit adder for signal <count[13]_GND_7_o_add_3_OUT> created at line 89.
     Found 1-bit tristate buffer for signal <to_bus<15>> created at line 147
     Found 1-bit tristate buffer for signal <to_bus<14>> created at line 147
     Found 1-bit tristate buffer for signal <to_bus<13>> created at line 147
@@ -1296,13 +1270,13 @@ Synthesizing Unit <GPU>.
     Found 10-bit register for signal <pxY>.
     Found 1-bit register for signal <vs>.
     Found 2-bit register for signal <clock_ctr>.
-    Found 2-bit adder for signal <clock_ctr[1]_GND_74_o_add_1_OUT> created at line 76.
-    Found 10-bit adder for signal <pxX[9]_GND_74_o_add_7_OUT> created at line 92.
-    Found 10-bit adder for signal <pxY[9]_GND_74_o_add_17_OUT> created at line 114.
-    Found 10-bit comparator greater for signal <pxX[9]_GND_74_o_LessThan_27_o> created at line 133
-    Found 10-bit comparator greater for signal <pxY[9]_GND_74_o_LessThan_28_o> created at line 133
-    Found 10-bit comparator greater for signal <PWR_17_o_pxX[9]_LessThan_30_o> created at line 134
-    Found 10-bit comparator greater for signal <GND_74_o_pxY[9]_LessThan_32_o> created at line 134
+    Found 2-bit adder for signal <clock_ctr[1]_GND_73_o_add_1_OUT> created at line 76.
+    Found 10-bit adder for signal <pxX[9]_GND_73_o_add_7_OUT> created at line 92.
+    Found 10-bit adder for signal <pxY[9]_GND_73_o_add_17_OUT> created at line 114.
+    Found 10-bit comparator greater for signal <pxX[9]_GND_73_o_LessThan_27_o> created at line 133
+    Found 10-bit comparator greater for signal <pxY[9]_GND_73_o_LessThan_28_o> created at line 133
+    Found 10-bit comparator greater for signal <PWR_16_o_pxX[9]_LessThan_30_o> created at line 134
+    Found 10-bit comparator greater for signal <GND_73_o_pxY[9]_LessThan_32_o> created at line 134
     Summary:
 	inferred   3 Adder/Subtractor(s).
 	inferred  24 D-type flip-flop(s).
@@ -1316,9 +1290,9 @@ WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and lef
     Found 7-bit register for signal <segments>.
     Found 4-bit register for signal <an>.
     Found 18-bit register for signal <counter_r>.
-    Found 18-bit adder for signal <counter_r[17]_GND_103_o_add_2_OUT> created at line 1241.
-    Found 16x7-bit Read Only RAM for signal <v[3]_GND_103_o_wide_mux_3_OUT>
-    Found 4x4-bit Read Only RAM for signal <counter_r[17]_PWR_18_o_wide_mux_4_OUT>
+    Found 18-bit adder for signal <counter_r[17]_GND_102_o_add_2_OUT> created at line 1241.
+    Found 16x7-bit Read Only RAM for signal <v[3]_GND_102_o_wide_mux_3_OUT>
+    Found 4x4-bit Read Only RAM for signal <counter_r[17]_PWR_17_o_wide_mux_4_OUT>
     Found 1-bit 4-to-1 multiplexer for signal <v<3>> created at line 39.
     Found 1-bit 4-to-1 multiplexer for signal <v<2>> created at line 39.
     Found 1-bit 4-to-1 multiplexer for signal <v<1>> created at line 39.
@@ -1329,10 +1303,10 @@ WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and lef
 	inferred  29 D-type flip-flop(s).
 	inferred   4 Multiplexer(s).
 Unit <leddriver> synthesized.
-RTL-Simplification CPUSTAT: 0.62 
-RTL-BasicInf CPUSTAT: 0.79 
-RTL-BasicOpt CPUSTAT: 0.00 
-RTL-Remain-Bus CPUSTAT: 0.04 
+RTL-Simplification CPUSTAT: 0.57 
+RTL-BasicInf CPUSTAT: 0.83 
+RTL-BasicOpt CPUSTAT: 0.01 
+RTL-Remain-Bus CPUSTAT: 0.03 
 
 =========================================================================
 HDL Synthesis Report
@@ -1341,30 +1315,22 @@ Macro Statistics
 # RAMs                                                 : 2
  16x7-bit single-port Read Only RAM                    : 1
  4x4-bit single-port Read Only RAM                     : 1
-# Adders/Subtractors                                   : 10
+# Adders/Subtractors                                   : 5
  10-bit adder                                          : 2
  14-bit adder                                          : 1
  18-bit adder                                          : 1
  2-bit adder                                           : 1
- 3-bit adder                                           : 2
- 4-bit adder                                           : 1
- 5-bit adder                                           : 1
- 7-bit adder                                           : 1
-# Registers                                            : 1048
- 1-bit register                                        : 7
+# Registers                                            : 1040
+ 1-bit register                                        : 6
  10-bit register                                       : 3
  14-bit register                                       : 1
- 16-bit register                                       : 2
  18-bit register                                       : 1
  2-bit register                                        : 1
- 3-bit register                                        : 2
- 4-bit register                                        : 1026
- 5-bit register                                        : 1
- 7-bit register                                        : 2
+ 4-bit register                                        : 1025
+ 7-bit register                                        : 1
  8-bit register                                        : 2
-# Comparators                                          : 5
+# Comparators                                          : 4
  10-bit comparator greater                             : 4
- 5-bit comparator greater                              : 1
 # Multiplexers                                         : 53
  1-bit 2-to-1 multiplexer                              : 9
  1-bit 4-to-1 multiplexer                              : 4
@@ -1394,7 +1360,7 @@ Unit <UART> synthesized (advanced).
 
 Synthesizing (advanced) Unit <leddriver>.
 The following registers are absorbed into counter <counter_r>: 1 register on signal <counter_r>.
-INFO:Xst:3048 - The small RAM <Mram_v[3]_GND_103_o_wide_mux_3_OUT> will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
+INFO:Xst:3048 - The small RAM <Mram_v[3]_GND_102_o_wide_mux_3_OUT> will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
     -----------------------------------------------------------------------
     | ram_type           | Distributed                         |          |
     -----------------------------------------------------------------------
@@ -1405,7 +1371,7 @@ INFO:Xst:3048 - The small RAM <Mram_v[3]_GND_103_o_wide_mux_3_OUT> will be imple
     |     diA            | connected to signal <GND>           |          |
     |     doA            | connected to internal node          |          |
     -----------------------------------------------------------------------
-INFO:Xst:3048 - The small RAM <Mram_counter_r[17]_PWR_18_o_wide_mux_4_OUT> will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
+INFO:Xst:3048 - The small RAM <Mram_counter_r[17]_PWR_17_o_wide_mux_4_OUT> will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
     -----------------------------------------------------------------------
     | ram_type           | Distributed                         |          |
     -----------------------------------------------------------------------
@@ -1418,14 +1384,6 @@ INFO:Xst:3048 - The small RAM <Mram_counter_r[17]_PWR_18_o_wide_mux_4_OUT> will 
     -----------------------------------------------------------------------
 Unit <leddriver> synthesized (advanced).
 
-Synthesizing (advanced) Unit <spi>.
-The following registers are absorbed into counter <count7bit>: 1 register on signal <count7bit>.
-The following registers are absorbed into counter <count5bit>: 1 register on signal <count5bit>.
-The following registers are absorbed into counter <count3bit>: 1 register on signal <count3bit>.
-The following registers are absorbed into counter <testx_cnt>: 1 register on signal <testx_cnt>.
-The following registers are absorbed into counter <count3bit2>: 1 register on signal <count3bit2>.
-Unit <spi> synthesized (advanced).
-
 =========================================================================
 Advanced HDL Synthesis Report
 
@@ -1433,20 +1391,15 @@ Macro Statistics
 # RAMs                                                 : 2
  16x7-bit single-port distributed Read Only RAM        : 1
  4x4-bit single-port distributed Read Only RAM         : 1
-# Counters                                             : 10
+# Counters                                             : 5
  10-bit up counter                                     : 2
  14-bit up counter                                     : 1
  18-bit up counter                                     : 1
  2-bit up counter                                      : 1
- 3-bit up counter                                      : 2
- 4-bit up counter                                      : 1
- 5-bit up counter                                      : 1
- 7-bit up counter                                      : 1
-# Registers                                            : 4172
- Flip-Flops                                            : 4172
-# Comparators                                          : 5
+# Registers                                            : 4139
+ Flip-Flops                                            : 4139
+# Comparators                                          : 4
  10-bit comparator greater                             : 4
- 5-bit comparator greater                              : 1
 # Multiplexers                                         : 148
  1-bit 2-to-1 multiplexer                              : 9
  1-bit 32-to-1 multiplexer                             : 128
@@ -5298,7 +5251,6 @@ WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <mem<11>_1_3> has a 
 WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <mem<11>_4_0> has a constant value of 0 in block <GMEM>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:2042 - Unit GMEM: 16 internal tristates are replaced by logic (pull-up yes): dbus_out<0>, dbus_out<10>, dbus_out<11>, dbus_out<12>, dbus_out<13>, dbus_out<14>, dbus_out<15>, dbus_out<1>, dbus_out<2>, dbus_out<3>, dbus_out<4>, dbus_out<5>, dbus_out<6>, dbus_out<7>, dbus_out<8>, dbus_out<9>.
 WARNING:Xst:2042 - Unit UART: 16 internal tristates are replaced by logic (pull-up yes): to_bus<0>, to_bus<10>, to_bus<11>, to_bus<12>, to_bus<13>, to_bus<14>, to_bus<15>, to_bus<1>, to_bus<2>, to_bus<3>, to_bus<4>, to_bus<5>, to_bus<6>, to_bus<7>, to_bus<8>, to_bus<9>.
-WARNING:Xst:2677 - Node <uart_inst/uart_word_flipflop> of sequential type is unconnected in block <snake>.
 WARNING:Xst:2677 - Node <uart_inst/count_13> of sequential type is unconnected in block <snake>.
 WARNING:Xst:2677 - Node <uart_inst/count_12> of sequential type is unconnected in block <snake>.
 WARNING:Xst:2677 - Node <uart_inst/count_11> of sequential type is unconnected in block <snake>.
@@ -5330,6 +5282,7 @@ WARNING:Xst:2677 - Node <uart_inst/regi2/regi_5> of sequential type is unconnect
 WARNING:Xst:2677 - Node <uart_inst/regi2/regi_6> of sequential type is unconnected in block <snake>.
 WARNING:Xst:2677 - Node <uart_inst/regi2/regi_7> of sequential type is unconnected in block <snake>.
 WARNING:Xst:2677 - Node <uart_inst/uart2> of sequential type is unconnected in block <snake>.
+WARNING:Xst:2677 - Node <uart_inst/uart_word_flipflop> of sequential type is unconnected in block <snake>.
 WARNING:Xst:2677 - Node <uart_inst/cur_byte> of sequential type is unconnected in block <snake>.
 WARNING:Xst:2677 - Node <uart_inst/uart1> of sequential type is unconnected in block <snake>.
 WARNING:Xst:2973 - All outputs of instance <uart_inst/shiftreg> of block <shiftregi> are unconnected in block <snake>. Underlying logic will be removed.
@@ -5338,8 +5291,6 @@ Optimizing unit <snake> ...
 
 Optimizing unit <GPU> ...
 
-Optimizing unit <spi> ...
-
 Optimizing unit <shiftregi> ...
 
 Optimizing unit <leddriver> ...
@@ -5347,7 +5298,6 @@ Optimizing unit <leddriver> ...
 Mapping all equations...
 Building and optimizing final netlist ...
 Found area constraint ratio of 100 (+ 0) on block snake, actual ratio is 7.
-FlipFlop gpu_inst/pxY_4 has been replicated 1 time(s)
 
 Final Macro Processing ...
 
@@ -5355,8 +5305,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 369
- Flip-Flops                                            : 369
+# Registers                                            : 313
+ Flip-Flops                                            : 313
 
 =========================================================================
 
@@ -5379,28 +5329,27 @@ Top Level Output File Name         : design.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 701
+# BELS                             : 617
 #      GND                         : 1
-#      INV                         : 8
+#      INV                         : 4
 #      LUT1                        : 35
-#      LUT2                        : 274
-#      LUT3                        : 26
-#      LUT4                        : 42
-#      LUT5                        : 74
-#      LUT6                        : 131
+#      LUT2                        : 269
+#      LUT3                        : 5
+#      LUT4                        : 29
+#      LUT5                        : 68
+#      LUT6                        : 96
 #      MUXCY                       : 35
 #      MUXF7                       : 36
 #      VCC                         : 1
 #      XORCY                       : 38
-# FlipFlops/Latches                : 369
-#      FD                          : 323
-#      FDE                         : 44
+# FlipFlops/Latches                : 313
+#      FD                          : 311
 #      FDR                         : 2
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
-# IO Buffers                       : 35
-#      IBUF                        : 10
-#      OBUF                        : 25
+# IO Buffers                       : 31
+#      IBUF                        : 9
+#      OBUF                        : 22
 
 Device utilization summary:
 ---------------------------
@@ -5409,20 +5358,20 @@ Selected Device : 6slx16csg324-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:             369  out of  18224     2%  
- Number of Slice LUTs:                  590  out of   9112     6%  
-    Number used as Logic:               590  out of   9112     6%  
+ Number of Slice Registers:             313  out of  18224     1%  
+ Number of Slice LUTs:                  506  out of   9112     5%  
+    Number used as Logic:               506  out of   9112     5%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    607
-   Number with an unused Flip Flop:     238  out of    607    39%  
-   Number with an unused LUT:            17  out of    607     2%  
-   Number of fully used LUT-FF pairs:   352  out of    607    57%  
-   Number of unique control sets:         7
+ Number of LUT Flip Flop pairs used:    506
+   Number with an unused Flip Flop:     193  out of    506    38%  
+   Number with an unused LUT:             0  out of    506     0%  
+   Number of fully used LUT-FF pairs:   313  out of    506    61%  
+   Number of unique control sets:         2
 
 IO Utilization: 
- Number of IOs:                          37
- Number of bonded IOBs:                  36  out of    232    15%  
+ Number of IOs:                          33
+ Number of bonded IOBs:                  32  out of    232    13%  
 
 Specific Feature Utilization:
  Number of BUFG/BUFGCTRLs:                1  out of     16     6%  
@@ -5448,7 +5397,7 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-clk                                | BUFGP                  | 369   |
+clk                                | BUFGP                  | 313   |
 -----------------------------------+------------------------+-------+
 
 Asynchronous Control Signals Information:
@@ -5459,10 +5408,10 @@ Timing Summary:
 ---------------
 Speed Grade: -3
 
-   Minimum period: 4.740ns (Maximum Frequency: 210.964MHz)
-   Minimum input arrival time before clock: 4.905ns
-   Maximum output required time after clock: 12.078ns
-   Maximum combinational path delay: 6.044ns
+   Minimum period: 4.527ns (Maximum Frequency: 220.911MHz)
+   Minimum input arrival time before clock: 5.166ns
+   Maximum output required time after clock: 12.091ns
+   Maximum combinational path delay: 6.081ns
 
 Timing Details:
 ---------------
@@ -5470,55 +5419,55 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk'
-  Clock period: 4.740ns (frequency: 210.964MHz)
-  Total number of paths / destination ports: 1969 / 414
+  Clock period: 4.527ns (frequency: 220.911MHz)
+  Total number of paths / destination ports: 1132 / 315
 -------------------------------------------------------------------------
-Delay:               4.740ns (Levels of Logic = 4)
-  Source:            gpu_inst/pxX_2 (FF)
-  Destination:       gpu_inst/pxX_0 (FF)
+Delay:               4.527ns (Levels of Logic = 4)
+  Source:            gpu_inst/pxY_8 (FF)
+  Destination:       gpu_inst/pxY_0 (FF)
   Source Clock:      clk rising
   Destination Clock: clk rising
 
-  Data Path: gpu_inst/pxX_2 to gpu_inst/pxX_0
+  Data Path: gpu_inst/pxY_8 to gpu_inst/pxY_0
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q               4   0.447   1.028  gpu_inst/pxX_2 (gpu_inst/pxX_2)
-     LUT5:I0->O            1   0.203   0.580  gpu_inst/Mcount_pxX_val1_SW0 (N12)
-     LUT6:I5->O           12   0.205   0.909  gpu_inst/Mcount_pxX_val1 (gpu_inst/N5)
-     LUT4:I3->O           10   0.205   0.857  gpu_inst/Mcount_pxX_val2 (gpu_inst/Mcount_pxX_val)
-     LUT4:I3->O            1   0.205   0.000  gpu_inst/pxX_0_rstpot (gpu_inst/pxX_0_rstpot)
-     FD:D                      0.102          gpu_inst/pxX_0
+     FD:C->Q               7   0.447   1.002  gpu_inst/pxY_8 (gpu_inst/pxY_8)
+     LUT3:I0->O            1   0.205   0.580  gpu_inst/GND_73_o_GND_73_o_OR_41_o2_SW0 (N16)
+     LUT6:I5->O            2   0.205   0.721  gpu_inst/GND_73_o_GND_73_o_OR_41_o2 (gpu_inst/N8)
+     LUT6:I4->O           10   0.203   0.857  gpu_inst/Mcount_pxY_val1 (gpu_inst/Mcount_pxY_val)
+     LUT4:I3->O            1   0.205   0.000  gpu_inst/pxY_0_rstpot (gpu_inst/pxY_0_rstpot)
+     FD:D                      0.102          gpu_inst/pxY_0
     ----------------------------------------
-    Total                      4.740ns (1.367ns logic, 3.373ns route)
-                                       (28.8% logic, 71.2% route)
+    Total                      4.527ns (1.367ns logic, 3.160ns route)
+                                       (30.2% logic, 69.8% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
-  Total number of paths / destination ports: 286 / 286
+  Total number of paths / destination ports: 347 / 291
 -------------------------------------------------------------------------
-Offset:              4.905ns (Levels of Logic = 3)
+Offset:              5.166ns (Levels of Logic = 3)
   Source:            rst (PAD)
-  Destination:       gpu_inst/pxX_0 (FF)
+  Destination:       leddriver_inst/segments_4 (FF)
   Destination Clock: clk rising
 
-  Data Path: rst to gpu_inst/pxX_0
+  Data Path: rst to leddriver_inst/segments_4
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O           274   1.222   2.316  rst_IBUF (rst_IBUF)
-     LUT4:I0->O           10   0.203   0.857  gpu_inst/Mcount_pxX_val2 (gpu_inst/Mcount_pxX_val)
-     LUT4:I3->O            1   0.205   0.000  gpu_inst/pxX_0_rstpot (gpu_inst/pxX_0_rstpot)
-     FD:D                      0.102          gpu_inst/pxX_0
+     IBUF:I->O           266   1.222   2.296  rst_IBUF (rst_IBUF)
+     LUT6:I3->O            7   0.205   1.138  leddriver_inst/Mmux_v<0>11 (leddriver_inst/v<0>)
+     LUT6:I0->O            1   0.203   0.000  leddriver_inst/Mram_v[3]_GND_102_o_wide_mux_3_OUT111 (leddriver_inst/Mram_v[3]_GND_102_o_wide_mux_3_OUT1)
+     FD:D                      0.102          leddriver_inst/segments_1
     ----------------------------------------
-    Total                      4.905ns (1.732ns logic, 3.173ns route)
-                                       (35.3% logic, 64.7% route)
+    Total                      5.166ns (1.732ns logic, 3.434ns route)
+                                       (33.5% logic, 66.5% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
-  Total number of paths / destination ports: 10214 / 22
+  Total number of paths / destination ports: 10213 / 21
 -------------------------------------------------------------------------
-Offset:              12.078ns (Levels of Logic = 9)
+Offset:              12.091ns (Levels of Logic = 9)
   Source:            gpu_inst/pxX_7 (FF)
   Destination:       vgaRed<2> (PAD)
   Source Clock:      clk rising
@@ -5527,10 +5476,10 @@ Offset:              12.078ns (Levels of Logic = 9)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q              72   0.447   1.693  gpu_inst/pxX_7 (gpu_inst/pxX_7)
+     FD:C->Q              74   0.447   1.706  gpu_inst/pxX_7 (gpu_inst/pxX_7)
      LUT5:I4->O          128   0.205   2.295  gmem_inst/mux60121 (N3)
      LUT5:I0->O            1   0.203   0.580  gmem_inst/mux10211 (gmem_inst/read_adr[9]_mem[31][25][3]_wide_mux_4155_OUT<2>)
-     LUT6:I5->O            1   0.205   0.000  gmem_inst/Mmux_tile_type_out_87_G (N107)
+     LUT6:I5->O            1   0.205   0.000  gmem_inst/Mmux_tile_type_out_87_G (N65)
      MUXF7:I1->O           1   0.140   0.827  gmem_inst/Mmux_tile_type_out_87 (gmem_inst/Mmux_tile_type_out_87)
      LUT6:I2->O            1   0.203   0.000  gmem_inst/Mmux_tile_type_out_32 (gmem_inst/Mmux_tile_type_out_32)
      MUXF7:I1->O           3   0.140   0.898  gmem_inst/Mmux_tile_type_out_2_f7_1 (gmem_tile_type_out<2>)
@@ -5538,14 +5487,14 @@ Offset:              12.078ns (Levels of Logic = 9)
      LUT4:I3->O            1   0.205   0.579  gpu_inst/Mmux_vgaGreen31 (vgaGreen_2_OBUF)
      OBUF:I->O                 2.571          vgaGreen_2_OBUF (vgaGreen<2>)
     ----------------------------------------
-    Total                     12.078ns (4.522ns logic, 7.556ns route)
+    Total                     12.091ns (4.522ns logic, 7.569ns route)
                                        (37.4% logic, 62.6% route)
 
 =========================================================================
 Timing constraint: Default path analysis
   Total number of paths / destination ports: 8 / 8
 -------------------------------------------------------------------------
-Delay:               6.044ns (Levels of Logic = 4)
+Delay:               6.081ns (Levels of Logic = 4)
   Source:            sw<6> (PAD)
   Destination:       vgaRed<1> (PAD)
 
@@ -5553,13 +5502,13 @@ Delay:               6.044ns (Levels of Logic = 4)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             1   1.222   0.684  sw_6_IBUF (sw_6_IBUF)
+     IBUF:I->O             2   1.222   0.721  sw_6_IBUF (sw_6_IBUF)
      LUT2:I0->O            1   0.203   0.580  gpu_inst/Mmux_vgaRed2_SW0 (N10)
      LUT6:I5->O            1   0.205   0.579  gpu_inst/Mmux_vgaRed2 (vgaRed_1_OBUF)
      OBUF:I->O                 2.571          vgaRed_1_OBUF (vgaRed<1>)
     ----------------------------------------
-    Total                      6.044ns (4.201ns logic, 1.843ns route)
-                                       (69.5% logic, 30.5% route)
+    Total                      6.081ns (4.201ns logic, 1.880ns route)
+                                       (69.1% logic, 30.9% route)
 
 =========================================================================
 
@@ -5571,21 +5520,21 @@ Clock to Setup on destination clock clk
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-clk            |    4.740|         |         |         |
+clk            |    4.527|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
-Total REAL time to Xst completion: 13.00 secs
-Total CPU time to Xst completion: 8.42 secs
+Total REAL time to Xst completion: 9.00 secs
+Total CPU time to Xst completion: 7.97 secs
  
 --> 
 
 
-Total memory usage is 568584 kilobytes
+Total memory usage is 566308 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings : 3881 (   0 filtered)
-Number of infos    :    4 (   0 filtered)
+Number of warnings : 3880 (   0 filtered)
+Number of infos    :    3 (   0 filtered)
 
