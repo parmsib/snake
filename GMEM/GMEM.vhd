@@ -55,7 +55,7 @@ begin
 			elsif should_read_dbus = '1' then
 				--write. address from write_adr. data from dbus
 				mem(	conv_integer(write_adr(9 downto 5)),
-					conv_integer(write_adr(4 downto 0))) <= dbus_in(3 downto 0);
+					conv_integer(write_adr(4 downto 0))) <= dbus_in(15 downto 12);
 			end if;
 		end if;
 	end process;
