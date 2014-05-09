@@ -37,7 +37,7 @@ PART=xc6slx16-3-csg324
 
 #GPU-test:
 lab.%: S=snake.vhd GPU/GPU.vhd GMEM/GMEM.vhd leddriver.vhd SPI/spi.vhd UART/UART.vhd Common/shiftregister.vhd Common/register.vhd
-lab.%: T=UART/UART_tb.vhd
+lab.%: T=SPI_tb.vhd
 lab.%: U=lab.ucf
 
 #SPI-test:

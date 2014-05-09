@@ -18,9 +18,9 @@ entity snake is
 		--
 		uart_in: in STD_LOGIC;
 		--
-		sw : in STD_LOGIC_VECTOR(7 downto 0) --spakar på kortet (kontrollerar bakgrundsfärg);
---		ss, mosi, sclk : out STD_LOGIC;
---		miso : in STD_LOGIC
+		sw : in STD_LOGIC_VECTOR(7 downto 0); --spakar på kortet (kontrollerar bakgrundsfärg);
+		ss, mosi, sclk : out STD_LOGIC;
+		miso : in STD_LOGIC
 		);
             
 		
@@ -38,20 +38,22 @@ architecture behv of snake is
 			uart_in : in STD_LOGIC;
 			uart_word_ready: out STD_LOGIC; --aktivt låg!
 			to_bus: out STD_LOGIC_VECTOR(n-1 downto 0);
-			should_write_bus: in STD_LOGIC);
+			should_write_bus: in STD_LOGIC;
+			debug_signal : out STD_LOGIC_VECTOR(15 downto 0)
+			);
 	end component;
 
---	component SPI is
---		port ( 	clk : in std_logic;
---			buss : inout std_logic_vector(15 downto 0);
---			flags : inout std_logic_vector(6 downto 0);
---			frombus : out std_logic_vector(3 downto 0);
---			miso : in std_logic;
---			sclk : out std_logic;
---			mosi : out std_logic;
---			testx : out std_logic_vector(15 downto 0)
---		);
---	end component;
+	component SPI is
+		port ( 	clk : in std_logic;
+			buss : inout std_logic_vector(15 downto 0);
+			flags : inout std_logic_vector(6 downto 0);
+			frombus : out std_logic_vector(3 downto 0);
+			miso : in std_logic;
+			sclk : out std_logic;
+			mosi : out std_logic;
+			testx : out std_logic_vector(15 downto 0)
+		);
+	end component;
 
 	component GPU is
 		port (	clk, rst : in STD_LOGIC;
@@ -93,8 +95,8 @@ architecture behv of snake is
 
 	--interna signaler mellan komponenterna
 	signal dbus : STD_LOGIC_VECTOR(15 downto 0) := X"0000"; --buss
---	signal flags : STD_LOGIC_VECTOR(6 downto 0) := "0000000";
---	signal frombus : STD_LOGIC_VECTOR(3 downto 0) := "0000";
+	signal flags : STD_LOGIC_VECTOR(6 downto 0) := "0000000";
+	signal frombus : STD_LOGIC_VECTOR(3 downto 0) := "0000";
 
 	signal uart_word_ready : STD_LOGIC;
 	signal uart_should_write_bus : STD_LOGIC;
@@ -104,23 +106,31 @@ architecture behv of snake is
 
 	signal baked_value : STD_LOGIC_VECTOR(15 downto 0);
 
---	signal miso_tmp : std_logic;
+	signal miso_tmp : std_logic;
 
---	signal spitestx : std_logic_vector(15 downto 0);
+	signal spitestx : std_logic_vector(15 downto 0) := "0000000000000000";
+	signal spitestx_tmp : std_logic_vector(15 downto 0) := "0000000000000000";
+	signal spitest_bool : std_logic := '1';
 begin
---	ss <= '0';
---	miso_tmp <= miso; denna var utkommenterad inna jag kommenterade bort SPI
---	spi_inst : SPI port map(
---		clk => clk,
---		buss => dbus,
---		flags => flags,
---		frombus => frombus,
---		miso => miso,
---		sclk => sclk,
---		mosi => mosi,
---		testx => spitestx
---		);
-	
+	ss <= '0';
+	miso_tmp <= miso; --denna var utkommenterad inna jag kommenterade bort SPI
+	spi_inst : SPI port map(
+		clk => clk,
+		buss => dbus,
+		flags => flags,
+		frombus => frombus,
+		miso => miso,
+		sclk => sclk,
+		mosi => mosi,
+		testx => spitestx
+		);
+--	process(spitestx_tmp) begin
+--		if spitest_bool = '1' then
+--			spitestx <= spitestx_tmp;
+--			spitest_bool <= '0';
+--		end if;
+--	end process;	
+
 
 	uart_inst : UART generic map(16) port map(
 		clk => clk,
@@ -128,7 +138,8 @@ begin
 		uart_in => uart_in,
 		uart_word_ready => uart_word_ready,
 		to_bus => dbus,
-		should_write_bus => uart_should_write_bus
+		should_write_bus => uart_should_write_bus,
+		debug_signal => baked_value
 		);
 	
 	gmem_inst : GMEM port map( 
@@ -157,14 +168,14 @@ begin
 		);
 
 	
-	baked_value <= "0" & sw(7 downto 5) & "0" & sw(4 downto 2) & "00" & sw(1 downto 0) & "000" & rst;
+	--baked_value <= "0" & sw(7 downto 5) & "0" & sw(4 downto 2) & "00" & sw(1 downto 0) & "000" & rst;
 	leddriver_inst : leddriver port map(
 		clk => clk,
 		rst => rst,
 		seg => seg,
 		an => an,
-		value => baked_value
-		--value => spitestx
+		--value => baked_value
+		value => spitestx
 		);
 
 end behv;		

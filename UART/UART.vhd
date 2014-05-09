@@ -12,7 +12,10 @@ entity UART is
 		uart_in : in STD_LOGIC;
 		uart_word_ready: out STD_LOGIC; --aktivt låg!
 		to_bus: out STD_LOGIC_VECTOR(n-1 downto 0);
-		should_write_bus: in STD_LOGIC);
+		should_write_bus: in STD_LOGIC;
+		debug_signal : out STD_LOGIC_VECTOR(15 downto 0)
+		);
+		
 end UART;
 
 architecture behav of UART is
@@ -151,6 +154,8 @@ begin
 		
 	to_bus <=	regi1_out & regi2_out when should_write_bus = '1' else
 				"ZZZZZZZZZZZZZZZZ";
+
+	debug_signal <= regi1_out & regi2_out;
 				
 	
 end behav;
