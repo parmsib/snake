@@ -1,0 +1,128 @@
+;kartan består av 32*32 bitar, där varje bit bestämmer om det är ett hinder i den cellen.
+;32 * 32 bitar = 1024 bitar = 64 words
+
+;var äpplet befinner sig bestäms av en word som beskriver X, och Y. 
+
+;krävs en word för att bestämma en cell (5 bitar för X, 5 bitar för Y. 2^5 = 32)
+;varje orm har en cirkulär array av celler den ockuperar, eller har ockuperat.
+;finns en head, och en tail, för varje orm som beskriver var i arrayen ormen börjar, och var den slutar.
+;en orm kan vara max 62 celler lång, så arrayen är 64 words (två extra för head och tail)
+
+;menyn behöver en statisk bild att visa. Den är 32*32*4 bitar stor = 256 words
+
+;karta över PM:
+;programmet börjar på 0 och växer neråt
+;menybild ligger på minesadress $B00 - $BFF
+;orm1 ligger på minnesadress $C00 - $C3F = 3072 - 3135
+;orm2 ligger på minnesadress $C40 - C7F = 3136 - 3199
+;kartan ligger på minnesadress $C80 - $CBF = 3200 - 3263
+;äpplet ligger på minnesadress $CC0 = 3264
+;spelhastigheten ligger på minssadress $CC1 = 3265
+;random minne för implementationer läggs på $D00 - slut = 3328 - slut
+
+;menyn fungerar så att joystick1 bestämmer spelhastighet med antingen höger, vänster, upp eller ner. Därefter går vi direkt till spelet
+
+MENU
+	MLOAD #0, Gr0, 0; ladda in 0 som startvärde för x
+	MLOAD #0, Gr1, 0; ladda in 0 som startvärde för y
+
+MENULOOPX
+	STORE $D00, Gr1, 0; kopiera data från Gr1 (y) till Gr15, som ska användas för att indexera GMEM
+	LOAD $D00, Gr15, 0; 
+	LSL #5, Gr15;shifta bort värdet till Y-delen av Gmem-adressen
+	STORE $D00, Gr0, 0; ORa in data till X-delen av Gmem-adressen från Gr0 (x)
+	OR $D00, Gr15;
+	;Nu innehåller Gr15 Y-adressen konkatenerat med X-adressen, redo för GMEM
+	
+	;Behöver indexera minnesrymden som innehåller menybilden.
+	STORE $D00, Gr1, 0; Lägg y * (32bitar = 8 words) i Gr2 som är word-index i statiska bilden
+	LOAD $D00, Gr2;
+	MUL #8, Gr2;
+	STORE $D00, Gr0, 0; Lägg till x // 4 till Gr2, för att få rätt word-offset i x-led
+	LOAD $D00, Gr3; 
+	DIV #4, Gr3; heltalsdivision (avrunda nedåt)
+	STORE $D00, Gr3;
+	ADD $D00, Gr2;
+	;nu innehåller Gr2 hela adressen till det word som vår sökta tile ligger i
+	
+	;behöver ta reda på vilken tile i detta word vi är ute efter
+	STORE $D00, Gr0; Spara (x mod 4) - 1 till Gr3, vilket är tile-index i wordet
+	LOAD $D00, Gr3;
+	MOD #4, Gr3;
+	SUB #1, Gr3;
+	;nu innehåller Gr3 tile-index i wordet
+	
+	LOAD $B00, Gr4, Gr4; Ladda in rätt word från bilden till register 3
+	MUL #4 Gr3; multiplicera tile-index för att få hur långt vi måste shifta i wordet
+	LSL Gr3, Gr4; Shifta wordet så att vår tile hamnar längs till vänster (MSBs, vilket är vad GMEMet tar från bussen)
+	AND Gr4, #$F000; ANDa bort de bitar som lång efter vår tile i wordet
+	
+	;Nu innehåller Gr4 den tile som ska ut på bussen och in i GMEM! :D
+	;Gr15 innehåller den adress i GMEM som tilen ska sparas på, vilket är enligt överenskommelse.
+	GSTORE Gr4;
+	
+	ADD #1, Gr0;
+	CMP #32, Gr0;
+	BEQ #MENULOOPY; om vi har loopat genm en hel rad, gå till nästa y
+	BRA #MENULOOPX; annars, fortsätt på denna rad
+	
+MENULOOPY
+	ADD #1, Gr1;
+	CMP #32, Gr1;
+	BEQ #MENULOOP; har vi loopat genom alla rader har vi printat hela bilden och kan gå vidare
+	
+	BRA #MENULOOPX; annars, fortsätt på nästa rad
+	
+	
+MENULOOP
+	;ladda in data från joystick1 till $D00 = 3328 i minnet
+	;TODO ovan
+	
+	;kolla om det är under eller över threshhold för att gå vidare
+	
+	;ladda joysticks första word för jämförelse
+	MLOAD #$D00, Gr0, 0 ;TODO kolla upp syntax o sånt
+	CMP #NÅTTHRESHHOLD, Gr0 ;kolla om vi är över gränsen för att faktiskt räknas som ett val
+	BLT #LEFTDIRSPEED
+	
+	;TODO: fortsätt åt andra håll
+
+LEFTDIRSPEED
+	MSTORE #$CC1, #NÅNHASTIGHET; lägg in en hastighet på rätt minnesplats
+	BRA #UART
+UPDIRSPEED
+RIGHTDIRSPEED
+DOWNDIRSPEED
+	
+UART
+	;kartan består av 64 words. vi hämtar dem och räknar upp varje gång
+	LOAD #0, Gr0;
+UARTLOOP
+	BOU #UARTREADY ;kolla om uart har ett word redo att hämtas
+	BRA #UARTLOOP ;fortsätt vänta
+UARTREADY
+	;TODO: Gör nedanstående instruktion
+	LOADUART Gr1; ladda Uart-wordet till Gr1
+	STORE #$C80, Gr1, Gr0; Lägg till wordet på rätt ställe. använder Gr0 som index
+	ADD #1, Gr0; incrementera countern
+	CMP Gr0, #64; kolla om vi är färdiga
+	BEQ #GAMELOOP; isf, hoppa till spelet
+	BRA #UARTLOOP; annars, fortsätt leta words
+	
+
+GAMELOOP
+	LOAD #$
+	;TODO FIXA JOYSTICKS!
+	
+	
+	
+
+
+
+
+
+
+
+
+
+

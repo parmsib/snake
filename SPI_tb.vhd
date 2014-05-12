@@ -41,8 +41,8 @@ architecture behv of SPI_tb is
 
   signal tb_running : boolean := true;
 
-        signal seg : std_logic_vector(7 downto 0);
-        signal an : std_logic_vector(3 downto 0);
+--        signal seg : std_logic_vector(7 downto 0);
+--        signal an : std_logic_vector(3 downto 0);
 
 		signal dflags : std_logic_vector(6 downto 0) := "0000000";
 		signal frombus : std_logic_vector(3 downto 0);
@@ -52,6 +52,8 @@ architecture behv of SPI_tb is
 		signal mosi : std_logic := '0';
         
 		signal ss : std_logic := '0';
+
+		signal joystick_data : STD_LOGIC_VECTOR(0 to 79) := B"10101010_11001100_11100011_11110000_11111000_00011111_11101110_01000100_11111111_10000001";
 begin
   --tile_type <= "0000";
 	uut: SPI port map (clk => clk,
@@ -84,6 +86,42 @@ begin
 	end loop;
 	wait;
 	end process;
+
+
+	miso_generator : process(sclk)
+	variable i : integer := 0;
+	begin
+		if rising_edge(sclk) then
+			miso <= joystick_data(i);
+			if i = 79 then
+				i := 0;
+			else
+				i := i + 1;
+			end if;
+		end if;
+	end process;
+			
+			
+
+--	miso_generator : process
+--	variable i : integer;
+--	variable j : integer;
+--	begin
+--		i := 0;
+--		j := 0;
+--		while tb_running loop
+--			wait for 1280 * 24 ns;
+--			for i in (0 to 4) loop
+--				miso <= joystick_data(i);
+--				if i = 39 then
+--					i := 0;
+--				else
+--					i := i + 1;
+--				end if;
+--				wait for 1280 ns;
+--			end loop;
+--		end loop;
+--	end process;
   
 	stimuli_generator : process
 	variable i : integer;
@@ -97,15 +135,7 @@ begin
 		rst <= '0';
 		report "Reset released" severity note;
 
-
-		-- for i in 0 to 50000000 loop         -- Vänta ett antal klockcykler
-			-- wait until rising_edge(clk);
-		-- end loop;  -- i
-	
-		-- tb_running <= false;                -- Stanna klockan (vilket medför att inga
-										-- -- nya event genereras vilket stannar
-										-- -- simuleringen).
-		-- wait;
+		
 		wait;
 	end process;
 

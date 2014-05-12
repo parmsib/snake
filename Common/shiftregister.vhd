@@ -19,7 +19,7 @@ begin
 	process(clk) begin
 		if rising_edge(clk) then
 			if rst = '1' then
-				regi <= (regi'range => 0);
+				regi <= (regi'range => '0');
 			elsif should_shift = '1' then
 				if shiftdir='1' then
 					regi <= input & regi(n-1 downto 1);
@@ -32,12 +32,10 @@ begin
 
 	--kombinatoriskt output-nät
 	process(regi, should_write_output) begin
-		if should_write_output then
+		if should_write_output = '1' then
 			output <= regi;
 		else
-			for i in (N1 downto 0) loop
-				output(i) <= 'Z';
-			end loop;
+			output <= ( others => 'Z');
 		end if;
 	end process;
 

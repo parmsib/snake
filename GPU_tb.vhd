@@ -7,16 +7,16 @@ END GPU_tb;
 
 architecture behv of GPU_tb is
 	component GPU is
-		port (	clk, rst : in STD_LOGIC;
-				tile_type : in STD_LOGIC_VECTOR(3 downto 0);
-				gmem_adr : out STD_LOGIC_VECTOR (9 downto 0);
-				vgaRed : out STD_LOGIC_VECTOR(2 downto 0);
-				vgaGreen : out STD_LOGIC_VECTOR(2 downto 0);
-				vgaBlue : out STD_LOGIC_VECTOR(2 downto 1);
-				Hsync :out STD_LOGIC;
-				Vsync : out STD_LOGIC;
-                                seg : out std_logic_vector(7 downto 0);
-                                an : out std_logic_vector(3 downto 0));
+	Port (
+		clk, rst : in STD_LOGIC;
+		tile_type : in STD_LOGIC_VECTOR(3 downto 0);
+		gmem_adr : out STD_LOGIC_VECTOR (9 downto 0);
+		vgaRed : out STD_LOGIC_VECTOR(2 downto 0);
+		vgaGreen : out STD_LOGIC_VECTOR(2 downto 0);
+		vgaBlue : out STD_LOGIC_VECTOR(2 downto 1);
+		Hsync :out STD_LOGIC;
+		Vsync : out STD_LOGIC;
+		bg_color : in STD_LOGIC_VECTOR(7 downto 0));
                               
 	end component;
 
@@ -47,6 +47,7 @@ architecture behv of GPU_tb is
   signal vgaRed, vgaGreen : STD_LOGIC_VECTOR (2 downto 0);
   signal vgaBlue : STD_LOGIC_VECTOR (2 downto 1);
   signal Hsync, Vsync : STD_LOGIC;
+  signal gmem_adr : STD_LOGIC_VECTOR(9 downto 0);
 
   signal tb_running : boolean := true;
 
@@ -58,16 +59,17 @@ architecture behv of GPU_tb is
 begin
   tile_stat <= "0000";
   --tile_type <= "0000";
-	uut: GPU port map (clk => clk,
-							rst => rst,
+	uut: GPU port map (	clk => clk,
+				rst => rst,
 				tile_type => tile_stat,
+				gmem_adr => gmem_adr,
 				vgaRed => vgaRed,
-				vgaBlue => vgaBlue,
 				vgaGreen => vgaGreen,
+				vgaBlue => vgaBlue,
 				Hsync => Hsync,
 				Vsync => Vsync,
-                           seg => seg,
-                           an => an);
+				bg_color => "01001010"
+				);
 				--gmem_adr => tile_adr);
 --	testmem: GMEM port map ( 	clk, rst, 
 --					B"0000_0000_0000_0000",
