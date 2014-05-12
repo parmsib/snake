@@ -12,6 +12,8 @@
 
 ;karta över PM:
 ;programmet börjar på 0 och växer neråt
+;Orm1 föregående håll ligger på $AFE
+;Orm2 föregående håll ligger på $AFF
 ;menybild ligger på minesadress $B00 - $BFF
 ;orm1 ligger på minnesadress $C00 - $C3F = 3072 - 3135
 ;orm2 ligger på minnesadress $C40 - C7F = 3136 - 3199
@@ -23,8 +25,8 @@
 ;menyn fungerar så att joystick1 bestämmer spelhastighet med antingen höger, vänster, upp eller ner. Därefter går vi direkt till spelet
 
 MENU
-	MLOAD #0, Gr0, 0; ladda in 0 som startvärde för x
-	MLOAD #0, Gr1, 0; ladda in 0 som startvärde för y
+	MLOAD #0, Gr0; ladda in 0 som startvärde för x
+	MLOAD #0, Gr1; ladda in 0 som startvärde för y
 
 MENULOOPX
 	STORE $D00, Gr1, 0; kopiera data från Gr1 (y) till Gr15, som ska användas för att indexera GMEM
@@ -53,7 +55,7 @@ MENULOOPX
 	;nu innehåller Gr3 tile-index i wordet
 	
 	LOAD $B00, Gr4, Gr4; Ladda in rätt word från bilden till register 3
-	MUL #4 Gr3; multiplicera tile-index för att få hur långt vi måste shifta i wordet
+	MUL #4, Gr3; multiplicera tile-index för att få hur långt vi måste shifta i wordet
 	LSL Gr3, Gr4; Shifta wordet så att vår tile hamnar längs till vänster (MSBs, vilket är vad GMEMet tar från bussen)
 	AND Gr4, #$F000; ANDa bort de bitar som lång efter vår tile i wordet
 	
@@ -111,14 +113,82 @@ UARTREADY
 	
 
 GAMELOOP
-	LOAD #$
-	;TODO FIXA JOYSTICKS!
-	
-	
-	
 
 
+SNAKELOADOLD1
+	;först spara positionen gamla huvudet är på. 
+	LOAD $C3E, Gr0; ladda head-pointern till Gr0
+	;dags att förberade subrutinkall till FROMGMEM
+	LOAD $C00, Gr15, Gr0; ladda Gr15 med gamla huvudets position (Gr0 som index)
+	LOAD #SNAKERETURNA, Gr14; returadress
+	BRA #FROMGMEM; Lägger X, Y i Gr12, Gr13
+SNAKERETURNA
+	
+	; nu: Gr12, Gr13 innehåller X, Y
+	; ska ge dem rätt värde utifrån rörelseriktning
+	
+	;ta reda på SPI-data för snake 1
+	;TODO FIXA JOYSTICK
+	;välj direction baserat på SPI-data
+	
+SNAKELEFT1
+	SUB #1, Gr12; minska X med 1
+	BRA #SNAKESTOREHEADPOS
+SNAKEUP1
+	SUB #1, Gr13; minska Y med 1
+	BRA #SNAKESTOREHEADPOS
+SNAKERIGHT1
+	ADD #1, Gr12; öka X med 1
+	BRA #SNAKESTOREHEADPOS
+SNAKEDOWN1
+	ADD #1, Gr13; öka Y med 1
+	BRA #SNAKESTOREHEADPOS
+	
+SNAKESTOREHEADPOS
+	LOAD #SNAKERETURNB, Gr14;
+	BRA #TOGMEM; formatera tillbaka till GMEM-form
+SNAKERETURNB 
+	;Nu ligger första ormens nya huvudposition i Gr15, formaterat för Gmem
+	STORE $D00; Spara huvudets position för senare användning
+	
+; PASTA IN ORM2 HÄR!
+	
+	
+	;nu ligger nya huvud-positionerna  $D00 och $D01
+	;dags att flytta fram head och lägga in rätt värde på head-platsen i arraysen
+	
+	LOAD $C3E, Gr0; orm 1 head pointer till gr0
+	ADD #1, Gr0; 
+	MOD #62, Gr0; cirkulär lista. orm-array max 62 lång.
+	LOAD $D00, Gr1; ladda in nya huvudpos till Gr1
+	STORE $C00, Gr1, Gr0; spara nya huvudpos på huvudplatsen i orm-arrayen
+	STORE $C3E, Gr0; lägg tillbaka nya huvudplatsen igen
+	
+	;Dags att kolla kollision med kartan eller äpple
+	
+	LOAD $D00, Gr0; ladda huvudets position till Gr0
+	CMP $CC0, Gr0; jämför med äpplets position
+	BEQ #SNAKEHITAPPLE1; om träff
+	BRA #SNAKEMOVETAIL1; annars, öka öka svans-pekaren
+	
+SNAKEHITAPPLE1
+	
+	
+SNAKEMOVETAIL1
+	LOAD $C3F, Gr0; ladda in svanspekaren för orm 1
+	ADD #1, Gr0; öka den med ett
+	STORE $C3F, Gr0; lägg tillbaka igen
+	;dags att måla tomt där svansen var
+	LOAD $
 
+	;Kolla kollision med banan eller äpple
+	;om inte äpple tagen:
+	;	flytta fram tail
+	;	måla tomt där tail va
+	;kolla kollision mellan huvud och spelare
+	;Måla orm på alla ställen mellan head och tail i arraysen
+	
+	
 
 
 
