@@ -29,6 +29,7 @@ architecture behav of spi is
 
 	signal testx_tmp : std_logic_vector(15 downto 0) := "0000000000000000";
 	signal testx_cnt : std_logic_vector(3 downto 0) := "0000";
+	signal testsclk_cnt : std_logic_vector(15 downto 0) := "0000000000000000";
 begin
 	flags <= "0010000";
 	process(clk)
@@ -44,7 +45,10 @@ begin
 							xreg <= miso & xreg(15 downto 1);
 							testx_cnt <= testx_cnt + 1;
 							if(testx_cnt = "1111") then
+								--testx_tmp <= testsclk_cnt;
+								testsclk_cnt <= testsclk_cnt + 1;
 								testx_tmp <= xreg;
+								testx_cnt <= "0000";
 							end if;
 						elsif (count3bit2 = 2) or (count3bit2 = 3) then
 							yreg <= miso & yreg(15 downto 1);

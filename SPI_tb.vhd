@@ -13,7 +13,7 @@ architecture behv of SPI_tb is
 			frombus : out std_logic_vector(3 downto 0);
 			miso : in std_logic;
 			sclk : out std_logic;
-			mosi : out std_logic;
+			mosi : out std_logic
 		);
                               
 	end component;

@@ -105,13 +105,13 @@ WARNING:Xst:653 - Signal <frombus> is used but never assigned. This sourceless s
     Found 3-bit register for signal <count3bit>.
     Found 3-bit register for signal <count3bit2>.
     Found 7-bit register for signal <count7bit>.
-    Found 7-bit adder for signal <count7bit[6]_count7bit[6]_mux_40_OUT> created at line 38.
-    Found 5-bit adder for signal <count5bit[4]_GND_7_o_add_3_OUT> created at line 40.
-    Found 4-bit adder for signal <testx_cnt[3]_GND_7_o_add_7_OUT> created at line 45.
-    Found 3-bit adder for signal <count3bit[2]_GND_7_o_add_19_OUT> created at line 54.
-    Found 3-bit adder for signal <count3bit2[2]_GND_7_o_add_21_OUT> created at line 56.
+    Found 7-bit adder for signal <count7bit[6]_count7bit[6]_mux_46_OUT> created at line 39.
+    Found 5-bit adder for signal <count5bit[4]_GND_7_o_add_3_OUT> created at line 41.
+    Found 4-bit adder for signal <testx_cnt[3]_GND_7_o_add_7_OUT> created at line 46.
+    Found 3-bit adder for signal <count3bit[2]_GND_7_o_add_23_OUT> created at line 58.
+    Found 3-bit adder for signal <count3bit2[2]_GND_7_o_add_25_OUT> created at line 60.
     Found 16-bit tristate buffer for signal <buss> created at line 7
-    Found 5-bit comparator greater for signal <n0005> created at line 41
+    Found 5-bit comparator greater for signal <n0005> created at line 42
     Summary:
 	inferred   5 Adder/Subtractor(s).
 	inferred  55 D-type flip-flop(s).
@@ -138,8 +138,8 @@ WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and lef
 	inferred  29 D-type flip-flop(s).
 	inferred   4 Multiplexer(s).
 Unit <leddriver> synthesized.
-RTL-Simplification CPUSTAT: 0.01 
-RTL-BasicInf CPUSTAT: 0.12 
+RTL-Simplification CPUSTAT: 0.03 
+RTL-BasicInf CPUSTAT: 0.11 
 RTL-BasicOpt CPUSTAT: 0.00 
 RTL-Remain-Bus CPUSTAT: 0.00 
 
@@ -207,9 +207,9 @@ Unit <leddriver> synthesized (advanced).
 Synthesizing (advanced) Unit <spi>.
 The following registers are absorbed into counter <count7bit>: 1 register on signal <count7bit>.
 The following registers are absorbed into counter <count5bit>: 1 register on signal <count5bit>.
-The following registers are absorbed into counter <testx_cnt>: 1 register on signal <testx_cnt>.
-The following registers are absorbed into counter <count3bit2>: 1 register on signal <count3bit2>.
 The following registers are absorbed into counter <count3bit>: 1 register on signal <count3bit>.
+The following registers are absorbed into counter <count3bit2>: 1 register on signal <count3bit2>.
+The following registers are absorbed into counter <testx_cnt>: 1 register on signal <testx_cnt>.
 Unit <spi> synthesized (advanced).
 
 =========================================================================
@@ -248,6 +248,7 @@ Optimizing unit <leddriver> ...
 Mapping all equations...
 Building and optimizing final netlist ...
 Found area constraint ratio of 100 (+ 0) on block snake, actual ratio is 1.
+FlipFlop spi_inst/count7bit_0 has been replicated 1 time(s)
 
 Final Macro Processing ...
 
@@ -255,8 +256,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 84
- Flip-Flops                                            : 84
+# Registers                                            : 85
+ Flip-Flops                                            : 85
 
 =========================================================================
 
@@ -279,21 +280,21 @@ Top Level Output File Name         : design.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 149
+# BELS                             : 153
 #      GND                         : 1
 #      INV                         : 2
 #      LUT1                        : 17
 #      LUT2                        : 9
-#      LUT3                        : 23
-#      LUT4                        : 14
-#      LUT5                        : 26
-#      LUT6                        : 21
+#      LUT3                        : 22
+#      LUT4                        : 15
+#      LUT5                        : 27
+#      LUT6                        : 24
 #      MUXCY                       : 17
 #      VCC                         : 1
 #      XORCY                       : 18
-# FlipFlops/Latches                : 84
-#      FD                          : 61
-#      FDE                         : 23
+# FlipFlops/Latches                : 85
+#      FD                          : 66
+#      FDE                         : 19
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
 # IO Buffers                       : 16
@@ -307,15 +308,15 @@ Selected Device : 6slx16csg324-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:              84  out of  18224     0%  
- Number of Slice LUTs:                  112  out of   9112     1%  
-    Number used as Logic:               112  out of   9112     1%  
+ Number of Slice Registers:              85  out of  18224     0%  
+ Number of Slice LUTs:                  116  out of   9112     1%  
+    Number used as Logic:               116  out of   9112     1%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    112
-   Number with an unused Flip Flop:      28  out of    112    25%  
-   Number with an unused LUT:             0  out of    112     0%  
-   Number of fully used LUT-FF pairs:    84  out of    112    75%  
+ Number of LUT Flip Flop pairs used:    116
+   Number with an unused Flip Flop:      31  out of    116    26%  
+   Number with an unused LUT:             0  out of    116     0%  
+   Number of fully used LUT-FF pairs:    85  out of    116    73%  
    Number of unique control sets:         2
 
 IO Utilization: 
@@ -346,7 +347,7 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-clk                                | BUFGP                  | 84    |
+clk                                | BUFGP                  | 85    |
 -----------------------------------+------------------------+-------+
 
 Asynchronous Control Signals Information:
@@ -357,7 +358,7 @@ Timing Summary:
 ---------------
 Speed Grade: -3
 
-   Minimum period: 3.918ns (Maximum Frequency: 255.258MHz)
+   Minimum period: 3.919ns (Maximum Frequency: 255.148MHz)
    Minimum input arrival time before clock: 2.337ns
    Maximum output required time after clock: 3.597ns
    Maximum combinational path delay: No path found
@@ -368,10 +369,10 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk'
-  Clock period: 3.918ns (frequency: 255.258MHz)
-  Total number of paths / destination ports: 1049 / 107
+  Clock period: 3.919ns (frequency: 255.148MHz)
+  Total number of paths / destination ports: 1049 / 104
 -------------------------------------------------------------------------
-Delay:               3.918ns (Levels of Logic = 3)
+Delay:               3.919ns (Levels of Logic = 3)
   Source:            spi_inst/count7bit_5 (FF)
   Destination:       spi_inst/xreg_15 (FF)
   Source Clock:      clk rising
@@ -382,12 +383,12 @@ Delay:               3.918ns (Levels of Logic = 3)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      FD:C->Q               5   0.447   0.819  spi_inst/count7bit_5 (spi_inst/count7bit_5)
-     LUT2:I0->O            9   0.203   0.934  spi_inst/count7bit[6]_GND_7_o_equal_3_o_inv_SW0 (N4)
-     LUT6:I4->O           16   0.203   1.005  spi_inst/_n0138_inv11 (spi_inst/N14)
+     LUT2:I0->O           13   0.203   0.933  spi_inst/count7bit[6]_GND_7_o_equal_3_o_inv_SW0 (N4)
+     LUT6:I5->O           16   0.205   1.005  spi_inst/_n011721 (spi_inst/N23)
      LUT3:I2->O            1   0.205   0.000  spi_inst/xreg_15_rstpot (spi_inst/xreg_15_rstpot)
      FD:D                      0.102          spi_inst/xreg_15
     ----------------------------------------
-    Total                      3.918ns (1.160ns logic, 2.758ns route)
+    Total                      3.919ns (1.162ns logic, 2.757ns route)
                                        (29.6% logic, 70.4% route)
 
 =========================================================================
@@ -439,19 +440,19 @@ Clock to Setup on destination clock clk
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-clk            |    3.918|         |         |         |
+clk            |    3.919|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
-Total REAL time to Xst completion: 4.00 secs
-Total CPU time to Xst completion: 3.21 secs
+Total REAL time to Xst completion: 3.00 secs
+Total CPU time to Xst completion: 3.23 secs
  
 --> 
 
 
-Total memory usage is 461204 kilobytes
+Total memory usage is 461224 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    6 (   0 filtered)
