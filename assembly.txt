@@ -12,6 +12,7 @@
 
 ;karta över PM:
 ;programmet börjar på 0 och växer neråt
+;Score ligger på $AFD
 ;Orm1 föregående håll ligger på $AFE
 ;Orm2 föregående håll ligger på $AFF
 ;menybild ligger på minesadress $B00 - $BFF
@@ -22,7 +23,16 @@
 ;spelhastigheten ligger på minssadress $CC1 = 3265
 ;random minne för implementationer läggs på $D00 - slut = 3328 - slut
 
+;Tiles:
+;	0000 = 0, tomt
+;   1111 = F, hinder
+;   0010 = 2, orm1
+;	0011 = 3, orm2
+;	0100 = 4, äpple
+
 ;menyn fungerar så att joystick1 bestämmer spelhastighet med antingen höger, vänster, upp eller ner. Därefter går vi direkt till spelet
+
+;---------------------------------------MENU-DELEN-------------------
 
 MENU
 	MLOAD #0, Gr0; ladda in 0 som startvärde för x
@@ -95,6 +105,8 @@ LEFTDIRSPEED
 UPDIRSPEED
 RIGHTDIRSPEED
 DOWNDIRSPEED
+
+;-------------------------------------------UART-DELEN----------------
 	
 UART
 	;kartan består av 64 words. vi hämtar dem och räknar upp varje gång
@@ -108,10 +120,47 @@ UARTREADY
 	STORE #$C80, Gr1, Gr0; Lägg till wordet på rätt ställe. använder Gr0 som index
 	ADD #1, Gr0; incrementera countern
 	CMP Gr0, #64; kolla om vi är färdiga
-	BEQ #GAMELOOP; isf, hoppa till spelet
+	BEQ #GAME; isf, hoppa till spelet
 	BRA #UARTLOOP; annars, fortsätt leta words
 	
+;-----------------------------------GAME INIT-----------------------------
+	
+GAME
+	;printa kartan
+PRINTMAP
+	LOAD #0, Gr0;
+	LOAD #0, Gr1;
+	
+PRINTMAPLOOPX
+	STORE $F00, Gr0; kopiera X och Y till in-register till TOGMEM
+	STORE $F01, Gr1;
+	LOAD $F00, Gr12;
+	LOAD $F01, Gr13;
+	LOAD #PRINTMAPRETURN, Gr14; return-adress
+	BRA #TOGMEM
+PRINTMAPRETURN
+	;nu har vi X och Y på GMEM-form i Gr15
+	LOAD #PRINTMAPRETURN2, Gr14;
+	BRA #GETOBSTACLEBYGMEM
+PRINTMAPRETURN2
+	;nu har vi FFFF i Gr11 om det är ett hinder på pos
+	GSTORE Gr11; F är tile-värdet för hinder
+	ADD #1, Gr0; öka X
+	CMP #32, Gr0; 
+	BNE #PRINTMAPLOOPX; om vi inte är färdiga med raden
+	;annars ( vi är färdiga med raden) fortsätt ner
 
+PRINTMAPLOOPY
+	LOAD #0, Gr0;
+	ADD #1, Gr1;
+	CMP #32, Gr1;
+	BNE #PRINTMAPLOOPX; om vi inte är färdiga, fortsätt loopa
+	;annars (vi är färdiga) gå vidare
+	
+	
+;--------------------------------------GAME LOOP-------------
+	
+	
 GAMELOOP
 
 
@@ -164,23 +213,78 @@ SNAKERETURNB
 	STORE $C00, Gr1, Gr0; spara nya huvudpos på huvudplatsen i orm-arrayen
 	STORE $C3E, Gr0; lägg tillbaka nya huvudplatsen igen
 	
+;PASTA IN ORM 2 HÄR!
+	
 	;Dags att kolla kollision med kartan eller äpple
 	
+;-------------KOLLA ÄPPLE
+	
+	;äpple
 	LOAD $D00, Gr0; ladda huvudets position till Gr0
 	CMP $CC0, Gr0; jämför med äpplets position
-	BEQ #SNAKEHITAPPLE1; om träff
-	BRA #SNAKEMOVETAIL1; annars, öka öka svans-pekaren
+	BNE #SNAKECHECKMAP1; om ej träff, gå vidare
+	;annars (om träff) fixa äpple
+	;--fixa score
+	LOAD $AFD, Gr3; ladda Score till Gr3
+	ADD #1, Gr3; öka med ett
+	STORE $AFD, Gr3; spara tillbaka den inkrementade scoren
+	;--fixa nytt äpplet
 	
-SNAKEHITAPPLE1
 	
+;-------------KOLLA KARTA
+SNAKECHECKMAP1
+	;karta
+	;förbered för GETOBSTACLEBYGMEM
+	LOAD $D00, Gr15; pos
+	LOAD #SNAKEHITRETURN1, Gr14; returnadress
+	BRA #GETOBSTACLEBYGMEM; gör kallet
+SNAKEHITRETURN1
+	;nu ligger det FFFF i Gr11 om det är ett hinder på pos
+	CMP #$FFFF, Gr11;
+	BNE #SNAKEMOVETAIL; om en hinder i vägen, gå vidare
+	;annars (hinder i vägen)
+	BRA #MENU; gå till menyn
 	
 SNAKEMOVETAIL1
 	LOAD $C3F, Gr0; ladda in svanspekaren för orm 1
-	ADD #1, Gr0; öka den med ett
+	LOAD $C00, Gr15, Gr0; ladda gamla svanspos tills senare
+	ADD #1, Gr0; öka pekaren med ett
+	MOD #62, Gr0; cirkulär array
 	STORE $C3F, Gr0; lägg tillbaka igen
+	
 	;dags att måla tomt där svansen var
-	LOAD $
+	;har redan gamla svansposen i Gr15
+	GSTORE #$0000; sudda, med tile 0000
 
+SNAKECHECKHITPLAYER1
+	LOAD $C7E, Gr0; ladda andra ormens head-pointer, som loopas över
+	;LOAD $C7F, Gr1; tail-pointer, som skall loopas till
+	LOAD $C3E, Gr2; ladda denna orms huvud-pointer
+	LOAD $C00, Gr2, Gr2; ladda denna orms huvudpos
+	STORE $D00, Gr2; spara huvudpos på $D00
+SNAKEHITLOOP1
+	LOAD $C40, Gr3, Gr0; ladda nuvarande dels pos
+	CMP $D00, Gr3; jämför current dels pos med huvudpos
+	BNE #SNAKELOOPCONTINUE1; om inte träff
+	BRA #MENU; annars
+SNAKELOOPCONTINUE1
+	;kan passa på att rita ut ormen när vi ändår loopar genom den
+	LOAD $C40, Gr15, Gr0; spara cur pos i Gr15, för att rita ut till GMEM
+	GSTORE #$0003; rita orm2-tile på cur pos.
+	;sätt fram current-pointern och kolla slut etc
+	ADD #1, Gr0;
+	MOD #62, Gr0; cirkulär lista
+	CMP $C7F, Gr0; Jämför nuvarande dels pointer med tailpointer
+	BNE #SNAKEHITLOOP1; om inte samma, fortsätt loopa
+	;annars, fortsätt programmet
+	
+;PASTA ORM 2 HÄR!
+
+	
+	
+	
+	
+	
 	;Kolla kollision med banan eller äpple
 	;om inte äpple tagen:
 	;	flytta fram tail
