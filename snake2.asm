@@ -42,6 +42,59 @@ SNAKERETURNB2
 	LOAD $D01, Gr1; ladda in nya huvudpos till Gr1
 	STORE $C40, Gr1, Gr0; spara nya huvudpos på huvudplatsen i orm-arrayen
 	STORE $C7E, Gr0; lägg tillbaka nya huvudplatsen igen
+	
+;-----------------------------------------------------------------
+SNAKEMOVETAIL2
+	LOAD $C7F, Gr0; ladda in svanspekaren för orm 1
+	LOAD $C40, Gr15, Gr0; ladda gamla svanspos tills senare
+	ADD #1, Gr0; öka den med ett
+	STORE $C3F, Gr0; lägg tillbaka igen
+	
+	;dags att måla tomt där svansen var
+	;har redan gamla svansposen i Gr15
+	GSTORE #$0000; sudda, med tile 0000
+	
+	
+;--------------------------------------------------------------------
+	
+	
+SNAKECHECKHITPLAYER2
+	LOAD $C3E, Gr0; ladda andra ormens head-pointer, som loopas över
+	;LOAD $C7F, Gr1; tail-pointer, som skall loopas till
+	LOAD $C7E, Gr2; ladda denna orms huvud-pointer
+	LOAD $C40, Gr2, Gr2; ladda denna orms huvudpos
+	STORE $D00, Gr2; spara huvudpos på $D00
+SNAKEHITLOOP2
+	LOAD $C00, Gr3, Gr0; ladda nuvarande dels pos
+	CMP $D00, Gr3; jämför current dels pos med huvudpos
+	BNE #SNAKELOOPCONTINUE2; om inte träff
+	BRA #MENU; annars
+SNAKELOOPCONTINUE2
+	;kan passa på att rita ut ormen när vi ändår loopar genom den
+	LOAD $C40, Gr15, Gr0; spara cur pos i Gr15, för att rita ut till GMEM
+	GSTORE #$0002; rita orm2-tile på cur pos.
+	;sätt fram cur-pointern och kolla slut etc
+	ADD #1, Gr0;
+	MOD #62, Gr0; cirkulär lista
+	CMP $C3F, Gr0; Jämför nuvarande dels pointer med tailpointer
+	BNE #SNAKEHITLOOP2; om inte samma, fortsätt loopa
+	;annars (samma), fortsätt
+	
+;---------------------------------------------------------------------
+	
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 

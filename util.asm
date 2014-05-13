@@ -34,3 +34,91 @@ FROMGMEM
 
 
 ;----------------------------------
+
+;IN
+
+;Gr14 return-adress
+;Gr15 pos på GMEM-form
+
+;OUT
+;Gr11 $FFFF om det är hinder på (x, y)
+;	annars $0000
+
+GETOBSTACLEBYGMEM
+	STORE $F00, Gr15; spara GMEM-posen på F00
+	LOAD $F00, Gr12; ladda ovanstående
+	;Gr12 får vara X
+	;Gr15 Y
+	AND #$001F, Gr12; ta bort Y-bitarna
+	LSR #5, Gr15; shifta bort Y-bitarna till LSBs
+	MUL #32, Gr15; multiplicera Y med 32 för få antal bitar den offsetar
+	STORE $F00, Gr15; addera de båda och sätt resultat i Gr12
+	ADD $F00, Gr12;
+	;nu innehåller Gr12 det bitnr vår bit har
+	STORE $F00, Gr12; kopiera datat till Gr15
+	LOAD $F00, Gr15;
+	DIV #16, Gr15; heltalsdela Gr15 med 16 för att hitta word-index
+	MOD #16, Gr12; gör modulus 16 på Gr12 för att hitta hur mycket
+	;			...vi måste shifta till vänster sen i wordet
+	LOAD $C80, Gr10, Gr15; ladda rätt word i kartan till Gr10
+	STORE $F00, Gr12;
+	LSL $F00, Gr15; Shifta wordet till vänster Gr12 antal gånger
+	AND #$8000, Gr15; anda bort all annan data
+	LOAD #$0000, Gr11;ladda ett standardvärde till Gr11
+	CMP #$8000, Gr15; kolla om det är en etta vi shiftat in
+	BNE #WASNOTOBSTACLE; om så inte var fallet
+	LOAD #$FFFF, Gr11; annars (var hinder där)
+WASNOTOBSTACLE
+	BRA Gr14; return
+	
+	
+;-------------------------------------------------------------------
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
