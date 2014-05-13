@@ -19,8 +19,14 @@ entity snake is
 		uart_in: in STD_LOGIC;
 		--
 		sw : in STD_LOGIC_VECTOR(7 downto 0); --spakar på kortet (kontrollerar bakgrundsfärg);
-		ss, mosi, sclk : out STD_LOGIC;
-		miso : in STD_LOGIC
+		ss1, mosi1, sclk1 : out STD_LOGIC;
+		miso1 : in STD_LOGIC;
+		ss2, mosi2, sclk2 : out STD_LOGIC;
+		miso2 : in STD_LOGIC;
+		ss3, mosi3, sclk3 : out STD_LOGIC;
+		miso3 : in STD_LOGIC;
+		ss4, mosi4, sclk4 : out STD_LOGIC;
+		miso4 : in STD_LOGIC
 		);
             
 		
@@ -43,16 +49,27 @@ architecture behv of snake is
 			);
 	end component;
 
-	component SPI is
+	component SPIMASTER is
 		port ( 	clk : in std_logic;
 			buss : inout std_logic_vector(15 downto 0);
 			flags : inout std_logic_vector(6 downto 0);
-			frombus : out std_logic_vector(3 downto 0);
-			miso : in std_logic;
-			sclk : out std_logic;
-			mosi : out std_logic;
-			ss : out std_logic;
-			testx : out std_logic_vector(15 downto 0)
+			frombus : in std_logic_vector(3 downto 0);
+			miso1 : in std_logic;
+			sclk1 : out std_logic;
+			mosi1 : out std_logic;
+			ss1 : out std_logic;
+			miso2 : in std_logic;
+			sclk2 : out std_logic;
+			mosi2 : out std_logic;
+			ss2 : out std_logic;
+			miso3 : in std_logic;
+			sclk3 : out std_logic;
+			mosi3 : out std_logic;
+			ss3 : out std_logic;
+			miso4 : in std_logic;
+			sclk4 : out std_logic;
+			mosi4 : out std_logic;
+			ss4 : out std_logic
 		);
 	end component;
 
@@ -97,7 +114,7 @@ architecture behv of snake is
 	--interna signaler mellan komponenterna
 	signal dbus : STD_LOGIC_VECTOR(15 downto 0) := X"0000"; --buss
 	signal flags : STD_LOGIC_VECTOR(6 downto 0) := "0000000";
-	signal frombus : STD_LOGIC_VECTOR(3 downto 0) := "0000";
+	signal frombus : STD_LOGIC_VECTOR(3 downto 0) := "1000";
 
 	signal uart_word_ready : STD_LOGIC;
 	signal uart_should_write_bus : STD_LOGIC;
@@ -107,9 +124,13 @@ architecture behv of snake is
 
 	signal baked_value : STD_LOGIC_VECTOR(15 downto 0);
 
-	signal miso_tmp : std_logic;
+	signal miso1_tmp : std_logic;
+	signal miso2_tmp : std_logic;
+	signal miso3_tmp : std_logic;
+	signal miso4_tmp : std_logic;
 
 	signal spitestx : std_logic_vector(15 downto 0) := "0000000000000000";
+	signal spitesty : std_logic_vector(15 downto 0) := "0000000000000000";
 	signal spitestx_tmp : std_logic_vector(15 downto 0) := "0000000000000000";
 	signal spitest_bool : std_logic := '1';
 	signal slowclk : std_logic := '0';
@@ -128,17 +149,31 @@ begin
 			slowclk_cnt <= slowclk_cnt + 1;
 		end if;
 	end process;
-	miso_tmp <= miso; --denna var utkommenterad inna jag kommenterade bort SPI
-	spi_inst : SPI port map(
-		clk => clk,
-		buss => dbus,
-		flags => flags,
-		frombus => frombus,
-		miso => miso,
-		sclk => sclk,
-		mosi => mosi,
-		ss => ss,
-		testx => spitestx
+	miso1_tmp <= miso1; --denna var utkommenterad inna jag kommenterade bort SPI
+	miso2_tmp <= miso2;
+	miso3_tmp <= miso3;
+	miso4_tmp <= miso4;
+	spi_inst : SPIMASTER port map( 	
+			clk => clk,
+			buss => dbus,
+			flags => flags,
+			frombus => frombus,
+			miso1 => miso1,
+			sclk1 => sclk1,
+			mosi1 => mosi1,
+			ss1 => ss1,
+			miso2 => miso2,
+			sclk2 => sclk2,
+			mosi2 => mosi2,
+			ss2 => ss2,
+			miso3 => miso3,
+			sclk3 => sclk3,
+			mosi3 => mosi3,
+			ss3 => ss3,
+			miso4 => miso4,
+			sclk4 => sclk4,
+			mosi4 => mosi4,
+			ss4 => ss4
 		);
 --	process(spitestx_tmp) begin
 --		if spitest_bool = '1' then
@@ -191,7 +226,7 @@ begin
 		seg => seg,
 		an => an,
 		--value => baked_value
-		value => spitestx
+		value => dbus
 		);
 
 end behv;		
