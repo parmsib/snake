@@ -228,7 +228,32 @@ SNAKERETURNB
 	LOAD $AFD, Gr3; ladda Score till Gr3
 	ADD #1, Gr3; öka med ett
 	STORE $AFD, Gr3; spara tillbaka den inkrementade scoren
-	;--fixa nytt äpplet
+	;--fixa nytt äpple
+PLACEAPPLELOOP
+	RAND Gr0; cell X
+	RAND Gr1; cell Y
+	;förbered kall till TOGMEM
+	LOAD #PLACEAPPLERETURN, Gr14;
+	STORE $DB0, Gr0; spara undan Gr0 och Gr1
+	STORE $DB1, Gr1; 
+	BRA #TOGMEM;
+PLACEAPPLERETURN1
+	;nu innehåller Gr15 X och Y på GMEM-format
+	;förbered kall till BETOBSTACLEBYGMEM
+	LOAD #PLACEAPPLERETURN2, Gr14;
+	BRA #GETOBSTACLEBYGMEM;
+PLACEAPPLERETURN2
+	;nu innehåller Gr11 info om kartan på X, Y
+	CMP #$FFFF, Gr11; 
+	BEQ #PLACEAPPLECONTINUE; om det är upptaget, fortsätt
+	;annars (det var inte ett hinder ivägen), kolla om det är en orm ivägen
+	;TODO: FIXA DETTA. orkar inte fixa förän det behövs. Kanske kan skippa
+PLACEAPPLESNAKELOOP
+	
+	
+PLACEAPPLECONTINUE
+	
+	
 	
 	
 ;-------------KOLLA KARTA
