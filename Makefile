@@ -36,7 +36,7 @@ PART=xc6slx16-3-csg324
 #riktigt : lab.%: S=snake.vhd GPU/GPU.vhd GMEM/GMEM.vhd CPU/CPU.vhd UART/UART.vhd Common/shiftregister.vhd 
 
 #GPU-test:
-lab.%: S=snake.vhd GPU/GPU.vhd GMEM/GMEM.vhd leddriver.vhd SPI/spimaster.vhd SPI/spi.vhd UART/UART.vhd Common/shiftregister.vhd Common/register.vhd
+lab.%: S=snake.vhd GPU/GPU.vhd GMEM/GMEM.vhd leddriver.vhd SPI/spi.vhd SPI/spimaster.vhd UART/UART.vhd Common/shiftregister.vhd Common/register.vhd
 lab.%: T=SPI_tb.vhd
 lab.%: U=lab.ucf
 

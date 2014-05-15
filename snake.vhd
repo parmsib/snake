@@ -19,14 +19,8 @@ entity snake is
 		uart_in: in STD_LOGIC;
 		--
 		sw : in STD_LOGIC_VECTOR(7 downto 0); --spakar på kortet (kontrollerar bakgrundsfärg);
-		ss1, mosi1, sclk1 : out STD_LOGIC;
-		miso1 : in STD_LOGIC;
-		ss2, mosi2, sclk2 : out STD_LOGIC;
-		miso2 : in STD_LOGIC;
-		ss3, mosi3, sclk3 : out STD_LOGIC;
-		miso3 : in STD_LOGIC;
-		ss4, mosi4, sclk4 : out STD_LOGIC;
-		miso4 : in STD_LOGIC
+		ss, mosi, sclk : out STD_LOGIC_VECTOR(3 downto 0);
+		miso : in STD_LOGIC_VECTOR(3 downto 0)
 		);
             
 		
@@ -49,27 +43,16 @@ architecture behv of snake is
 			);
 	end component;
 
-	component SPIMASTER is
+	component spimaster is
+		generic ( amount : integer := 2);
 		port ( 	clk : in std_logic;
 			buss : inout std_logic_vector(15 downto 0);
 			flags : inout std_logic_vector(6 downto 0);
 			frombus : in std_logic_vector(3 downto 0);
-			miso1 : in std_logic;
-			sclk1 : out std_logic;
-			mosi1 : out std_logic;
-			ss1 : out std_logic;
-			miso2 : in std_logic;
-			sclk2 : out std_logic;
-			mosi2 : out std_logic;
-			ss2 : out std_logic;
-			miso3 : in std_logic;
-			sclk3 : out std_logic;
-			mosi3 : out std_logic;
-			ss3 : out std_logic;
-			miso4 : in std_logic;
-			sclk4 : out std_logic;
-			mosi4 : out std_logic;
-			ss4 : out std_logic
+			miso : in std_logic_vector(amount-1 downto 0);
+			sclk : out std_logic_vector(amount-1 downto 0);
+			mosi : out std_logic_vector(amount-1 downto 0);
+			ss : out std_logic_vector(amount-1 downto 0)
 		);
 	end component;
 
@@ -109,7 +92,17 @@ architecture behv of snake is
             an       : out std_logic_vector(3 downto 0);
             value    : in  std_logic_vector(15 downto 0));
         end component;
-	
+
+	component spi
+		port ( 	clk : in std_logic;
+			buss : inout std_logic_vector(3 downto 0);
+			flags : inout std_logic_vector(6 downto 0);
+			miso : in std_logic;
+			sclk : out std_logic;
+			mosi : out std_logic;
+			ss : out std_logic
+		);
+	end component;	
 
 	--interna signaler mellan komponenterna
 	signal dbus : STD_LOGIC_VECTOR(15 downto 0) := X"0000"; --buss
@@ -136,52 +129,34 @@ architecture behv of snake is
 	signal slowclk : std_logic := '0';
 	signal slowclk_cnt : std_logic_vector(26 downto 0) := "000000000000000000000000000";
 begin
-	process(clk)
-		begin
-		if rising_edge(clk) then
-			if slowclk_cnt = "000000000000000000000000000" then
-				if slowclk = '1' then
-					slowclk <= '0';
-				else
-					slowclk <= '1';
-				end if;
-			end if;
-			slowclk_cnt <= slowclk_cnt + 1;
-		end if;
-	end process;
-	miso1_tmp <= miso1; --denna var utkommenterad inna jag kommenterade bort SPI
-	miso2_tmp <= miso2;
-	miso3_tmp <= miso3;
-	miso4_tmp <= miso4;
-	spi_inst : SPIMASTER port map( 	
+
+--	dbus(15 downto 14) <= miso; --denna var utkommenterad inna jag kommenterade bort SPI
+--	miso2_tmp <= miso2;
+--	miso3_tmp <= miso3;
+--	miso4_tmp <= miso4;
+	spi_inst : spimaster 
+		generic map( amount => 4)
+		port map( 	
 			clk => clk,
 			buss => dbus,
 			flags => flags,
 			frombus => frombus,
-			miso1 => miso1,
-			sclk1 => sclk1,
-			mosi1 => mosi1,
-			ss1 => ss1,
-			miso2 => miso2,
-			sclk2 => sclk2,
-			mosi2 => mosi2,
-			ss2 => ss2,
-			miso3 => miso3,
-			sclk3 => sclk3,
-			mosi3 => mosi3,
-			ss3 => ss3,
-			miso4 => miso4,
-			sclk4 => sclk4,
-			mosi4 => mosi4,
-			ss4 => ss4
+			miso => miso,
+			sclk => sclk,
+			mosi => mosi,
+			ss => ss
 		);
---	process(spitestx_tmp) begin
---		if spitest_bool = '1' then
---			spitestx <= spitestx_tmp;
---			spitest_bool <= '0';
---		end if;
---	end process;	
 
+--	spi_tst : spi
+--		port map ( 	
+--			clk => clk,
+--			buss => dbus(3 downto 0),
+--			flags => flags,
+--			miso => miso,
+--			sclk => sclk,
+--			mosi => mosi,
+--			ss => ss
+--		);
 
 	uart_inst : UART generic map(16) port map(
 		clk => clk,

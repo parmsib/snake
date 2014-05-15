@@ -34,18 +34,19 @@ architecture behav of spi is
 --	signal testx_cnt : std_logic_vector(3 downto 0) := "0000";
 --	signal testsclk_cnt : std_logic_vector(15 downto 0) := "0000000000000000";
 
---	signal dout : std_logic_vector(7 downto 0) := "11111111";
---	signal dout_index : std_logic_vector(2 downto 0) := "000";
+	--signal dout : std_logic_vector(7 downto 0) := "10000001";
+	--signal dout_index : std_logic_vector(2 downto 0) := "000";
+	signal mosi_tmp : std_logic := '0';
 
 
-
-	
+	--signal miso_tmp : std_logic := '0';
 begin
+	--miso_tmp <= miso;
 	--flags <= "0010000";
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			if flags(0) = '0' then
+			--if flags(0) = '0' then
 				count7bit <= count7bit + 1;
 				if count7bit = "10000000" then
 					if count6bit = "111111" then
@@ -56,7 +57,6 @@ begin
 							ss_tmp <= '0';
 						else
 							if count10bit = 15 then
-								
 								sclk_tmp <= '1';
 							elsif count10bit = 14 then
 								sclk_tmp <= '1';
@@ -68,6 +68,7 @@ begin
 					end if;
 				elsif count7bit = "11111111" then
 					sclk_tmp <= '0';
+					mosi_tmp <= miso;
 					if count10bit = 15 then
 						if count6bit = 39 then
 							count6bit <= "111111";
@@ -108,12 +109,12 @@ begin
 						end if;
 					end if;
 				end if;
-			end if;
+			--end if;
 		end if;
 
 	end process;
 	
 	ss <= ss_tmp;
-	mosi <= '1';
+	mosi <= mosi_tmp;
 	sclk <= sclk_tmp;
 end behav;

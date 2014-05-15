@@ -5,7 +5,7 @@ Parameter TMPDIR set to tmpdir
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.07 secs
+Total CPU time to Xst completion: 0.06 secs
  
 --> 
 
@@ -67,12 +67,12 @@ Parsing architecture <GMbehv> of entity <gmem>.
 Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../leddriver.vhd" into library work
 Parsing entity <leddriver>.
 Parsing architecture <Behavioral> of entity <leddriver>.
-Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../SPI/spimaster.vhd" into library work
-Parsing entity <spimaster>.
-Parsing architecture <behav> of entity <spimaster>.
 Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../SPI/spi.vhd" into library work
 Parsing entity <spi>.
 Parsing architecture <behav> of entity <spi>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../SPI/spimaster.vhd" into library work
+Parsing entity <spimaster>.
+Parsing architecture <behav> of entity <spimaster>.
 Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../UART/UART.vhd" into library work
 Parsing entity <UART>.
 Parsing architecture <behav> of entity <uart>.
@@ -88,17 +88,13 @@ Parsing architecture <behav> of entity <regi>.
 =========================================================================
 
 Elaborating entity <snake> (architecture <behv>) from library <work>.
-WARNING:HDLCompiler:871 - "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../snake.vhd" Line 117: Using initial value "1000" for frombus since it is never assigned
-WARNING:HDLCompiler:1127 - "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../snake.vhd" Line 152: Assignment to miso1_tmp ignored, since the identifier is never used
-WARNING:HDLCompiler:1127 - "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../snake.vhd" Line 153: Assignment to miso2_tmp ignored, since the identifier is never used
-WARNING:HDLCompiler:1127 - "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../snake.vhd" Line 154: Assignment to miso3_tmp ignored, since the identifier is never used
-WARNING:HDLCompiler:1127 - "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../snake.vhd" Line 155: Assignment to miso4_tmp ignored, since the identifier is never used
+WARNING:HDLCompiler:871 - "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../snake.vhd" Line 110: Using initial value "1000" for frombus since it is never assigned
 
-Elaborating entity <spimaster> (architecture <behav>) from library <work>.
+Elaborating entity <spimaster> (architecture <behav>) with generics from library <work>.
 
 Elaborating entity <spi> (architecture <behav>) from library <work>.
-WARNING:HDLCompiler:92 - "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../SPI/spimaster.vhd" Line 81: frombus should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../SPI/spimaster.vhd" Line 82: outreg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../SPI/spimaster.vhd" Line 45: frombus should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../SPI/spimaster.vhd" Line 46: outreg should be on the sensitivity list of the process
 
 Elaborating entity <UART> (architecture <behav>) with generics from library <work>.
 
@@ -111,7 +107,7 @@ Elaborating entity <GMEM> (architecture <GMbehv>) from library <work>.
 Elaborating entity <GPU> (architecture <behv>) from library <work>.
 
 Elaborating entity <leddriver> (architecture <Behavioral>) from library <work>.
-WARNING:HDLCompiler:634 - "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../snake.vhd" Line 120: Net <uart_should_write_bus> does not have a driver.
+WARNING:HDLCompiler:634 - "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../snake.vhd" Line 113: Net <uart_should_write_bus> does not have a driver.
 
 =========================================================================
 *                           HDL Synthesis                               *
@@ -119,17 +115,16 @@ WARNING:HDLCompiler:634 - "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/.
 
 Synthesizing Unit <snake>.
     Related source file is "/edu/tobhu543/TSEA83/projekt/snake.vhd".
-INFO:Xst:3010 - "/edu/tobhu543/TSEA83/projekt/snake.vhd" line 186: Output port <debug_signal> of the instance <uart_inst> is unconnected or connected to loadless signal.
-INFO:Xst:3010 - "/edu/tobhu543/TSEA83/projekt/snake.vhd" line 186: Output port <uart_word_ready> of the instance <uart_inst> is unconnected or connected to loadless signal.
-WARNING:Xst:2563 - Inout <flags<0>> is never assigned. Tied to value Z.
+INFO:Xst:3010 - "/edu/tobhu543/TSEA83/projekt/snake.vhd" line 161: Output port <debug_signal> of the instance <uart_inst> is unconnected or connected to loadless signal.
+INFO:Xst:3010 - "/edu/tobhu543/TSEA83/projekt/snake.vhd" line 161: Output port <uart_word_ready> of the instance <uart_inst> is unconnected or connected to loadless signal.
 WARNING:Xst:653 - Signal <uart_should_write_bus> is used but never assigned. This sourceless signal will be automatically connected to value GND.
-    Found 1-bit tristate buffer for signal <flags<0>> created at line 116
     Summary:
-	inferred   1 Tristate(s).
+	no macro.
 Unit <snake> synthesized.
 
 Synthesizing Unit <spimaster>.
     Related source file is "/edu/tobhu543/TSEA83/projekt/SPI/spimaster.vhd".
+        amount = 4
 INFO:Xst:2774 - HDL ADVISOR - KEEP property attached to signal outreg<15:12> may hinder XST clustering optimizations.
 INFO:Xst:2774 - HDL ADVISOR - KEEP property attached to signal outreg<7:4> may hinder XST clustering optimizations.
     Summary:
@@ -138,16 +133,12 @@ Unit <spimaster> synthesized.
 
 Synthesizing Unit <spi>.
     Related source file is "/edu/tobhu543/TSEA83/projekt/SPI/spi.vhd".
-WARNING:Xst:2563 - Inout <flags<6>> is never assigned. Tied to value Z.
-WARNING:Xst:2563 - Inout <flags<5>> is never assigned. Tied to value Z.
-WARNING:Xst:2563 - Inout <flags<4>> is never assigned. Tied to value Z.
-WARNING:Xst:2563 - Inout <flags<3>> is never assigned. Tied to value Z.
-WARNING:Xst:2563 - Inout <flags<2>> is never assigned. Tied to value Z.
-WARNING:Xst:2563 - Inout <flags<1>> is never assigned. Tied to value Z.
+WARNING:Xst:2563 - Inout <flags> is never assigned. Tied to value Z.
     Found 6-bit register for signal <count6bit>.
     Found 1-bit register for signal <ss_tmp>.
     Found 1-bit register for signal <sclk_tmp>.
     Found 10-bit register for signal <count10bit>.
+    Found 1-bit register for signal <mosi_tmp>.
     Found 3-bit register for signal <count3bit>.
     Found 3-bit register for signal <count3bit2>.
     Found 16-bit register for signal <xreg>.
@@ -155,28 +146,23 @@ WARNING:Xst:2563 - Inout <flags<1>> is never assigned. Tied to value Z.
     Found 16-bit register for signal <yreg>.
     Found 8-bit register for signal <breg>.
     Found 8-bit register for signal <count7bit>.
-    Found 8-bit adder for signal <count7bit[7]_GND_8_o_add_0_OUT> created at line 49.
+    Found 8-bit adder for signal <count7bit[7]_GND_8_o_add_0_OUT> created at line 50.
     Found 10-bit adder for signal <count10bit[9]_GND_8_o_add_6_OUT> created at line 65.
-    Found 6-bit adder for signal <count6bit[5]_GND_8_o_add_15_OUT> created at line 76.
-    Found 3-bit adder for signal <count3bit[2]_GND_8_o_add_18_OUT> created at line 78.
-    Found 3-bit adder for signal <count3bit2[2]_GND_8_o_add_20_OUT> created at line 80.
-    Found 1-bit tristate buffer for signal <flags<6>> created at line 8
-    Found 1-bit tristate buffer for signal <flags<5>> created at line 8
-    Found 1-bit tristate buffer for signal <flags<4>> created at line 8
-    Found 1-bit tristate buffer for signal <flags<3>> created at line 8
-    Found 1-bit tristate buffer for signal <flags<2>> created at line 8
-    Found 1-bit tristate buffer for signal <flags<1>> created at line 8
-    Found 3-bit comparator lessequal for signal <n0026> created at line 82
-    Found 16-bit comparator greater for signal <yreg[15]_GND_8_o_LessThan_30_o> created at line 97
-    Found 16-bit comparator greater for signal <GND_8_o_yreg[15]_LessThan_31_o> created at line 99
-    Found 16-bit comparator greater for signal <xreg[15]_GND_8_o_LessThan_32_o> created at line 101
-    Found 16-bit comparator greater for signal <GND_8_o_xreg[15]_LessThan_33_o> created at line 103
+    Found 6-bit adder for signal <count6bit[5]_GND_8_o_add_15_OUT> created at line 77.
+    Found 3-bit adder for signal <count3bit[2]_GND_8_o_add_18_OUT> created at line 79.
+    Found 3-bit adder for signal <count3bit2[2]_GND_8_o_add_20_OUT> created at line 81.
+    Found 7-bit tristate buffer for signal <flags> created at line 8
+    Found 3-bit comparator lessequal for signal <n0025> created at line 83
+    Found 16-bit comparator greater for signal <yreg[15]_GND_8_o_LessThan_30_o> created at line 98
+    Found 16-bit comparator greater for signal <GND_8_o_yreg[15]_LessThan_31_o> created at line 100
+    Found 16-bit comparator greater for signal <xreg[15]_GND_8_o_LessThan_32_o> created at line 102
+    Found 16-bit comparator greater for signal <GND_8_o_xreg[15]_LessThan_33_o> created at line 104
     Summary:
 	inferred   5 Adder/Subtractor(s).
-	inferred  76 D-type flip-flop(s).
+	inferred  77 D-type flip-flop(s).
 	inferred   5 Comparator(s).
 	inferred  29 Multiplexer(s).
-	inferred   6 Tristate(s).
+	inferred   1 Tristate(s).
 Unit <spi> synthesized.
 
 Synthesizing Unit <UART>.
@@ -1370,9 +1356,9 @@ WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and lef
 	inferred  29 D-type flip-flop(s).
 	inferred   4 Multiplexer(s).
 Unit <leddriver> synthesized.
-RTL-Simplification CPUSTAT: 1.03 
-RTL-BasicInf CPUSTAT: 1.41 
-RTL-BasicOpt CPUSTAT: 0.01 
+RTL-Simplification CPUSTAT: 0.62 
+RTL-BasicInf CPUSTAT: 0.89 
+RTL-BasicOpt CPUSTAT: 0.00 
 RTL-Remain-Bus CPUSTAT: 0.03 
 
 =========================================================================
@@ -1390,8 +1376,8 @@ Macro Statistics
  3-bit adder                                           : 8
  6-bit adder                                           : 4
  8-bit adder                                           : 4
-# Registers                                            : 1084
- 1-bit register                                        : 14
+# Registers                                            : 1088
+ 1-bit register                                        : 18
  10-bit register                                       : 7
  14-bit register                                       : 1
  16-bit register                                       : 8
@@ -1416,8 +1402,9 @@ Macro Statistics
  3-bit 2-to-1 multiplexer                              : 4
  4-bit 2-to-1 multiplexer                              : 4
  4-bit 32-to-1 multiplexer                             : 33
-# Tristates                                            : 83
- 1-bit tristate buffer                                 : 83
+# Tristates                                            : 62
+ 1-bit tristate buffer                                 : 58
+ 7-bit tristate buffer                                 : 4
 
 =========================================================================
 
@@ -1459,9 +1446,9 @@ INFO:Xst:3048 - The small RAM <Mram_counter_r[17]_PWR_20_o_wide_mux_4_OUT> will 
 Unit <leddriver> synthesized (advanced).
 
 Synthesizing (advanced) Unit <spi>.
+The following registers are absorbed into counter <count7bit>: 1 register on signal <count7bit>.
 The following registers are absorbed into counter <count3bit>: 1 register on signal <count3bit>.
 The following registers are absorbed into counter <count3bit2>: 1 register on signal <count3bit2>.
-The following registers are absorbed into counter <count7bit>: 1 register on signal <count7bit>.
 The following registers are absorbed into counter <count6bit>: 1 register on signal <count6bit>.
 The following registers are absorbed into counter <count10bit>: 1 register on signal <count10bit>.
 Unit <spi> synthesized (advanced).
@@ -1488,8 +1475,8 @@ Macro Statistics
  3-bit up counter                                      : 8
  6-bit up counter                                      : 4
  8-bit up counter                                      : 4
-# Registers                                            : 4313
- Flip-Flops                                            : 4313
+# Registers                                            : 4317
+ Flip-Flops                                            : 4317
 # Comparators                                          : 24
  10-bit comparator greater                             : 4
  16-bit comparator greater                             : 16
@@ -5363,232 +5350,21 @@ WARNING:Xst:2677 - Node <xreg_6> of sequential type is unconnected in block <spi
 WARNING:Xst:2677 - Node <xreg_7> of sequential type is unconnected in block <spi>.
 WARNING:Xst:2183 - Unit GMEM: the following tristate(s) are NOT replaced by logic (Please refer to Answer Record 20048 for more information): dbus_out<0>, dbus_out<10>, dbus_out<11>, dbus_out<12>, dbus_out<13>, dbus_out<14>, dbus_out<15>, dbus_out<1>, dbus_out<2>, dbus_out<3>, dbus_out<4>, dbus_out<5>, dbus_out<6>, dbus_out<7>, dbus_out<8>, dbus_out<9>.
 WARNING:Xst:2183 - Unit UART: the following tristate(s) are NOT replaced by logic (Please refer to Answer Record 20048 for more information): to_bus<0>, to_bus<10>, to_bus<11>, to_bus<12>, to_bus<13>, to_bus<14>, to_bus<15>, to_bus<1>, to_bus<2>, to_bus<3>, to_bus<4>, to_bus<5>, to_bus<6>, to_bus<7>, to_bus<8>, to_bus<9>.
-WARNING:Xst:2042 - Unit spi: 6 internal tristates are replaced by logic (pull-up yes): flags<1>, flags<2>, flags<3>, flags<4>, flags<5>, flags<6>.
-WARNING:Xst:1426 - The value init of the FF/Latch spi_inst/spi_1/sclk_tmp hinder the constant cleaning in the block snake.
-   You should achieve better results by setting this init to 1.
-WARNING:Xst:1426 - The value init of the FF/Latch spi_inst/spi_2/sclk_tmp hinder the constant cleaning in the block snake.
-   You should achieve better results by setting this init to 1.
-WARNING:Xst:1426 - The value init of the FF/Latch spi_inst/spi_3/sclk_tmp hinder the constant cleaning in the block snake.
-   You should achieve better results by setting this init to 1.
-WARNING:Xst:1426 - The value init of the FF/Latch spi_inst/spi_4/sclk_tmp hinder the constant cleaning in the block snake.
-   You should achieve better results by setting this init to 1.
-WARNING:Xst:1710 - FF/Latch <spi_inst/spi_2/buss_3> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/buss_2> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/buss_1> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/buss_0> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/xreg_15> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/xreg_14> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/xreg_13> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/xreg_12> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/xreg_11> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/xreg_10> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/xreg_9> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/xreg_8> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/sclk_tmp> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/ss_tmp> has a constant value of 1 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/breg_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/yreg_15> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/yreg_14> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/yreg_13> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/yreg_12> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/yreg_11> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/yreg_10> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/yreg_9> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/yreg_8> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count3bit2_2> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count3bit2_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count3bit2_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count10bit_8> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count10bit_7> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count10bit_9> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count10bit_5> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count10bit_4> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count10bit_6> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count10bit_2> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count10bit_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count10bit_3> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count10bit_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count7bit_7> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count7bit_6> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count7bit_5> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count7bit_4> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count7bit_3> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count7bit_2> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count7bit_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/count7bit_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/buss_2> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/buss_1> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/buss_0> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/xreg_15> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/xreg_14> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/xreg_13> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/xreg_12> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/xreg_11> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/xreg_10> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/xreg_9> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/xreg_8> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/sclk_tmp> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/ss_tmp> has a constant value of 1 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/breg_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/yreg_15> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/yreg_14> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/yreg_13> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/yreg_12> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/yreg_11> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/yreg_10> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/yreg_9> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/yreg_8> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/yreg_8> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count3bit2_2> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count3bit2_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count3bit2_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count10bit_8> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count10bit_7> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count10bit_9> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count10bit_5> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count10bit_4> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count10bit_6> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count10bit_2> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count10bit_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count10bit_3> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count10bit_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count7bit_7> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count7bit_6> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count7bit_5> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count7bit_4> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count7bit_3> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count7bit_2> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count7bit_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/count7bit_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/buss_3> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/buss_2> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/buss_1> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/buss_0> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/xreg_15> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/xreg_14> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/xreg_13> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/xreg_12> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/xreg_11> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/xreg_10> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/xreg_9> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/xreg_8> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/sclk_tmp> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/ss_tmp> has a constant value of 1 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/breg_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/yreg_15> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/yreg_14> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/yreg_13> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/yreg_12> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/yreg_11> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/yreg_10> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/yreg_9> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/yreg_8> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count3bit2_2> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count3bit2_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count3bit2_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count10bit_8> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count10bit_7> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count10bit_9> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count10bit_5> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count10bit_4> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count10bit_6> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count10bit_2> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count10bit_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count10bit_3> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count10bit_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count7bit_7> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count7bit_6> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count7bit_5> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count7bit_4> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count7bit_3> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count7bit_2> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count7bit_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/count7bit_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/buss_3> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/buss_3> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/buss_2> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/buss_1> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/buss_0> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/xreg_15> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/xreg_14> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/xreg_13> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/xreg_12> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/xreg_11> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/xreg_10> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/xreg_9> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/xreg_8> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/sclk_tmp> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/ss_tmp> has a constant value of 1 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/breg_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/yreg_15> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/yreg_14> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/yreg_13> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/yreg_12> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/yreg_11> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/yreg_10> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/yreg_9> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count3bit2_2> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count3bit2_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count3bit2_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count10bit_8> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count10bit_7> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count10bit_9> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count10bit_5> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count10bit_4> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count10bit_6> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count10bit_2> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count10bit_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count10bit_3> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count10bit_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count7bit_7> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count7bit_6> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count7bit_5> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count7bit_4> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count7bit_3> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count7bit_2> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count7bit_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/count7bit_0> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_4/breg_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_2/breg_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_1/breg_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <spi_inst/spi_3/breg_1> has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:2677 - Node <spi_inst/spi_4/count6bit_5> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_4/count6bit_4> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_4/count6bit_3> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_4/count6bit_2> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_4/count6bit_1> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_4/count6bit_0> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_4/count3bit_2> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_4/count3bit_1> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_4/count3bit_0> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_3/count6bit_5> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_3/count6bit_4> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_3/count6bit_3> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_3/count6bit_2> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_3/count6bit_1> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_3/count6bit_0> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_3/count3bit_2> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_3/count3bit_1> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_3/count3bit_0> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_2/count6bit_5> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_2/count6bit_4> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_2/count6bit_3> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_2/count6bit_2> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_2/count6bit_1> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_2/count6bit_0> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_2/count3bit_2> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_2/count3bit_1> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_2/count3bit_0> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_1/count6bit_5> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_1/count6bit_4> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_1/count6bit_3> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_1/count6bit_2> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_1/count6bit_1> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_1/count6bit_0> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_1/count3bit_2> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_1/count3bit_1> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2677 - Node <spi_inst/spi_1/count3bit_0> of sequential type is unconnected in block <snake>.
+WARNING:Xst:2042 - Unit spi: 7 internal tristates are replaced by logic (pull-up yes): flags<0>, flags<1>, flags<2>, flags<3>, flags<4>, flags<5>, flags<6>.
+
+Optimizing unit <snake> ...
+
+Optimizing unit <GPU> ...
+
+Optimizing unit <UART> ...
+
+Optimizing unit <shiftregi> ...
+
+Optimizing unit <GMEM> ...
+
+Optimizing unit <leddriver> ...
 WARNING:Xst:2677 - Node <uart_inst/uart_word_flipflop> of sequential type is unconnected in block <snake>.
+WARNING:Xst:2677 - Node <uart_inst/shiftreg/regi_0> of sequential type is unconnected in block <snake>.
 WARNING:Xst:2677 - Node <uart_inst/regi1/regi_0> of sequential type is unconnected in block <snake>.
 WARNING:Xst:2677 - Node <uart_inst/regi1/regi_1> of sequential type is unconnected in block <snake>.
 WARNING:Xst:2677 - Node <uart_inst/regi1/regi_2> of sequential type is unconnected in block <snake>.
@@ -5622,26 +5398,19 @@ WARNING:Xst:2677 - Node <uart_inst/count_0> of sequential type is unconnected in
 WARNING:Xst:2677 - Node <uart_inst/uart2> of sequential type is unconnected in block <snake>.
 WARNING:Xst:2677 - Node <uart_inst/cur_byte> of sequential type is unconnected in block <snake>.
 WARNING:Xst:2677 - Node <uart_inst/uart1> of sequential type is unconnected in block <snake>.
-WARNING:Xst:2973 - All outputs of instance <uart_inst/shiftreg> of block <shiftregi> are unconnected in block <snake>. Underlying logic will be removed.
-
-Optimizing unit <snake> ...
-
-Optimizing unit <GPU> ...
-
-Optimizing unit <shiftregi> ...
-
-Optimizing unit <leddriver> ...
-WARNING:Xst:1710 - FF/Latch <leddriver_inst/segments_6> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <leddriver_inst/segments_5> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <leddriver_inst/segments_4> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <leddriver_inst/segments_3> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <leddriver_inst/segments_2> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <leddriver_inst/segments_1> (without init value) has a constant value of 0 in block <snake>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <leddriver_inst/segments_0> (without init value) has a constant value of 1 in block <snake>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:2677 - Node <uart_inst/shiftreg/regi_9> of sequential type is unconnected in block <snake>.
+WARNING:Xst:2677 - Node <uart_inst/shiftreg/regi_8> of sequential type is unconnected in block <snake>.
+WARNING:Xst:2677 - Node <uart_inst/shiftreg/regi_7> of sequential type is unconnected in block <snake>.
+WARNING:Xst:2677 - Node <uart_inst/shiftreg/regi_6> of sequential type is unconnected in block <snake>.
+WARNING:Xst:2677 - Node <uart_inst/shiftreg/regi_5> of sequential type is unconnected in block <snake>.
+WARNING:Xst:2677 - Node <uart_inst/shiftreg/regi_4> of sequential type is unconnected in block <snake>.
+WARNING:Xst:2677 - Node <uart_inst/shiftreg/regi_3> of sequential type is unconnected in block <snake>.
+WARNING:Xst:2677 - Node <uart_inst/shiftreg/regi_2> of sequential type is unconnected in block <snake>.
+WARNING:Xst:2677 - Node <uart_inst/shiftreg/regi_1> of sequential type is unconnected in block <snake>.
 
 Mapping all equations...
 Building and optimizing final netlist ...
-Found area constraint ratio of 100 (+ 0) on block snake, actual ratio is 7.
+Found area constraint ratio of 100 (+ 0) on block snake, actual ratio is 12.
 
 Final Macro Processing ...
 
@@ -5649,8 +5418,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 306
- Flip-Flops                                            : 306
+# Registers                                            : 533
+ Flip-Flops                                            : 533
 
 =========================================================================
 
@@ -5673,26 +5442,28 @@ Top Level Output File Name         : design.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 608
+# BELS                             : 1260
 #      GND                         : 1
-#      INV                         : 4
-#      LUT1                        : 35
-#      LUT2                        : 269
-#      LUT3                        : 5
-#      LUT4                        : 29
-#      LUT5                        : 67
-#      LUT6                        : 88
-#      MUXCY                       : 35
+#      INV                         : 8
+#      LUT1                        : 103
+#      LUT2                        : 304
+#      LUT3                        : 44
+#      LUT4                        : 190
+#      LUT5                        : 104
+#      LUT6                        : 260
+#      MUXCY                       : 99
 #      MUXF7                       : 36
 #      VCC                         : 1
-#      XORCY                       : 38
-# FlipFlops/Latches                : 306
-#      FD                          : 304
-#      FDR                         : 2
+#      XORCY                       : 110
+# FlipFlops/Latches                : 533
+#      FD                          : 409
+#      FDE                         : 92
+#      FDR                         : 10
+#      FDRE                        : 22
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
-# IO Buffers                       : 43
-#      IBUF                        : 9
+# IO Buffers                       : 47
+#      IBUF                        : 13
 #      OBUF                        : 34
 
 Device utilization summary:
@@ -5702,20 +5473,20 @@ Selected Device : 6slx16csg324-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:             306  out of  18224     1%  
- Number of Slice LUTs:                  497  out of   9112     5%  
-    Number used as Logic:               497  out of   9112     5%  
+ Number of Slice Registers:             533  out of  18224     2%  
+ Number of Slice LUTs:                 1013  out of   9112    11%  
+    Number used as Logic:              1013  out of   9112    11%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    497
-   Number with an unused Flip Flop:     191  out of    497    38%  
-   Number with an unused LUT:             0  out of    497     0%  
-   Number of fully used LUT-FF pairs:   306  out of    497    61%  
-   Number of unique control sets:         2
+ Number of LUT Flip Flop pairs used:   1013
+   Number with an unused Flip Flop:     480  out of   1013    47%  
+   Number with an unused LUT:             0  out of   1013     0%  
+   Number of fully used LUT-FF pairs:   533  out of   1013    52%  
+   Number of unique control sets:        15
 
 IO Utilization: 
  Number of IOs:                          49
- Number of bonded IOBs:                  44  out of    232    18%  
+ Number of bonded IOBs:                  48  out of    232    20%  
 
 Specific Feature Utilization:
  Number of BUFG/BUFGCTRLs:                1  out of     16     6%  
@@ -5741,7 +5512,7 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-clk                                | BUFGP                  | 306   |
+clk                                | BUFGP                  | 533   |
 -----------------------------------+------------------------+-------+
 
 Asynchronous Control Signals Information:
@@ -5752,9 +5523,9 @@ Timing Summary:
 ---------------
 Speed Grade: -3
 
-   Minimum period: 4.527ns (Maximum Frequency: 220.911MHz)
-   Minimum input arrival time before clock: 5.021ns
-   Maximum output required time after clock: 12.091ns
+   Minimum period: 5.395ns (Maximum Frequency: 185.347MHz)
+   Minimum input arrival time before clock: 5.027ns
+   Maximum output required time after clock: 11.485ns
    Maximum combinational path delay: 6.044ns
 
 Timing Details:
@@ -5763,55 +5534,54 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk'
-  Clock period: 4.527ns (frequency: 220.911MHz)
-  Total number of paths / destination ports: 1090 / 308
+  Clock period: 5.395ns (frequency: 185.347MHz)
+  Total number of paths / destination ports: 10390 / 679
 -------------------------------------------------------------------------
-Delay:               4.527ns (Levels of Logic = 4)
-  Source:            gpu_inst/pxY_8 (FF)
-  Destination:       gpu_inst/pxY_0 (FF)
+Delay:               5.395ns (Levels of Logic = 4)
+  Source:            spi_inst/SPIGEN[3].spi_inst/count10bit_6 (FF)
+  Destination:       spi_inst/SPIGEN[3].spi_inst/count10bit_8 (FF)
   Source Clock:      clk rising
   Destination Clock: clk rising
 
-  Data Path: gpu_inst/pxY_8 to gpu_inst/pxY_0
+  Data Path: spi_inst/SPIGEN[3].spi_inst/count10bit_6 to spi_inst/SPIGEN[3].spi_inst/count10bit_8
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q               7   0.447   1.002  gpu_inst/pxY_8 (gpu_inst/pxY_8)
-     LUT3:I0->O            1   0.205   0.580  gpu_inst/GND_94_o_GND_94_o_OR_103_o2_SW0 (N16)
-     LUT6:I5->O            2   0.205   0.721  gpu_inst/GND_94_o_GND_94_o_OR_103_o2 (gpu_inst/N8)
-     LUT6:I4->O           10   0.203   0.857  gpu_inst/Mcount_pxY_val1 (gpu_inst/Mcount_pxY_val)
-     LUT4:I3->O            1   0.205   0.000  gpu_inst/pxY_0_rstpot (gpu_inst/pxY_0_rstpot)
-     FD:D                      0.102          gpu_inst/pxY_0
+     FD:C->Q               3   0.447   0.898  spi_inst/SPIGEN[3].spi_inst/count10bit_6 (spi_inst/SPIGEN[3].spi_inst/count10bit_6)
+     LUT4:I0->O            1   0.203   0.580  spi_inst/SPIGEN[3].spi_inst/_n0367_inv1_SW0 (N102)
+     LUT6:I5->O           37   0.205   1.591  spi_inst/SPIGEN[3].spi_inst/_n0367_inv1 (N10)
+     LUT5:I2->O           10   0.205   0.961  spi_inst/SPIGEN[3].spi_inst/Mcount_count10bit_val1 (spi_inst/SPIGEN[3].spi_inst/Mcount_count10bit_val)
+     LUT4:I2->O            1   0.203   0.000  spi_inst/SPIGEN[3].spi_inst/count10bit_8_rstpot (spi_inst/SPIGEN[3].spi_inst/count10bit_8_rstpot)
+     FD:D                      0.102          spi_inst/SPIGEN[3].spi_inst/count10bit_8
     ----------------------------------------
-    Total                      4.527ns (1.367ns logic, 3.160ns route)
-                                       (30.2% logic, 69.8% route)
+    Total                      5.395ns (1.365ns logic, 4.030ns route)
+                                       (25.3% logic, 74.7% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
-  Total number of paths / destination ports: 284 / 284
+  Total number of paths / destination ports: 300 / 300
 -------------------------------------------------------------------------
-Offset:              5.021ns (Levels of Logic = 3)
+Offset:              5.027ns (Levels of Logic = 2)
   Source:            rst (PAD)
-  Destination:       gpu_inst/pxY_0 (FF)
+  Destination:       gpu_inst/pxX_0 (FF)
   Destination Clock: clk rising
 
-  Data Path: rst to gpu_inst/pxY_0
+  Data Path: rst to gpu_inst/pxX_0
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O           265   1.222   2.432  rst_IBUF (rst_IBUF)
-     LUT6:I0->O           10   0.203   0.857  gpu_inst/Mcount_pxY_val1 (gpu_inst/Mcount_pxY_val)
-     LUT4:I3->O            1   0.205   0.000  gpu_inst/pxY_0_rstpot (gpu_inst/pxY_0_rstpot)
-     FD:D                      0.102          gpu_inst/pxY_0
+     IBUF:I->O           274   1.222   2.316  rst_IBUF (rst_IBUF)
+     LUT4:I0->O           10   0.203   0.856  gpu_inst/Mcount_pxX_val2 (gpu_inst/Mcount_pxX_val)
+     FDRE:R                    0.430          gpu_inst/pxX_0
     ----------------------------------------
-    Total                      5.021ns (1.732ns logic, 3.289ns route)
-                                       (34.5% logic, 65.5% route)
+    Total                      5.027ns (1.855ns logic, 3.172ns route)
+                                       (36.9% logic, 63.1% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
-  Total number of paths / destination ports: 10206 / 14
+  Total number of paths / destination ports: 10225 / 33
 -------------------------------------------------------------------------
-Offset:              12.091ns (Levels of Logic = 9)
+Offset:              11.485ns (Levels of Logic = 9)
   Source:            gpu_inst/pxX_7 (FF)
   Destination:       vgaRed<2> (PAD)
   Source Clock:      clk rising
@@ -5820,10 +5590,10 @@ Offset:              12.091ns (Levels of Logic = 9)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q              74   0.447   1.706  gpu_inst/pxX_7 (gpu_inst/pxX_7)
-     LUT5:I4->O          128   0.205   2.295  gmem_inst/mux60121 (N3)
-     LUT5:I0->O            1   0.203   0.580  gmem_inst/mux10211 (gmem_inst/read_adr[9]_mem[31][25][3]_wide_mux_4155_OUT<2>)
-     LUT6:I5->O            1   0.205   0.000  gmem_inst/Mmux_tile_type_out_87_G (N65)
+     FDRE:C->Q            11   0.447   1.227  gpu_inst/pxX_7 (gpu_inst/pxX_7)
+     LUT5:I0->O          124   0.203   2.169  gmem_inst/mux60112 (gmem_inst/N2)
+     LUT4:I1->O            1   0.205   0.580  gmem_inst/mux10211 (gmem_inst/read_adr[9]_mem[31][25][3]_wide_mux_4155_OUT<2>)
+     LUT6:I5->O            1   0.205   0.000  gmem_inst/Mmux_tile_type_out_87_G (N389)
      MUXF7:I1->O           1   0.140   0.827  gmem_inst/Mmux_tile_type_out_87 (gmem_inst/Mmux_tile_type_out_87)
      LUT6:I2->O            1   0.203   0.000  gmem_inst/Mmux_tile_type_out_32 (gmem_inst/Mmux_tile_type_out_32)
      MUXF7:I1->O           3   0.140   0.898  gmem_inst/Mmux_tile_type_out_2_f7_1 (gmem_tile_type_out<2>)
@@ -5831,8 +5601,8 @@ Offset:              12.091ns (Levels of Logic = 9)
      LUT4:I3->O            1   0.205   0.579  gpu_inst/Mmux_vgaGreen31 (vgaGreen_2_OBUF)
      OBUF:I->O                 2.571          vgaGreen_2_OBUF (vgaGreen<2>)
     ----------------------------------------
-    Total                     12.091ns (4.522ns logic, 7.569ns route)
-                                       (37.4% logic, 62.6% route)
+    Total                     11.485ns (4.522ns logic, 6.963ns route)
+                                       (39.4% logic, 60.6% route)
 
 =========================================================================
 Timing constraint: Default path analysis
@@ -5847,7 +5617,7 @@ Delay:               6.044ns (Levels of Logic = 4)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      IBUF:I->O             1   1.222   0.684  sw_6_IBUF (sw_6_IBUF)
-     LUT2:I0->O            1   0.203   0.580  gpu_inst/Mmux_vgaRed2_SW0 (N10)
+     LUT2:I0->O            1   0.203   0.580  gpu_inst/Mmux_vgaRed2_SW0 (N126)
      LUT6:I5->O            1   0.205   0.579  gpu_inst/Mmux_vgaRed2 (vgaRed_1_OBUF)
      OBUF:I->O                 2.571          vgaRed_1_OBUF (vgaRed<1>)
     ----------------------------------------
@@ -5864,21 +5634,21 @@ Clock to Setup on destination clock clk
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-clk            |    4.527|         |         |         |
+clk            |    5.395|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
-Total REAL time to Xst completion: 14.00 secs
-Total CPU time to Xst completion: 13.15 secs
+Total REAL time to Xst completion: 12.00 secs
+Total CPU time to Xst completion: 10.34 secs
  
 --> 
 
 
-Total memory usage is 571436 kilobytes
+Total memory usage is 572096 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings : 4143 (   0 filtered)
+Number of warnings : 3915 (   0 filtered)
 Number of infos    :    6 (   0 filtered)
 
