@@ -74,36 +74,48 @@ MENULOOPXRETURN
 	
 	ADD #1, Gr12;
 	CMP #32, Gr12;
-	BEQ #MENULOOPY; om vi har loopat genm en hel rad, gå till nästa y
-	BRA #MENULOOPX; annars, fortsätt på denna rad
+	BNE #MENULOOPX; om vi inte loopat fördigt på x, gör det igen
+	;annars, gå vidare ner till Y
 	
-MENULOOPY
+	;LOOP Y
 	ADD #1, Gr13;
 	CMP #32, Gr13;
-	BEQ #MENULOOP; har vi loopat genom alla rader har vi printat hela bilden och kan gå vidare
+	LOAD #0, Gr12; nollställ X, på nästa rad
+	BNE #MENULOOPX; om vi inte loopat färdigt på Y, fortsätt loopa
+	;annars (vi har loopat färdigt), gå vidare
 	
-	BRA #MENULOOPX; annars, fortsätt på nästa rad
 	
 	
 MENULOOP
 	;ladda in data från joystick1 till $D00 = 3328 i minnet
 	;TODO ovan
-	
-	;kolla om det är under eller över threshhold för att gå vidare
-	
-	;ladda joysticks första word för jämförelse
-	MLOAD #$D00, Gr0, 0 ;TODO kolla upp syntax o sånt
-	CMP #NÅTTHRESHHOLD, Gr0 ;kolla om vi är över gränsen för att faktiskt räknas som ett val
-	BLT #LEFTDIRSPEED
-	
-	;TODO: fortsätt åt andra håll
+	SPI Gr0; ladda SPI-data till gr0
+	CMP #UP, Gr0;
+	BEQ #UPDIRSPEED;
+	CMP #RIGHT, Gr0;
+	BEQ #RIGHTDIRSPEED;
+	CMP #DOWN, Gr0;
+	BEQ #DOWNDIRSPEED;
+	CMP #LEFT, Gr0;
+	BEQ #LEFTDIRSPEED;
+	BRA #MENULOOP; var inget håll, fortsätt kolla.
 
-LEFTDIRSPEED
-	MSTORE #$CC1, #NÅNHASTIGHET; lägg in en hastighet på rätt minnesplats
-	BRA #UART
 UPDIRSPEED
+	LOAD  #1000, Gr0;
+	BRA #STORESPEED;
 RIGHTDIRSPEED
+	LOAD  #800, Gr0;
+	BRA #STORESPEED,
 DOWNDIRSPEED
+	LOAD  #600, Gr0;
+	BRA #STORESPEED;
+LEFTDIRSPEED
+	LOAD  #400, Gr0;
+	BRA #STORESPEED;
+
+STORESPEED
+	STORE #$CC1, Gr0; lägg in vald hastighet på rätt minnesplats
+	;gå vidare till UART
 
 ;-------------------------------------------UART-DELEN----------------
 	
