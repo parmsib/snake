@@ -8,17 +8,14 @@
 # //  OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS
 # //  AND IS SUBJECT TO LICENSE TERMS.
 # //
-# vsim SPI_tb 
+# vsim ALU_tb 
 # ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Note: (vopt-143) Recognized '1' FSM/s in design unit 'spi.behav'.
 # Loading std.standard
 # Loading ieee.std_logic_1164(body)
 # Loading ieee.numeric_std(body)
-# Loading work.spi_tb(behv)#1
 # Loading ieee.std_logic_arith(body)
 # Loading ieee.std_logic_unsigned(body)
-# Loading work.spi(behav)#1
-add wave -r /*
-run 1ms
-# ** Note: Reset released
-#    Time: 505 ns  Iteration: 1  Instance: /spi_tb
+# Loading work.alu_tb(behv)#1
+# Loading work.alu(behav)#1
+add wave sim:/alu_tb/uut/*
+run 320ns
