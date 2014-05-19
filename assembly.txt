@@ -128,7 +128,7 @@ UARTREADY
 	LOADUART Gr1; ladda Uart-wordet till Gr1
 	STORE #$C80, Gr1, Gr0; Lägg till wordet på rätt ställe. använder Gr0 som index
 	ADD #1, Gr0; incrementera countern
-	CMP Gr0, #64; kolla om vi är färdiga
+	CMP #64, Gr0; kolla om vi är färdiga
 	BEQ #GAME; isf, hoppa till spelet
 	BRA #UARTLOOP; annars, fortsätt leta words
 	
@@ -146,9 +146,9 @@ GAME
 	
 	LOAD #16, Gr12; sätt äpplet i mitten
 	LOAD #16, Gr13;
-	LOAD #GAMECONTINUE, Gr14;
+	LOAD #GAMERETURN, Gr14; förbered TOGMEM-kall
 	BRA #TOGMEM;
-GAMECONTINUE
+GAMERETURN
 	STORE $CC0, Gr15; spara adressen till äpplet
 	
 	
@@ -244,33 +244,42 @@ SNAKERETURNA
 	CMP #LEFT, Gr0;
 	BEQ #SNAKELEFT1;
 	;annars (inget håll nedtryckt):
-	
-	
-	
-	;ta reda på SPI-data för snake 1
-	;TODO FIXA JOYSTICK
-	;välj direction baserat på SPI-data
+	LOAD $AFE, Gr1; ladda in gammal direction
+	CMP #0, Gr1;
+	BEQ #SNAKEUP1;
+	CMP #1, Gr1;
+	BEQ #SNAKERIGHT1;
+	CMP #2, Gr1;
+	BEQ #SNAKEDOWN1;
+	CMP #3, Gr1;
+	BEQ #SNAKELEFT1;
+	;har vi inte hittat nåt håll än, you dun goofed
 	
 SNAKEUP1
+	LOAD #0, Gr2; spara håll till store senare
 	SUB #1, Gr13; minska Y med 1
 	BRA #SNAKESTOREHEADPOS
 SNAKERIGHT1
+	LOAD #1, Gr2; spara håll till store senare
 	ADD #1, Gr12; öka X med 1
 	BRA #SNAKESTOREHEADPOS
 SNAKEDOWN1
+	LOAD #2, Gr2; spara håll till store senare
 	ADD #1, Gr13; öka Y med 1
 	BRA #SNAKESTOREHEADPOS
 SNAKELEFT1
+	LOAD #3, Gr2; spara håll till store senare
 	SUB #1, Gr12; minska X med 1
 	BRA #SNAKESTOREHEADPOS
 	
 	
 SNAKESTOREHEADPOS
+	STORE $AFE, Gr2; spara håll till orm1s senaste valda håll
 	LOAD #SNAKERETURNB, Gr14;
 	BRA #TOGMEM; formatera tillbaka till GMEM-form
 SNAKERETURNB 
 	;Nu ligger första ormens nya huvudposition i Gr15, formaterat för Gmem
-	STORE $D00; Spara huvudets position för senare användning
+	STORE $D00, Gr15; Spara huvudets position för senare användning
 	
 ; PASTA IN ORM2 HÄR!
 	
@@ -283,7 +292,7 @@ SNAKERETURNB
 	MOD #62, Gr0; cirkulär lista. orm-array max 62 lång.
 	LOAD $D00, Gr1; ladda in nya huvudpos till Gr1
 	STORE $C00, Gr1, Gr0; spara nya huvudpos på huvudplatsen i orm-arrayen
-	STORE $C3E, Gr0; lägg tillbaka nya huvudplatsen igen
+	STORE $C3E, Gr0; lägg tillbaka nya huvudplatsen
 	
 ;PASTA IN ORM 2 HÄR!
 	
@@ -302,8 +311,8 @@ SNAKERETURNB
 	STORE $AFD, Gr3; spara tillbaka den inkrementade scoren
 	;--fixa nytt äpple
 PLACEAPPLELOOP
-	RAND Gr0; cell X
-	RAND Gr1; cell Y
+	RAND Gr12; cell X
+	RAND Gr13; cell Y
 	;förbered kall till TOGMEM
 	LOAD #PLACEAPPLERETURN, Gr14;
 	STORE $DB0, Gr0; spara undan Gr0 och Gr1
@@ -311,7 +320,7 @@ PLACEAPPLELOOP
 	BRA #TOGMEM;
 PLACEAPPLERETURN1
 	;nu innehåller Gr15 X och Y på GMEM-format
-	;förbered kall till BETOBSTACLEBYGMEM
+	;förbered kall till GETOBSTACLEBYGMEM
 	LOAD #PLACEAPPLERETURN2, Gr14;
 	BRA #GETOBSTACLEBYGMEM;
 PLACEAPPLERETURN2
@@ -323,7 +332,8 @@ PLACEAPPLERETURN2
 	;nu bara lägger jag ut den utan att ta i akt ormarna
 	STORE $CC0, Gr15; Spara (X, Y) som äpplets pos
 	LOAD #$4000, Gr8; måla (X, Y) med äppel-tile
-	GSTORE Gr8;
+	GSTORE Gr8; adressen ligger redan i (X, Y)
+	GSTORE Gr8; adressen ligger redan i (X, Y)
 	
 	
 	
@@ -332,22 +342,22 @@ PLACEAPPLERETURN2
 SNAKECHECKMAP1
 	;karta
 	;förbered för GETOBSTACLEBYGMEM
-	LOAD $D00, Gr15; pos
+	LOAD $D00, Gr15; huvudpos sen tidigare sparad
 	LOAD #SNAKEHITRETURN1, Gr14; returnadress
 	BRA #GETOBSTACLEBYGMEM; gör kallet
 SNAKEHITRETURN1
 	;nu ligger det FFFF i Gr11 om det är ett hinder på pos
 	CMP #$FFFF, Gr11;
-	BNE #SNAKEMOVETAIL; om en hinder i vägen, gå vidare
+	BNE #SNAKEMOVETAIL; om inte hinder i vägen, gå vidare
 	;annars (hinder i vägen)
-	BRA #MENU; gå till menyn
+	BRA #MENU; förlorat, gå till menyn
 	
 SNAKEMOVETAIL1
 	LOAD $C3F, Gr0; ladda in svanspekaren för orm 1
 	LOAD $C00, Gr15, Gr0; ladda gamla svanspos tills senare
 	ADD #1, Gr0; öka pekaren med ett
 	MOD #62, Gr0; cirkulär array
-	STORE $C3F, Gr0; lägg tillbaka igen
+	STORE $C3F, Gr0; lägg tillbaka inkrementerad pekre
 	
 	;dags att måla tomt där svansen var
 	;har redan gamla svansposen i Gr15
@@ -355,31 +365,32 @@ SNAKEMOVETAIL1
 	GSTORE Gr8; 
 
 SNAKECHECKHITPLAYER1
-	LOAD $C7E, Gr0; ladda andra ormens head-pointer, som loopas över
-	;LOAD $C7F, Gr1; tail-pointer, som skall loopas till
+	LOAD $C7F, Gr0; ladda andra ormens tail-pointer, som loopas över
 	LOAD $C3E, Gr2; ladda denna orms huvud-pointer
 	LOAD $C00, Gr2, Gr2; ladda denna orms huvudpos
-	STORE $D00, Gr2; spara huvudpos på $D00
+	STORE $D00, Gr2; spara huvudpos på $D00 (var antagligen redan pos på $D00)
 SNAKEHITLOOP1
 	LOAD $C40, Gr3, Gr0; ladda nuvarande dels pos
 	CMP $D00, Gr3; jämför current dels pos med huvudpos
 	BNE #SNAKELOOPCONTINUE1; om inte träff
-	BRA #MENU; annars
+	BRA #MENU; annars har vi förlorat
 SNAKELOOPCONTINUE1
 	;kan passa på att rita ut ormen när vi ändå  loopar genom den
-	LOAD $C40, Gr15, Gr0; spara cur pos i Gr15, för att rita ut till GMEM
-	LOAD #$3000, Gr8;
-	GSTORE Gr8; rita orm2-tile på cur pos.
+	LOAD $C40, Gr15, Gr0; spara cur dels pos i Gr15, för att rita ut till GMEM
+	LOAD #$3000, Gr8; orm2-tile
+	GSTORE Gr8; rita orm2-tile på cur dels pos.
 	;sätt fram current-pointern och kolla slut etc
 	ADD #1, Gr0;
 	MOD #62, Gr0; cirkulär lista
-	CMP $C7F, Gr0; Jämför nuvarande dels pointer med tailpointer
+	CMP $C7E, Gr0; Jämför nuvarande dels pointer med headpointer
 	BNE #SNAKEHITLOOP1; om inte samma, fortsätt loopa
-	;annars, fortsätt programmet
+	;annars (samma, loopat klart), fortsätt programmet
 	
 ;PASTA ORM 2 HÄR!
 
 ;--------------------------SPELHASTIGHET----------------
+; us och ms är egentligen verkligen inte en mikro eller millisekund
+; de är mycket större än så
 
 	LOAD #0, Gr0; usec counter
 	LOAD #0, Gr1; msec counter
