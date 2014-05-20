@@ -11,14 +11,14 @@ Z4 o-quiet -auto_acc_if_foreign -work work
 Z5 n@_opt
 Z6 OE;O;6.5c;42
 T_opt1
-Z7 V_HC3I3TORJF?8cGKKai4:1
+Z7 VeYXLVZ[_<22jdzVCIZeYD2
 R2
-Z8 =1--537552d3-1f2e7-6831
+Z8 =1--537b8da8-d83fd-30b9
 R4
 Z9 n@_opt1
 R6
 Ealu
-Z10 w1400197830
+Z10 w1400606115
 Z11 DPx17 __model_tech/ieee 11 numeric_std 0 22 =NSdli^?T5OD8;4F<blj<3
 Z12 DPx17 __model_tech/ieee 15 std_logic_arith 0 22 GJbAT?7@hRQU9IQ702DT]2
 Z13 DPx17 __model_tech/ieee 18 std_logic_unsigned 0 22 hEMVMlaNCR^<OOoVNV;m90
@@ -28,31 +28,31 @@ Z15 8../CPU/alu.vhd
 Z16 F../CPU/alu.vhd
 l0
 L6
-Z17 VX8mzDh^hBUzDRAldJaMYU3
+Z17 VYnSSHZC02Th_YB?zn;on03
 Z18 OE;C;6.5c;42
 o+acc
 Z19 tExplicit 1
-Z20 !s100 4<XX64a5_L:g]PNZ52gGN3
+Z20 !s100 bP`@hPAXfE^BZc>lRZcY^0
 Abehav
 R11
 R12
 R13
 R14
-Z21 DEx44 /edu/tobhu543/TSEA83/projekt/lab-simdir/work 3 alu 0 22 X8mzDh^hBUzDRAldJaMYU3
+Z21 DEx44 /edu/tobhu543/TSEA83/projekt/lab-simdir/work 3 alu 0 22 YnSSHZC02Th_YB?zn;on03
 32
 Z22 Mx4 17 __model_tech/ieee 14 std_logic_1164
 Mx3 17 __model_tech/ieee 18 std_logic_unsigned
 Mx2 17 __model_tech/ieee 15 std_logic_arith
 Mx1 17 __model_tech/ieee 11 numeric_std
-l24
-L17
-Z23 VYUARZDZzJK_I]nSz7Z2f;1
+l28
+L16
+Z23 VCE7fETNKYKc<jZOfz4GJM0
 R18
 o+acc
 R19
-Z24 !s100 O5Rf>@><[=@FP9>iOmg;K2
+Z24 !s100 NQ02NgzLMnLd_5^6j1g;Q0
 Ealu_tb
-Z25 w1400197526
+Z25 w1400603154
 R12
 R13
 R11
@@ -79,13 +79,13 @@ R22
 Mx3 17 __model_tech/ieee 11 numeric_std
 Mx2 17 __model_tech/ieee 18 std_logic_unsigned
 Mx1 17 __model_tech/ieee 15 std_logic_arith
-l36
+l35
 L9
-Z30 Vam9I]naKO6lD45iga]1:]1
+Z30 VjAN[1kg7:UJ=4oAJaWDjh2
 R18
 o+acc
 R19
-Z31 !s100 9NPz^2g9eXT4R>bm<TG]G2
+Z31 !s100 A0e_I`OG?<V04OgOdKhbD0
 Egmem
 Z32 w1399908526
 Z33 DPx4 ieee 15 std_logic_arith 0 22 GJbAT?7@hRQU9IQ702DT]2

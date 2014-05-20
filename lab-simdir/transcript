@@ -19,3 +19,41 @@
 # Loading work.alu(behav)#1
 add wave sim:/alu_tb/uut/*
 run 320ns
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 120 ns  Iteration: 1  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 120 ns  Iteration: 2  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 125 ns  Iteration: 2  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 130 ns  Iteration: 2  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 130 ns  Iteration: 3  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 130 ns  Iteration: 4  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 135 ns  Iteration: 2  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 140 ns  Iteration: 2  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 140 ns  Iteration: 3  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 140 ns  Iteration: 4  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 145 ns  Iteration: 2  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 150 ns  Iteration: 2  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 150 ns  Iteration: 3  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 150 ns  Iteration: 4  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 155 ns  Iteration: 2  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 160 ns  Iteration: 2  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 160 ns  Iteration: 3  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 160 ns  Iteration: 4  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
+#    Time: 165 ns  Iteration: 2  Instance: /alu_tb/uut

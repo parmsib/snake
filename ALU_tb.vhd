@@ -7,13 +7,12 @@ ENTITY ALU_tb IS
 END ALU_tb;
 
 architecture behv of ALU_tb is
-	component alu port(	
-		clk : in std_logic;
-		frombuss : in std_logic_vector(15 downto 0);
-		tobuss : out std_logic_vector(15 downto 0);
-		ALU : in std_logic_vector(3 downto 0);
-		tobus : in std_logic_vector(3 downto 0);
-		flags : out std_logic_vector(6 downto 0)
+	component alu port ( 	
+			clk : in std_logic;
+			buss : inout std_logic_vector(15 downto 0);
+			alu_styr : in std_logic_vector(3 downto 0);
+			tobus : in std_logic_vector(3 downto 0);
+			flags : inout std_logic_vector(6 downto 0)
 		);
 	end component;
 	SIGNAL clk : std_logic := '0';
@@ -25,20 +24,19 @@ architecture behv of ALU_tb is
 	signal dflags : std_logic_vector(6 downto 0) := "0000000";
 	signal tobus : std_logic_vector(3 downto 0) := "0000";
 
-	signal dalu : std_logic_vector(3 downto 0) := "0100";
+	signal dalu : std_logic_vector(3 downto 0) := "0000";
 	type arr is array(0 to 3) of std_logic_vector(15 downto 0);
 	signal buss_tmp : arr := (0 => X"0FF0",
 				  1 => X"03FF",
 				  2 => X"0FF0",
 				  3 => X"FF02");
 	signal dbus_tmp : std_logic_vector(15 downto 0) := "0000000000000000"; 
-	signal dalu_tmp : std_logic_vector(3 downto 0) := "0100";
+	signal dalu_tmp : std_logic_vector(3 downto 0) := "0000";
 begin
 	uut: alu port map(	
 		clk => clk,
-		frombuss => dbus,
-		tobuss => dbus2,
-		ALU => dalu,
+		buss => dbus,
+		alu_styr => dalu,
 		tobus => tobus,
 		flags => dflags
 		);					

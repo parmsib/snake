@@ -18,7 +18,7 @@ architecture behav of grx is
 	signal in_tmp : REG;
 	signal out_tmp : REG;
 begin
-	process (clk,reader, writer)
+	process (reader, writer)
 	begin
 		if clk'rising_edge then
 			if tobus="0110" then

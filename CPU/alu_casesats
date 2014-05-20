@@ -1,0 +1,60 @@
+case alu_styr is
+			when "0000" =>	-- NOP
+				alu_out <= alu_out;
+				alu_out_extra <= alu_out_extra;
+			when "0001" =>	-- ar = buss
+				alu_out <= signed_buss;
+			when "0010" =>	-- ar = not buss
+				alu_out <= 65535 - signed_buss;
+			when "0011" =>	-- ar = 0
+				alu_out <= to_signed(0, 16);	
+			when "0100" =>	-- ar = ar + buss
+				alu_out <= signed(ar) + signed_buss;
+				alu_out_extra <= signed('0' & ar) + ('0' & signed_buss);
+			when "0101" =>	-- ar = ar - buss
+				alu_out <= signed(ar) - signed_buss;
+				alu_out_extra <= signed('0' & ar) - ('0' & signed_buss);
+			when "0110" =>	-- ar = ar & buss
+				alu_out <= signed(unsigned(ar) and unsigned(buss));
+			when "0111" =>	-- ar = ar | buss
+				alu_out <= signed(unsigned(ar) or unsigned(buss));
+			when "1000" =>	-- ar = ar + buss (inga flaggor)
+				alu_out <= signed(ar) + signed_buss;
+			when "1001" =>	-- INITIERA RANDOM
+				random_reg(31) <= '1';
+				random_reg(30 downto 28) <= ar(2 downto 0);
+				random_reg(27 downto 24) <= not ar(3 downto 0);
+				random_reg(23 downto 20) <= ar(3 downto 0) xor not ar(3 downto 0);
+				random_reg(19 downto 16) <= ar(1 downto 0) & ar(3 downto 2);
+				random_reg(15 downto 12) <= ar(3 downto 0);
+				random_reg(23 downto 20) <= not (ar(3 downto 0) xor not ar(3 downto 0));
+				random_reg(19 downto 16) <= not (ar(1 downto 0) & ar(3 downto 2));
+				random_reg(15 downto 12) <= ar(3 downto 0);
+				random_reg(11 downto 8) <= not ar(3 downto 0);
+				random_reg(7 downto 2) <= ar(5 downto 0);
+				random_reg(1 downto 0) <= "01";
+			when "1010" =>	-- ar = RANDOM 0 till buss
+				if signed_buss /= 0 then
+					alu_out <= signed(random_reg(15 downto 0)) - 
+							signed(random_reg(15 downto 0)) / signed_buss; 
+				end if;
+			when "1011" =>	-- ar = ar << 1
+				alu_out <= alu_out(14 downto 0) & '0';
+				alu_out_extra <= alu_out(15 downto 0) & '0';
+			when "1100" =>	-- ar = ar >> 1
+				alu_out <= '0' & alu_out(15 downto 1);
+				alu_out_extra <= alu_out(0) & alu_out(15 downto 0);
+			when "1101" =>	-- ar = ar * buss
+				alu_out <= signed(ar(7 downto 0)) * signed_buss(7 downto 0);
+			when "1110" =>	-- ar = ar / buss
+				if signed_buss /= 0 then
+					alu_out <= signed(ar) / signed_buss;
+				end if;
+			when "1111" =>	-- ar = ar mod buss
+				if signed_buss /= 0 then
+					alu_out <= signed(ar) - 
+							signed(ar) / signed_buss; 
+				end if;
+			when others =>
+				alu_out_extra <= alu_out_extra;
+			end case;
