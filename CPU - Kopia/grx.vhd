@@ -24,13 +24,21 @@ begin
 	process (clk)
 	begin
 		if rising_edge(clk) then
+			if tobus="0110" then
+				out_tmp <= gr(conv_integer(at));
+			else
+				out_tmp <= "ZZZZZZZZZZZZZZZZ";
+			end if;
+			if tobus="1110" then
+				out_tmp <= gr(conv_integer(ind));
+			else
+				out_tmp <= "ZZZZZZZZZZZZZZZZ";
+			end if;
 			if frombus="0110" then
-				gr(conv_integer(at)) <= in_tmp;
+				gr(conv_integer(at)) <= buss;
 			end if;
 		end if;
 	end process;
-	buss <= gr(conv_integer(at)) when tobus="0110" else "ZZZZZZZZZZZZZZZZ";
-	buss <= gr(conv_integer(ind)) when tobus="1110" else "ZZZZZZZZZZZZZZZZ";
-	in_tmp <= buss when frombus="0110" else gr(conv_integer(at));
+	buss <= out_tmp;
 	gr15 <= gr(15);
 end behav;

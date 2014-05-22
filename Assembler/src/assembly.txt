@@ -1,0 +1,424 @@
+﻿;kartan består av 32*32 bitar, där varje bit bestämmer om det är ett hinder i den cellen.
+;32 * 32 bitar = 1024 bitar = 64 words
+
+;var äpplet befinner sig bestäms av en word som beskriver X, och Y. 
+
+;krävs en word för att bestämma en cell (5 bitar för X, 5 bitar för Y. 2^5 = 32)
+;varje orm har en cirkulär array av celler den ockuperar, eller har ockuperat.
+;finns en head, och en tail, för varje orm som beskriver var i arrayen ormen börjar, och var den slutar.
+;en orm kan vara max 62 celler lång, så arrayen är 64 words (två extra för head och tail)
+
+;menyn behöver en statisk bild att visa. Den är 32*32*4 bitar stor = 256 words
+
+;karta över PM:
+;programmet börjar på 0 och växer neråt
+;Score ligger på $AFD
+;Orm1 föregående håll ligger på $AFE
+;Orm2 föregående håll ligger på $AFF
+;menybild ligger på minesadress $B00 - $BFF
+;orm1 ligger på minnesadress $C00 - $C3F = 3072 - 3135
+;orm2 ligger på minnesadress $C40 - C7F = 3136 - 3199
+;kartan ligger på minnesadress $C80 - $CBF = 3200 - 3263
+;äpplet ligger på minnesadress $CC0 = 3264
+;spelhastigheten (frame-tid i ms) ligger på minssadress $CC1 = 3265
+;random minne för implementationer läggs på $D00 - slut = 3328 - slut
+
+;Tiles:
+;	0000 = 0, tomt
+;   1111 = F, hinder
+;   0010 = 2, orm1
+;	0011 = 3, orm2
+;	0100 = 4, äpple
+
+;menyn fungerar så att joystick1 bestämmer spelhastighet med antingen höger, vänster, upp eller ner. Därefter går vi direkt till spelet
+
+;---------------------------------------MENU-DELEN-------------------
+
+MENU
+	LOAD #0, Gr12; ladda in 0 som startvärde för x
+	LOAD #0, Gr13; ladda in 0 som startvärde för y
+
+MENULOOPX
+	STORE #MENULOOPXRETURN, Gr14;
+	BRA #TOGMEM;
+MENULOOPXRETURN
+	;Nu innehåller Gr15 Y-adressen konkatenerat med X-adressen, redo för GMEM
+	
+	;Behöver indexera minnesrymden som innehåller menybilden.
+	STORE $D00, Gr13, Gr0; Lägg y * (32bitar = 8 words) i Gr2 som är word-index i statiska bilden
+	LOAD $D00, Gr2;
+	MUL #8, Gr2;
+	STORE $D00, Gr12; Lägg till x // 4 till Gr3, för att få rätt word-offset i x-led
+	LOAD $D00, Gr3; 
+	DIV #4, Gr3; heltalsdivision (avrunda nedåt)
+	STORE $D00, Gr3;
+	ADD $D00, Gr2;
+	;nu innehåller Gr2 hela adressen till det word som vår sökta tile ligger i
+	
+	;behöver ta reda på vilken tile i detta word vi är ute efter
+	STORE $D00, Gr12; Spara (x mod 4) - 1 till Gr3, vilket är tile-index i wordet
+	LOAD $D00, Gr3;
+	MOD #4, Gr3;
+	SUB #1, Gr3;
+	;nu innehåller Gr3 tile-index i wordet
+	
+	LOAD $B00, Gr4, Gr2; Ladda in rätt word från bilden till register 4
+	MUL #4, Gr3; multiplicera tile-index för att få hur långt vi måste shifta i wordet
+	STORE $D00, Gr4; Shifta wordet så att vår tile hamnar längs till vänster (MSBs, vilket är vad GMEMet tar från bussen)
+	LSL $D00, Gr4
+	AND Gr4, #$F000; ANDa bort de bitar som låg efter vår tile i wordet
+	
+	;Nu innehåller Gr4 den tile som ska ut på bussen och in i GMEM! :D
+	;Gr15 innehåller den adress i GMEM som tilen ska sparas på, vilket är enligt överenskommelse.
+	GSTORE Gr4;
+	
+	ADD #1, Gr12;
+	CMP #32, Gr12;
+	BNE #MENULOOPX; om vi inte loopat fördigt på x, gör det igen
+	;annars, gå vidare ner till Y
+	
+	;LOOP Y
+	ADD #1, Gr13;
+	CMP #32, Gr13;
+	LOAD #0, Gr12; nollställ X, på nästa rad
+	BNE #MENULOOPX; om vi inte loopat färdigt på Y, fortsätt loopa
+	;annars (vi har loopat färdigt), gå vidare
+	
+	
+	
+MENULOOP
+	SPI Gr0; ladda SPI-data till gr0
+	CMP #UP, Gr0;
+	BEQ #UPDIRSPEED;
+	CMP #RIGHT, Gr0;
+	BEQ #RIGHTDIRSPEED;
+	CMP #DOWN, Gr0;
+	BEQ #DOWNDIRSPEED;
+	CMP #LEFT, Gr0;
+	BEQ #LEFTDIRSPEED;
+	BRA #MENULOOP; var inget håll, fortsätt kolla.
+
+UPDIRSPEED
+	LOAD  #1000, Gr0;
+	BRA #STORESPEED;
+RIGHTDIRSPEED
+	LOAD  #800, Gr0;
+	BRA #STORESPEED,
+DOWNDIRSPEED
+	LOAD  #600, Gr0;
+	BRA #STORESPEED;
+LEFTDIRSPEED
+	LOAD  #400, Gr0;
+	BRA #STORESPEED;
+
+STORESPEED
+	STORE #$CC1, Gr0; lägg in vald hastighet på rätt minnesplats
+	;gå vidare till UART
+
+;-------------------------------------------UART-DELEN----------------
+	
+UART
+	;kartan består av 64 words. vi hämtar dem och räknar upp varje gång
+	LOAD #0, Gr0;
+UARTLOOP
+	BOU #UARTREADY ;kolla om uart har ett word redo att hämtas
+	BRA #UARTLOOP ;fortsätt vänta
+UARTREADY
+	;TODO: Gör nedanstående instruktion
+	LOADUART Gr1; ladda Uart-wordet till Gr1
+	STORE #$C80, Gr1, Gr0; Lägg till wordet på rätt ställe. använder Gr0 som index
+	ADD #1, Gr0; incrementera countern
+	CMP #64, Gr0; kolla om vi är färdiga
+	BEQ #GAME; isf, hoppa till spelet
+	BRA #UARTLOOP; annars, fortsätt leta words
+	
+;-----------------------------------GAME INIT-----------------------------
+	
+GAME
+	LOAD #0, Gr0;
+	STORE $AFD, Gr0; reseta score
+	
+	LOAD #1, Gr1;
+	STORE $AFE, Gr1; orm1 börjar åt höger
+	
+	LOAD #3, Gr1;
+	STORE $AFF, Gr1; orm2 börjar åt vänster
+	
+	LOAD #16, Gr12; sätt äpplet i mitten
+	LOAD #16, Gr13;
+	LOAD #GAMERETURN, Gr14; förbered TOGMEM-kall
+	BRA #TOGMEM;
+GAMERETURN
+	STORE $CC0, Gr15; spara adressen till äpplet
+	
+	
+	;reseta ormarnas arrays
+	LOAD #0, Gr0; loop-variabel
+	LOAD #0, Gr1; konstant 0
+RESETSNAKESLOOP
+	STORE $C00, Gr1, Gr0; sätt 0 på cur i orm1
+	STORE $C40, Gr1, Gr0; - || -          orm2
+	ADD #1, Gr0; inkrementera countern
+	CMP #62; kolla om kommit genom hela arrayen
+	BNE #RESETSNAKESLOOP; om vi inte är färdiga, gör om
+	;annars (vi är färdiga), gå vidare
+
+	LOAD #4, Gr12; X och Y för orm1 start
+	LOAD #4, Gr13;
+	LOAD #SETSTARTRETURN1, Gr14;
+	BRA #TOGMEM;
+SETSTARTRETURN1
+	STORE $C00, Gr15; spara X, Y på första stället i orm1-array
+	LOAD #0, Gr0; sätt orm1 head och tail-pekare till 0
+	STORE $C3E, Gr0; head
+	STORE $C3F, Gr0; tail
+	
+	
+	LOAD #28, Gr12; X och Y för orm2 start
+	LOAD #28, Gr13;
+	LOAD #SETSTARTRETURN2, Gr14;
+	BRA #TOGMEM;
+SETSTARTRETURN2
+	STORE $C40, Gr15; spara X, Y på första stället i orm1-array
+	LOAD #0, Gr0; sätt orm1 head och tail-pekare till 0
+	STORE $C7E, Gr0; head
+	STORE $C7F, Gr0; tail	
+
+;----------------PRINTA KARTAN
+PRINTMAP
+	LOAD #0, Gr0;
+	LOAD #0, Gr1;
+	
+PRINTMAPLOOPX
+	STORE $F00, Gr0; kopiera X och Y till in-register till TOGMEM
+	STORE $F01, Gr1;
+	LOAD $F00, Gr12;
+	LOAD $F01, Gr13;
+	LOAD #PRINTMAPRETURN, Gr14; return-adress
+	BRA #TOGMEM
+PRINTMAPRETURN
+	;nu har vi X och Y på GMEM-form i Gr15
+	LOAD #PRINTMAPRETURN2, Gr14;
+	BRA #GETOBSTACLEBYGMEM
+PRINTMAPRETURN2
+	;nu har vi FFFF i Gr11 om det är ett hinder på pos
+	GSTORE Gr11; F är tile-värdet för hinder
+	ADD #1, Gr0; öka X
+	CMP #32, Gr0; 
+	BNE #PRINTMAPLOOPX; om vi inte är färdiga med raden
+	;annars ( vi är färdiga med raden) fortsätt ner
+
+PRINTMAPLOOPY
+	LOAD #0, Gr0;
+	ADD #1, Gr1;
+	CMP #32, Gr1;
+	BNE #PRINTMAPLOOPX; om vi inte är färdiga, fortsätt loopa
+	;annars (vi är färdiga) gå vidare
+	
+	
+;--------------------------------------GAME LOOP-------------
+	
+	
+GAMELOOP
+
+
+SNAKELOADOLD1
+	;först spara positionen gamla huvudet är på. 
+	LOAD $C3E, Gr0; ladda head-pointern till Gr0
+	;dags att förberade subrutinkall till FROMGMEM
+	LOAD $C00, Gr15, Gr0; ladda Gr15 med gamla huvudets position (Gr0 som index)
+	LOAD #SNAKERETURNA, Gr14; returadress
+	BRA #FROMGMEM; Lägger X, Y i Gr12, Gr13
+SNAKERETURNA
+	
+	; nu: Gr12, Gr13 innehåller X, Y
+	; ska ge dem rätt värde utifrån rörelseriktning
+	
+	SPI Gr0;
+	CMP #UP, Gr0;
+	BEQ #SNAKEUP1;
+	CMP #RIGHT, Gr0;
+	BEQ #SNAKERIGHT1;
+	CMP #DOWN, Gr0;
+	BEQ #SNAKEDOWN1;
+	CMP #LEFT, Gr0;
+	BEQ #SNAKELEFT1;
+	;annars (inget håll nedtryckt):
+	LOAD $AFE, Gr1; ladda in gammal direction
+	CMP #0, Gr1;
+	BEQ #SNAKEUP1;
+	CMP #1, Gr1;
+	BEQ #SNAKERIGHT1;
+	CMP #2, Gr1;
+	BEQ #SNAKEDOWN1;
+	CMP #3, Gr1;
+	BEQ #SNAKELEFT1;
+	;har vi inte hittat nåt håll än, you dun goofed
+	
+SNAKEUP1
+	LOAD #0, Gr2; spara håll till store senare
+	SUB #1, Gr13; minska Y med 1
+	BRA #SNAKESTOREHEADPOS
+SNAKERIGHT1
+	LOAD #1, Gr2; spara håll till store senare
+	ADD #1, Gr12; öka X med 1
+	BRA #SNAKESTOREHEADPOS
+SNAKEDOWN1
+	LOAD #2, Gr2; spara håll till store senare
+	ADD #1, Gr13; öka Y med 1
+	BRA #SNAKESTOREHEADPOS
+SNAKELEFT1
+	LOAD #3, Gr2; spara håll till store senare
+	SUB #1, Gr12; minska X med 1
+	BRA #SNAKESTOREHEADPOS
+	
+	
+SNAKESTOREHEADPOS
+	STORE $AFE, Gr2; spara håll till orm1s senaste valda håll
+	LOAD #SNAKERETURNB, Gr14;
+	BRA #TOGMEM; formatera tillbaka till GMEM-form
+SNAKERETURNB 
+	;Nu ligger första ormens nya huvudposition i Gr15, formaterat för Gmem
+	STORE $D00, Gr15; Spara huvudets position för senare användning
+	
+; PASTA IN ORM2 HÄR!
+	
+	
+	;nu ligger nya huvud-positionerna  $D00 och $D01
+	;dags att flytta fram head och lägga in rätt värde på head-platsen i arraysen
+	
+	LOAD $C3E, Gr0; orm 1 head pointer till gr0
+	ADD #1, Gr0; 
+	MOD #62, Gr0; cirkulär lista. orm-array max 62 lång.
+	LOAD $D00, Gr1; ladda in nya huvudpos till Gr1
+	STORE $C00, Gr1, Gr0; spara nya huvudpos på huvudplatsen i orm-arrayen
+	STORE $C3E, Gr0; lägg tillbaka nya huvudplatsen
+	
+;PASTA IN ORM 2 HÄR!
+	
+	;Dags att kolla kollision med kartan eller äpple
+	
+;-------------ÄPPLE
+	
+	;äpple
+	LOAD $D00, Gr0; ladda huvudets position till Gr0
+	CMP $CC0, Gr0; jämför med äpplets position
+	BNE #SNAKECHECKMAP1; om ej träff, gå vidare
+	;annars (om träff) fixa äpple
+	;--fixa score
+	LOAD $AFD, Gr3; ladda Score till Gr3
+	ADD #1, Gr3; öka med ett
+	STORE $AFD, Gr3; spara tillbaka den inkrementade scoren
+	;--fixa nytt äpple
+PLACEAPPLELOOP
+	RAND Gr12; cell X
+	RAND Gr13; cell Y
+	;förbered kall till TOGMEM
+	LOAD #PLACEAPPLERETURN, Gr14;
+	STORE $DB0, Gr0; spara undan Gr0 och Gr1
+	STORE $DB1, Gr1; 
+	BRA #TOGMEM;
+PLACEAPPLERETURN1
+	;nu innehåller Gr15 X och Y på GMEM-format
+	;förbered kall till GETOBSTACLEBYGMEM
+	LOAD #PLACEAPPLERETURN2, Gr14;
+	BRA #GETOBSTACLEBYGMEM;
+PLACEAPPLERETURN2
+	;nu innehåller Gr11 info om kartan på X, Y
+	CMP #$FFFF, Gr11; 
+	BEQ #PLACEAPPLELOOP; om det är upptaget, fortsätt loopa
+	;annars (det var inte ett hinder ivägen), kolla om det är en orm ivägen
+	;TODO: FIXA DETTA. orkar inte fixa förän det behövs. Kanske kan skippa
+	;nu bara lägger jag ut den utan att ta i akt ormarna
+	STORE $CC0, Gr15; Spara (X, Y) som äpplets pos
+	LOAD #$4000, Gr8; måla (X, Y) med äppel-tile
+	GSTORE Gr8; adressen ligger redan i (X, Y)
+	GSTORE Gr8; adressen ligger redan i (X, Y)
+	
+	
+	
+	
+;-------------KOLLA OM ORM TRÄFFAR KARTA
+SNAKECHECKMAP1
+	;karta
+	;förbered för GETOBSTACLEBYGMEM
+	LOAD $D00, Gr15; huvudpos sen tidigare sparad
+	LOAD #SNAKEHITRETURN1, Gr14; returnadress
+	BRA #GETOBSTACLEBYGMEM; gör kallet
+SNAKEHITRETURN1
+	;nu ligger det FFFF i Gr11 om det är ett hinder på pos
+	CMP #$FFFF, Gr11;
+	BNE #SNAKEMOVETAIL; om inte hinder i vägen, gå vidare
+	;annars (hinder i vägen)
+	BRA #MENU; förlorat, gå till menyn
+	
+SNAKEMOVETAIL1
+	LOAD $C3F, Gr0; ladda in svanspekaren för orm 1
+	LOAD $C00, Gr15, Gr0; ladda gamla svanspos tills senare
+	ADD #1, Gr0; öka pekaren med ett
+	MOD #62, Gr0; cirkulär array
+	STORE $C3F, Gr0; lägg tillbaka inkrementerad pekre
+	
+	;dags att måla tomt där svansen var
+	;har redan gamla svansposen i Gr15
+	LOAD #$0000, Gr8; sudda, med tile 0000
+	GSTORE Gr8; 
+
+SNAKECHECKHITPLAYER1
+	LOAD $C7F, Gr0; ladda andra ormens tail-pointer, som loopas över
+	LOAD $C3E, Gr2; ladda denna orms huvud-pointer
+	LOAD $C00, Gr2, Gr2; ladda denna orms huvudpos
+	STORE $D00, Gr2; spara huvudpos på $D00 (var antagligen redan pos på $D00)
+SNAKEHITLOOP1
+	LOAD $C40, Gr3, Gr0; ladda nuvarande dels pos
+	CMP $D00, Gr3; jämför current dels pos med huvudpos
+	BNE #SNAKELOOPCONTINUE1; om inte träff
+	BRA #MENU; annars har vi förlorat
+SNAKELOOPCONTINUE1
+	;kan passa på att rita ut ormen när vi ändå  loopar genom den
+	LOAD $C40, Gr15, Gr0; spara cur dels pos i Gr15, för att rita ut till GMEM
+	LOAD #$3000, Gr8; orm2-tile
+	GSTORE Gr8; rita orm2-tile på cur dels pos.
+	;sätt fram current-pointern och kolla slut etc
+	ADD #1, Gr0;
+	MOD #62, Gr0; cirkulär lista
+	CMP $C7E, Gr0; Jämför nuvarande dels pointer med headpointer
+	BNE #SNAKEHITLOOP1; om inte samma, fortsätt loopa
+	;annars (samma, loopat klart), fortsätt programmet
+	
+;PASTA ORM 2 HÄR!
+
+;--------------------------SPELHASTIGHET----------------
+; us och ms är egentligen verkligen inte en mikro eller millisekund
+; de är mycket större än så
+
+	LOAD #0, Gr0; usec counter
+	LOAD #0, Gr1; msec counter
+GAMEWAITLOOPU
+	ADD #1, Gr0;
+	CMP #$FFFF, Gr0;
+	BNE #GAMEWAITLOOPU; om vi inte har loopat en ms än
+	;annars (har loopat en ms)
+	ADD #1, Gr1;
+	CMP $CC1, Gr1; se om vi har väntat antal ms som står i spelhastighet
+	BNE GAMEWAITLOOPU; om vi inte gjort det, forstätt loopa
+	;om vi väntat färdigt, gå till game-loop igen
+	BRA #GAMELOOP;
+	
+	
+	
+	;Kolla kollision med banan eller äpple CHECK
+	;om inte äpple tagen: CHECK
+	;	flytta fram tail CHECK
+	;	måla tomt där tail va CHECK
+	;kolla kollision mellan huvud och spelare CHECK
+	;Måla orm på alla ställen mellan head och tail i arraysen CHECK
+	
+	
+
+
+
+
+
+
+

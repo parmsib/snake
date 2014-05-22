@@ -12,7 +12,7 @@ entity pc is
 end pc;
 
 architecture behav of pc is
-	--signal out_tmp : std_logic_vector(15 downto 0) := "0000000000000000";
+	signal out_tmp : std_logic_vector(15 downto 0) := "0000000000000000";
 	signal in_tmp : std_logic_vector(11 downto 0) := "000000000000";
 	signal val : std_logic_vector(11 downto 0) := "000000000000";
 begin
@@ -20,17 +20,21 @@ begin
 	begin
 		if rising_edge(clk) then
 			if p = '1' then
-				val <= val + 1;
+				in_tmp <= in_tmp + 1;
 			else
+				if tobus="0011" then
+					out_tmp <= "0000" & val;
+				else
+					out_tmp <= "ZZZZZZZZZZZZZZZZ";
+				end if;
 				if frombus="0011" then
-					--in_tmp <= buss(11 downto 0);
-					val <= in_tmp;
+					in_tmp <= buss(11 downto 0);
 				else
 					--in_tmp <= "ZZZZ_ZZZZ_ZZZZ_ZZZZ";
 				end if;
 			end if;
 		end if;
 	end process;
-	buss <= "0000" & val when tobus="0011" else "ZZZZZZZZZZZZZZZZ";
-	in_tmp <= buss(11 downto 0) when frombus="0011" else val;
+	buss <= out_tmp;
+	val <= in_tmp;
 end behav;

@@ -14,17 +14,22 @@ end asr;
 architecture behav of asr is
 	signal out_tmp : std_logic_vector(15 downto 0) := "0000000000000000";
 	signal in_tmp : std_logic_vector(11 downto 0) := "000000000000";
-	signal val : std_logic_vector(11 downto 0) := "000000001111";
+	signal val : std_logic_vector(11 downto 0) := "000000000000";
 begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
+			if tobus="0111" then
+				out_tmp <= "0000" & val;
+			else
+				out_tmp <= "ZZZZZZZZZZZZZZZZ";
+			end if;
 			if frombus="0111" then
-				val <= in_tmp;
+				in_tmp <= buss(11 downto 0);
 			end if;
 		end if;
 	end process;
-	buss <= "0000" & val when tobus="0111" else "ZZZZZZZZZZZZZZZZ";
-	in_tmp <= buss(11 downto 0) when frombus="0111" else val;
-	adr <= val;
+	buss <= out_tmp;
+	val <= in_tmp;
+	adr <= in_tmp;
 end behav;

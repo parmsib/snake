@@ -1,0 +1,3 @@
+LOAD #12345, Gr5
+ADD #$0f, Gr5
+SUB #300, Gr5

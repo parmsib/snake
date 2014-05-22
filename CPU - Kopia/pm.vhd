@@ -20,9 +20,6 @@ architecture behav of pm is
 		3 => "0000000000001111", -- 15
 		4 => B"000010_0101_10_0000", -- "SUB #300, Gr5"
 		5 => "0000000100101100", -- 300
-		15 => "0000000000000101",
-		200 => "0000000110010000",
-		300 => "0000000011001000",
 		others => B"000000_0000_00_0000"
 	);
 	signal in_tmp : std_logic_vector(15 downto 0) := "0000000000000000";
@@ -32,10 +29,14 @@ begin
 	begin
 		if rising_edge(clk) then
 			if frombus="0010" then
-				pmem(conv_integer(adr)) <= in_tmp;
+				pmem(conv_integer(adr)) <= buss;
+			end if;
+			if tobus="0010" then
+				out_tmp <= pmem(conv_integer(adr));
+			else
+				out_tmp <= "ZZZZZZZZZZZZZZZZ";
 			end if;
 		end if;
 	end process;
-	buss <= pmem(conv_integer(adr)) when tobus="0010" else "ZZZZZZZZZZZZZZZZ";
-	in_tmp <= buss when frombus="0010" else pmem(conv_integer(adr));
+	buss <= out_tmp;
 end behav;

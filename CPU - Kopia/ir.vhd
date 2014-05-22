@@ -22,15 +22,20 @@ begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
+			if tobus="0001" then
+				out_tmp <= val;
+			else
+				out_tmp <= "ZZZZZZZZZZZZZZZZ";
+			end if;
 			if frombus="0001" then
-				val <= in_tmp;
+				in_tmp <= buss;
 			end if;
 		end if;
 	end process;
-	buss <= val when tobus="0001" else "ZZZZZZZZZZZZZZZZ";
-	in_tmp <= buss when frombus="0001" else val;
-	op <= in_tmp(15 downto 10);
-	grat <= in_tmp(9 downto 6);
-	m <= in_tmp(5 downto 4);
+	buss <= out_tmp;
+	val <= in_tmp;
+	op <= val(15 downto 10);
+	grat <= val(9 downto 6);
+	m <= val(5 downto 4);
 	index <= val(3 downto 0);
 end behav;
