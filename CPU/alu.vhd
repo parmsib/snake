@@ -33,7 +33,9 @@ begin
 	--random_out <= random_reg;
 	process(clk) begin
 		if rising_edge(clk) then
-			ar <= std_logic_vector(alu_out);
+			if alu_styr /= "0000" then
+				ar <= std_logic_vector(alu_out);
+			end if;
 			if alu_styr /= "1000" and alu_styr /= "0000" then
 				flags_vippor(6 downto 0) <= z & n & c & o & "ZZZ";
 		--	else
@@ -73,8 +75,8 @@ begin
 --				signed(random_reg(15 downto 0)) - 
 --					signed(random_reg(15 downto 0)) / signed_buss when alu_styr="1010" and signed_buss /= 0 else
 				signed(random_reg(15 downto 0)) mod signed_buss when alu_styr="1010" and signed_buss /= 0 else
-				alu_out(14 downto 0) & '0' when alu_styr="1011" else
-				'0' & alu_out(15 downto 1) when alu_styr="1100" else
+				signed(ar(14 downto 0)) & '0' when alu_styr="1011" else
+				'0' & signed(ar(15 downto 1)) when alu_styr="1100" else
 				signed(ar(7 downto 0)) * signed_buss(7 downto 0) when alu_styr="1101" else
 				signed(ar) / signed_buss when alu_styr="1110" and signed_buss /= 0 else
 				signed(ar) - signed(ar) / signed_buss when alu_styr="1111" and signed_buss /= 0 else
