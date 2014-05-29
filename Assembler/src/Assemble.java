@@ -116,6 +116,8 @@ public class Assemble
 					opCode = "011001";
 			    else if(cmd.equalsIgnoreCase("LOADUART"))
 					opCode = "011010";
+				else if(cmd.equalsIgnoreCase("RAND"))
+					opCode = "011011";
 				else {
 				    labels.put(cmd, pmCounter);
 					cont = false;
@@ -174,11 +176,11 @@ public class Assemble
 					}
 				    }
 				    //System.out.println("wrote shit");
-				    writer.println(pmCounter + " => B\"" + opCode + "_" + grx + "_" + addmod + "_" + ind + "\";" + " -- \"" + ass + "\"");
+				    writer.println(pmCounter + " => B\"" + opCode + "_" + grx + "_" + addmod + "_" + ind + "\"," + " -- \"" + ass + "\"");
 				    if (isInteger(operand))
-				    	writer.println((pmCounter + 1)+ " => \"" + operand + "\"; -- " + Integer.parseInt(operand, 2));
+				    	writer.println((pmCounter + 1)+ " => \"" + operand + "\", -- " + Integer.parseInt(operand, 2));
 				    else
-					writer.println((pmCounter + 1)+ " => \"" + operand + "\";");
+					writer.println((pmCounter + 1)+ " => \"" + operand + "\",");
 				    pmCounter += 2;
 				} else {
 
@@ -206,6 +208,7 @@ public class Assemble
 	    brs.get(brs.size() - 1).close();
 	    brs.remove(brs.size() - 1);
 	}
+	writer.println("others => B\"000000_0000_00_0000\"");
 	writer.close();
 	BufferedReader br = new BufferedReader(new FileReader("hulttmp-assembly.hult"));
 	PrintWriter out = new PrintWriter(args[1], "UTF-8");
@@ -215,7 +218,7 @@ public class Assemble
 	    String replace = null;
 	    for(String lbl : labels.keySet()) {
 		if (inp.toUpperCase().contains(lbl)) {
-		    inp = inp.replaceAll(lbl + "\";", pad(Integer.toBinaryString(labels.get(lbl)), 16, '0') + "\";");
+		    inp = inp.replaceAll(lbl + "\",", pad(Integer.toBinaryString(labels.get(lbl)), 16, '0') + "\",");
 			replace = labels.get(lbl).toString();
 		}
 	    }
@@ -232,10 +235,14 @@ public class Assemble
     public static String pad(String str, int size, char padChar)
     {
       String padded = str;
-      while (padded.length() < size)
-      {
-        padded = padChar + padded;
-      }
+	  if(padded.length() < size) {
+		  while (padded.length() < size)
+		  {
+			padded = padChar + padded;
+		  }
+	  } else if(padded.length() > size) {
+		padded = padded.substring(padded.length()-size);
+	  }
       return padded;
     }
 

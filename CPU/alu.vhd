@@ -34,8 +34,8 @@ begin
 	process(clk) begin
 		if rising_edge(clk) then
 			ar <= std_logic_vector(alu_out);
-			if alu_styr /= "1000" then
-				flags_vippor(6 downto 0) <= z & n & c & o & flags(2 downto 0);
+			if alu_styr /= "1000" and alu_styr /= "0000" then
+				flags_vippor(6 downto 0) <= z & n & c & o & "ZZZ";
 		--	else
 		--		flags <= flags;
 			end if;
@@ -106,7 +106,9 @@ begin
 	z <= '1' when alu_out = 0 else '0';
 	n <= '1' when alu_out < 0 else '0';
 	c <= alu_out_extra(16);
-	o <= '1' when 	(buss(15) = '0' and ar(15) = '0' and alu_out(15) = '1' and alu_styr = "0100")	-- +
-		 or 	(buss(15) = '1' and ar(15) = '1' and alu_out(15) = '0' and alu_styr = "0101")	-- -
+	o <= '1' when 	(buss(15) = '0' and ar(15) = '0' and alu_out(15) = '1' and alu_styr = "0100")	-- '+' + '+' = '-'
+		 or 	(buss(15) = '1' and ar(15) = '1' and alu_out(15) = '0' and alu_styr = "0100")	-- '-' + '-' = '+'
+		 or 	(buss(15) = '0' and ar(15) = '1' and alu_out(15) = '1' and alu_styr = "0101")	-- '+' - '-' = '-'
+		 or 	(buss(15) = '1' and ar(15) = '0' and alu_out(15) = '0' and alu_styr = "0101")	-- '-' - '+' = '+'
 		 else '0';
 end behav;

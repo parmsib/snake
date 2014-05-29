@@ -1,0 +1,3 @@
+LOAD #13, Gr2
+INCLUDE annaninclude.txt
+STORE #1337, Gr2

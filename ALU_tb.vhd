@@ -51,7 +51,7 @@ begin
 				dbus_tmp <= buss_tmp(a);
 			end if;
 			if a = 4 then
-				dbus_tmp <= "0000000000000000"; 
+				dbus_tmp <= "0101000000000000"; 
 				dalu <= "0001";
 				dalu_tmp <= dalu_tmp + 1;
 			end if;

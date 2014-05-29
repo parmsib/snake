@@ -1,20 +1,4 @@
-library ieee ;
-use ieee.std_logic_1164.all;
-use ieee.std_logic_unsigned.all;
-
-entity pm is
-	port(	buss : inout std_logic_vector(15 downto 0);
-			clk : in std_logic;
-			adr : in std_logic_vector(11 downto 0);
-			frombus : in std_logic_vector(3 downto 0);
-			tobus : in std_logic_vector(3 downto 0)
-		);
-end pm;
-
-architecture behav of pm is
-	type MEM is array(0 to 4095) of std_logic_vector(15 downto 0);
-	signal pmem : MEM := (
-		0 => B"010111_0101_00_0000", -- "LOAD #12345, Gr5 "
+0 => B"010111_0101_00_0000", -- "LOAD #12345, Gr5 "
 1 => "0011000000111001",
 2 => B"000001_0101_00_0000", -- "ADD #$0f, Gr5 "
 3 => "0000000000001111", -- 15
@@ -48,18 +32,18 @@ architecture behav of pm is
 29 => "0001111111111111",
 -- TEST3 -- 30
 30 => B"000100_0101_00_0000", -- "CMP #1, Gr5"
-31 => "1111111101101110", -- 1
+31 => "0000000000000001", -- 1
 32 => B"001100_0000_00_0000", -- "BGE TEST4" -- 36
 33 => "0000000000100100", -- 36
 34 => B"010111_0101_00_0000", -- "LOAD #$2FFF, Gr5"
 35 => "0010111111111111",
 -- TEST4 -- 36
---36 => B"000100_0101_00_0000", -- "CMP #0, Gr5"
---37 => "0000000000000000", -- 0
---38 => B"001110_0000_00_0000", -- "BPL TEST5" -- 42
---39 => "0000000000101010", -- 42
---40 => B"010111_0101_00_0000", -- "LOAD #$3FFF, Gr5"
---41 => "0011111111111111",
+36 => B"000100_0101_00_0000", -- "CMP #0, Gr5"
+37 => "0000000000000000", -- 0
+38 => B"001110_0000_00_0000", -- "BPL TEST5" -- 42
+39 => "0000000000101010", -- 42
+40 => B"010111_0101_00_0000", -- "LOAD #$3FFF, Gr5"
+41 => "0011111111111111",
 -- TEST5 -- 42
 42 => B"010010_0101_00_0000", -- "LSR #3, Gr5	"
 43 => "0000000000000011", -- 3
@@ -71,27 +55,4 @@ architecture behav of pm is
 49 => "0000000000100000", -- 32
 50 => B"010111_0101_01_0000", -- "LOAD 305, Gr5	"
 51 => "0000000100110001", -- 305
-
-300 => B"0000_0000_1100_1000",
-301 => B"0000_0001_0010_1110",
-302 => B"0010_1111_1000_0000",
-303 => B"0000_0000_1111_1111",
-
 others => B"000000_0000_00_0000"
-
-
-	);
-	signal in_tmp : std_logic_vector(15 downto 0) := "0000000000000000";
-	signal out_tmp : std_logic_vector(15 downto 0) := "0000000000000000";
-begin
-	process(clk)
-	begin
-		if rising_edge(clk) then
-			if frombus="0010" then
-				pmem(conv_integer(adr)) <= in_tmp;
-			end if;
-		end if;
-	end process;
-	buss <= pmem(conv_integer(adr)) when tobus="0010" else "ZZZZZZZZZZZZZZZZ";
-	in_tmp <= buss when frombus="0010" else pmem(conv_integer(adr));
-end behav;

@@ -16,6 +16,7 @@ end grx;
 architecture behav of grx is
 	type GRX16 is array(0 to 15) of std_logic_vector(15 downto 0);
 	signal gr : GRX16 := (
+		10 => B"0000_0000_0000_0011",
 		others => "0000000000000000"
 	);
 	signal in_tmp : std_logic_vector(15 downto 0);
