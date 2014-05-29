@@ -39,7 +39,7 @@ MENU
 	LOAD #0, Gr13; ladda in 0 som startvärde för y
 
 MENULOOPX
-	STORE #MENULOOPXRETURN, Gr14;
+	LOAD #MENULOOPXRETURN, Gr14;
 	BRA #TOGMEM;
 MENULOOPXRETURN
 	;Nu innehåller Gr15 Y-adressen konkatenerat med X-adressen, redo för GMEM
