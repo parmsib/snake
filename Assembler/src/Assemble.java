@@ -114,7 +114,7 @@ public class Assemble
 				    opCode = "011000";
 			    else if(cmd.equalsIgnoreCase("SPI"))
 					opCode = "011001";
-			    else if(cmd.equalsIgnoreCase("LOADUART"))
+			    else if(cmd.equalsIgnoreCase("UART"))
 					opCode = "011010";
 				else if(cmd.equalsIgnoreCase("RAND"))
 					opCode = "011011";
