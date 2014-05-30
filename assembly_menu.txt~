@@ -1,0 +1,97 @@
+;kartan består av 32*32 bitar, där varje bit bestämmer om det är ett hinder i den cellen.
+;32 * 32 bitar = 1024 bitar = 64 words
+
+;var äpplet befinner sig bestäms av en word som beskriver X, och Y. 
+
+;krävs en word för att bestämma en cell (5 bitar för X, 5 bitar för Y. 2^5 = 32)
+;varje orm har en cirkulär array av celler den ockuperar, eller har ockuperat.
+;finns en head, och en tail, för varje orm som beskriver var i arrayen ormen börjar, och var den slutar.
+;en orm kan vara max 62 celler lång, så arrayen är 64 words (två extra för head och tail)
+
+;menyn behöver en statisk bild att visa. Den är 32*32*4 bitar stor = 256 words
+
+;karta över PM:
+;programmet börjar på 0 och växer neråt
+;return adress ligger på $AF8
+;Orm1 head ligger på $AF9
+;Orm1 tail ligger på $AFA
+;Orm2 head ligger på $AFB
+;Orm2 tail ligger på $AFC
+;Score ligger på $AFD
+;Orm1 föregående håll ligger på $AFE
+;Orm2 föregående håll ligger på $AFF
+;menybild ligger på minesadress $B00 - $BFF
+;orm1 ligger på minnesadress $C00 - $C3F = 3072 - 3135
+;orm2 ligger på minnesadress $C40 - C7F = 3136 - 3199
+;kartan ligger på minnesadress $C80 - $CBF = 3200 - 3263
+;äpplet ligger på minnesadress $CC0 = 3264
+;spelhastigheten (frame-tid i ms) ligger på minssadress $CC1 = 3265
+;random minne för implementationer läggs på $D00 - slut = 3328 - slut
+
+;Tiles:
+;	0000 = 0, tomt
+;   1111 = F, hinder
+;   0010 = 2, orm1
+;	0011 = 3, orm2
+;	0100 = 4, äpple
+
+;menyn fungerar så att joystick1 bestämmer spelhastighet med antingen höger, vänster, upp eller ner. Därefter går vi direkt till spelet
+
+;---------------------------------------MENU-DELEN-------------------
+
+MENU
+	LOAD #0, Gr12; ladda in 0 som startvärde för x
+	LOAD #0, Gr13; ladda in 0 som startvärde för y
+
+MENULOOPX
+	LOAD #MENULOOPXRETURN, Gr14;
+	BRA #TOGMEM;
+MENULOOPXRETURN
+	;Nu innehåller Gr15 Y-adressen konkatenerat med X-adressen, redo för GMEM
+	
+	;Behöver indexera minnesrymden som innehåller menybilden.
+	STORE $D00, Gr13; Lägg y * (32bitar = 8 words) i Gr2 som är word-index i statiska bilden
+	LOAD $D00, Gr2;
+	;MUL #8, Gr2;
+	LSL #3, Gr2;
+	STORE $D00, Gr12; Lägg till x // 4 till Gr3, för att få rätt word-offset i x-led
+	LOAD $D00, Gr3; 
+	;DIV #4, Gr3; heltalsdivision (avrunda nedåt)
+	LSR #2, Gr3;
+	STORE $D00, Gr3;
+	ADD $D00, Gr2;
+	;nu innehåller Gr2 hela adressen till det word som vår sökta tile ligger i
+	
+	;behöver ta reda på vilken tile i detta word vi är ute efter
+	STORE $D00, Gr12; Spara (x mod 4) - 1 till Gr3, vilket är tile-index i wordet
+	LOAD $D00, Gr3;
+	;MOD #4, Gr3;
+	AND #$0003, Gr3; MOD #4
+	SUB #1, Gr3;
+	;nu innehåller Gr3 tile-index i wordet
+	
+	LOAD $B00, Gr4, Gr2; Ladda in rätt word från bilden till register 4
+	;MUL #4, Gr3; multiplicera tile-index för att få hur långt vi måste shifta i wordet
+	LSL #2, Gr3;
+	STORE $D00, Gr4; Shifta wordet så att vår tile hamnar längs till vänster (MSBs, vilket är vad GMEMet tar från bussen)
+	LSL $D00, Gr4
+	AND Gr4, #$F000; ANDa bort de bitar som låg efter vår tile i wordet
+	
+	;Nu innehåller Gr4 den tile som ska ut på bussen och in i GMEM! :D
+	;Gr15 innehåller den adress i GMEM som tilen ska sparas på, vilket är enligt överenskommelse.
+	GSTORE Gr4;
+	
+	ADD #1, Gr12;
+	CMP #32, Gr12;
+	BNE #MENULOOPX; om vi inte loopat fördigt på x, gör det igen
+	;annars, gå vidare ner till Y
+	
+	;LOOP Y
+	ADD #1, Gr13;
+	CMP #32, Gr13;
+	LOAD #0, Gr12; nollställ X, på nästa rad
+	BNE #MENULOOPX; om vi inte loopat färdigt på Y, fortsätt loopa
+	;annars (vi har loopat färdigt), gå vidare
+	
+	;---------------------
+	INCLUDE util.asm

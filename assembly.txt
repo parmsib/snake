@@ -50,7 +50,7 @@ MENULOOPXRETURN
 	;Nu innehåller Gr15 Y-adressen konkatenerat med X-adressen, redo för GMEM
 	
 	;Behöver indexera minnesrymden som innehåller menybilden.
-	STORE $D00, Gr13, 0; Lägg y * (32bitar = 8 words) i Gr2 som är word-index i statiska bilden
+	STORE $D00, Gr13; Lägg y * (32bitar = 8 words) i Gr2 som är word-index i statiska bilden
 	LOAD $D00, Gr2;
 	;MUL #8, Gr2;
 	LSL #3, Gr2;

@@ -57,15 +57,18 @@ GETOBSTACLEBYGMEM
 	;Gr15 Y
 	AND #$001F, Gr12; ta bort Y-bitarna
 	LSR #5, Gr15; shifta bort Y-bitarna till LSBs
-	MUL #32, Gr15; multiplicera Y med 32 för få antal bitar den offsetar
+	;MUL #32, Gr15; multiplicera Y med 32 för få antal bitar den offsetar
+	LSL #5, Gr15;
 	STORE $F00, Gr15; addera de båda och sätt resultat i Gr12
 	ADD $F00, Gr12;
 	;nu innehåller Gr12 det bitnr vår bit har
 	STORE $F00, Gr12; kopiera datat till Gr15
 	LOAD $F00, Gr15;
-	DIV #16, Gr15; heltalsdela Gr15 med 16 för att hitta word-index
-	MOD #16, Gr12; gör modulus 16 på Gr12 för att hitta hur mycket
+	;DIV #16, Gr15; heltalsdela Gr15 med 16 för att hitta word-index
+	LSR #4, Gr15;
+	;MOD #16, Gr12; gör modulus 16 på Gr12 för att hitta hur mycket
 	;			...vi måste shifta till vänster sen i wordet
+	AND #$000F, Gr12;
 	LOAD $C80, Gr10, Gr15; ladda rätt word i kartan till Gr10
 	STORE $F00, Gr12;
 	LSL $F00, Gr15; Shifta wordet till vänster Gr12 antal gånger

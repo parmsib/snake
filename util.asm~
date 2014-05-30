@@ -1,0 +1,131 @@
+
+;---------------------------------
+
+;IN:
+;Gr12: X-värde som vanligt word
+;Gr13: Y-värde som vanligt word
+;Gr14: return-adress
+
+;UT:
+;Gr15: Adress formaterad för GMEM
+
+TOGMEM
+	LSL #5, Gr13; shifta ut Y-bitarna till sin rätta plats
+	STORE $F00, Gr12; spara undan X, och Y
+	STORE $F01, Gr13;
+	LOAD $F01, Gr15; ladda in Y till Gr15.
+	OR $F00, Gr15; ORa in X-delen
+	STORE $AF8, Gr14 ;lägg returnadressen på ett ställe i minnet
+	BRA $AF8; returnera
+
+;----------------------------------
+
+
+
+;IN
+;Gr14 return-adress
+;Gr15 GMEM-formaterad adress
+
+;UT
+;Gr12 X-värde som vanligt ord
+;Gr13 Y-värde som vanligt ord
+
+FROMGMEM
+	STORE $F00, Gr14; spara undan in-värdet
+	LOAD $F00, Gr12; ladda till X
+	AND #$001F, Gr12; ANDa bort y-delen från x
+	LOAD $F00, Gr13;
+	LSR #5, Gr13; Shifta bort y-delen till LSBs
+	STORE $AF8, Gr14 ;lägg returnadressen på ett ställe i minnet
+	BRA $AF8;
+
+;----------------------------------
+
+;IN
+
+;Gr14 return-adress
+;Gr15 pos på GMEM-form
+
+;OUT
+;Gr11 $FFFF om det är hinder på (x, y)
+;	annars $0000
+
+GETOBSTACLEBYGMEM
+	STORE $F00, Gr15; spara GMEM-posen på F00
+	LOAD $F00, Gr12; ladda ovanstående
+	;Gr12 får vara X
+	;Gr15 Y
+	AND #$001F, Gr12; ta bort Y-bitarna
+	LSR #5, Gr15; shifta bort Y-bitarna till LSBs
+	MUL #32, Gr15; multiplicera Y med 32 för få antal bitar den offsetar
+	STORE $F00, Gr15; addera de båda och sätt resultat i Gr12
+	ADD $F00, Gr12;
+	;nu innehåller Gr12 det bitnr vår bit har
+	STORE $F00, Gr12; kopiera datat till Gr15
+	LOAD $F00, Gr15;
+	DIV #16, Gr15; heltalsdela Gr15 med 16 för att hitta word-index
+	MOD #16, Gr12; gör modulus 16 på Gr12 för att hitta hur mycket
+	;			...vi måste shifta till vänster sen i wordet
+	LOAD $C80, Gr10, Gr15; ladda rätt word i kartan till Gr10
+	STORE $F00, Gr12;
+	LSL $F00, Gr15; Shifta wordet till vänster Gr12 antal gånger
+	AND #$8000, Gr15; anda bort all annan data
+	LOAD #$0000, Gr11;ladda ett standardvärde till Gr11
+	CMP #$8000, Gr15; kolla om det är en etta vi shiftat in
+	BNE #WASNOTOBSTACLE; om så inte var fallet
+	LOAD #$FFFF, Gr11; annars (var hinder där)
+WASNOTOBSTACLE
+	STORE $AF8, Gr14 ;lägg returnadressen på ett ställe i minnet
+	BRA $AF8; return
+	
+	
+;-------------------------------------------------------------------
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

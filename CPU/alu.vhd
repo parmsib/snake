@@ -26,7 +26,7 @@ architecture behav of alu is
 	signal random_reg_new : std_logic_vector(31 downto 0) := (31 => '1', others => '0');
 	signal random_tmp : std_logic := '0';
 	signal random_out : std_logic_vector(31 downto 0) := (others => '0');
-	signal flags_vippor : std_logic_vector(6 downto 0) := "0000000";
+	signal flags_vippor : std_logic_vector(6 downto 3) := "0000";
 begin
 
 	signed_buss <= signed(buss);
@@ -37,7 +37,7 @@ begin
 				ar <= std_logic_vector(alu_out);
 			end if;
 			if alu_styr /= "1000" and alu_styr /= "0000" then
-				flags_vippor(6 downto 0) <= z & n & c & o & "ZZZ";
+				flags_vippor(6 downto 3) <= z & n & c & o;
 		--	else
 		--		flags <= flags;
 			end if;
@@ -52,15 +52,9 @@ begin
 			end if;
 		end if;
 	end process;
-	flags <= flags_vippor;
+	flags <= flags_vippor & "ZZZ";
 
-	process(tobus) begin
-		if tobus = "0100" then
-			buss <= ar;
-		else
-			buss <= "ZZZZZZZZZZZZZZZZ";
-		end if;
-	end process;
+	buss <= ar when tobus = "0100" else "ZZZZZZZZZZZZZZZZ";
 
 	--process(alu_styr, buss, ar) begin
 
@@ -74,13 +68,13 @@ begin
 				signed(ar) + signed_buss when alu_styr="1000" else
 --				signed(random_reg(15 downto 0)) - 
 --					signed(random_reg(15 downto 0)) / signed_buss when alu_styr="1010" and signed_buss /= 0 else
-				signed(random_reg(15 downto 0)) mod signed_buss when alu_styr="1010" and signed_buss /= 0 else
+				signed(random_reg(15 downto 0)) when alu_styr="1010" and signed_buss /= 0 else
 				signed(ar(14 downto 0)) & '0' when alu_styr="1011" else
 				'0' & signed(ar(15 downto 1)) when alu_styr="1100" else
-				signed(ar(7 downto 0)) * signed_buss(7 downto 0) when alu_styr="1101" else
-				signed(ar) / signed_buss when alu_styr="1110" and signed_buss /= 0 else
-				signed(ar) - signed(ar) / signed_buss when alu_styr="1111" and signed_buss /= 0 else
-				alu_out;
+				--signed(ar(7 downto 0)) * signed_buss(7 downto 0) when alu_styr="1101" else
+				--signed(ar) / signed_buss when alu_styr="1110" and signed_buss /= 0 else
+				--signed(ar) - signed(ar) / signed_buss when alu_styr="1111" and signed_buss /= 0 else
+				to_signed(0, 16);
 
 		alu_out_extra <= 	signed('0' & ar) + ('0' & signed_buss) when alu_styr="0100" and signed(ar) >= 0 and signed_buss >= 0 else
 					signed('1' & ar) + ('0' & signed_buss) when alu_styr="0100" and signed(ar) < 0 and signed_buss >= 0 else
