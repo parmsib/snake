@@ -11,8 +11,8 @@ entity UART is
 		clk, rst : in STD_LOGIC;
 		uart_in : in STD_LOGIC;
 		uart_word_ready: out STD_LOGIC; --aktivt låg!
-		to_bus: out STD_LOGIC_VECTOR(n-1 downto 0);
-		should_write_bus: in STD_LOGIC;
+		dbus: out STD_LOGIC_VECTOR(15 downto 0);
+		tobus: in STD_LOGIC_VECTOR(3 downto 0);
 		debug_signal : out STD_LOGIC_VECTOR(15 downto 0)
 		);
 		
@@ -42,14 +42,14 @@ architecture behav of UART is
 	--värde på klockan när uart är idle
 	constant idle : STD_LOGIC_VECTOR(13 downto 0) := "11111111111111"; 
 	
-	signal count : STD_LOGIC_VECTOR(13 downto 0);
-	signal uart1, uart2: STD_LOGIC;
-	signal shift : STD_LOGIC;
-	signal cur_byte : STD_LOGIC;
-	signal shiftreg_out : STD_LOGIC_VECTOR(9 downto 0);
-	signal regi1_out, regi2_out : STD_LOGIC_VECTOR( (n/2) - 1 downto 0);
-	signal load1, load2 : STD_LOGIC; --load1 är vänstra byte-registrets load-signal. etc
-	signal uart_word_flipflop : STD_LOGIC;
+	signal count : STD_LOGIC_VECTOR(13 downto 0) := "00000000000000";
+	signal uart1, uart2: STD_LOGIC := '0';
+	signal shift : STD_LOGIC := '0'; 
+	signal cur_byte : STD_LOGIC := '0';
+	signal shiftreg_out : STD_LOGIC_VECTOR(9 downto 0) := "0000000000";
+	signal regi1_out, regi2_out : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
+	signal load1, load2 : STD_LOGIC := '0'; --load1 är vänstra byte-registrets load-signal. etc
+	signal uart_word_flipflop : STD_LOGIC := '0';
 	
 	
 begin
@@ -98,7 +98,7 @@ begin
 				end if;
 				
 				--om vi har skickat ut ett word på bussen, sätt vippan tillbaks till hög
-				if should_write_bus = '1' then
+				if tobus = "0101" then
 					uart_word_flipflop <= '1';
 				end if;
 			end if;
@@ -152,7 +152,7 @@ begin
 		output => regi2_out);
 
 		
-	to_bus <=	regi1_out & regi2_out when should_write_bus = '1' else
+	dbus <=	regi1_out & regi2_out when tobus = "0101" else
 				"ZZZZZZZZZZZZZZZZ";
 
 	debug_signal <= regi1_out & regi2_out;

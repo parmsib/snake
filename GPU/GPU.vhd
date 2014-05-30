@@ -49,9 +49,9 @@ architecture behv of GPU is
 		);
 
 	
-	signal pxX, pxY : STD_LOGIC_VECTOR (9 downto 0);
-	signal hsync_pre, vsync_pre: STD_LOGIC;
-	signal clock_ctr : STD_LOGIC_VECTOR(1 downto 0);
+	signal pxX, pxY : STD_LOGIC_VECTOR (9 downto 0) := B"0000_0000_00";
+	signal hsync_pre, vsync_pre: STD_LOGIC := '1';
+	signal clock_ctr : STD_LOGIC_VECTOR(1 downto 0) := "00";
 
 --	signal vga_clock : STD_LOGIC;
 	-- signal tile_X : STD_LOGIC_VECTOR (7 downto 0);

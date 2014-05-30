@@ -40,10 +40,5 @@ begin
 			);
 	end generate SPIGEN;
 
-	process(clk) 
-	begin
-		if frombus = "1000" then
-			buss <= outreg;
-		end if;
-	end process;
+	buss <= outreg when frombus = "1000" else "ZZZZZZZZZZZZZZZZ";
 end behav;

@@ -8,14 +8,24 @@
 # //  OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS
 # //  AND IS SUBJECT TO LICENSE TERMS.
 # //
-# vsim CPU_tb 
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# vsim SNAKE_tb 
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Note: (vopt-143) Recognized '1' FSM/s in design unit 'spi.behav'.
 # Loading std.standard
 # Loading ieee.std_logic_1164(body)
 # Loading ieee.numeric_std(body)
-# Loading work.cpu_tb(behv)#1
+# Loading work.snake_tb(behv)#1
 # Loading ieee.std_logic_arith(body)
 # Loading ieee.std_logic_unsigned(body)
+# Loading work.snake(behv)#1
+# Loading work.spimaster(behav)#1
+# Loading work.spi(behav)#1
+# Loading work.uart(behav)#1
+# Loading work.shiftregi(behav)#1
+# Loading work.regi(behav)#1
+# Loading work.gmem(gmbehv)#1
+# Loading work.gpu(behv)#1
+# Loading work.leddriver(behavioral)#1
 # Loading work.cpu(behav)#1
 # Loading work.grx(behav)#1
 # Loading work.alu(behav)#1
@@ -26,116 +36,127 @@
 # Loading work.ir(behav)#1
 # Loading work.asr(behav)#1
 # Loading work.pc(behav)#1
-add wave sim:/cpu_tb/uut/xupc/*
-add wave sim:/cpu_tb/uut/xalu/*
-add wave sim:/cpu_tb/uut/xgrx/*
-add wave sim:/cpu_tb/uut/xpm/*
+add wave -r /*
 run 2us
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xpc
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xpc
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xpc
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xpc
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xasr
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xasr
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xasr
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xasr
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xir
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xir
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xir
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xir
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xkr2
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xkr2
 # ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xkr2
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xkr2
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xkr1
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xkr1
 # ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xkr1
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xkr1
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xpm
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xpm
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xpm
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xpm
 # ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xpm
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xpm
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xpm
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xpm
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xalu
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xgrx
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xgrx
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xgrx
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xgrx
 # ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xgrx
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xgrx
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xgrx
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xgrx
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /cpu_tb/uut/xgrx
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/cpu_inst/xgrx
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/gpu_inst
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/gmem_inst
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/gmem_inst
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/gmem_inst
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/gmem_inst
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/uart_inst
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ns  Iteration: 0  Instance: /snake_tb/uut/spi_inst
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 495 ns  Iteration: 3  Instance: /cpu_tb/uut/xalu
+#    Time: 495 ns  Iteration: 3  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 495 ns  Iteration: 4  Instance: /cpu_tb/uut/xalu
+#    Time: 495 ns  Iteration: 4  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 495 ns  Iteration: 5  Instance: /cpu_tb/uut/xalu
+#    Time: 495 ns  Iteration: 5  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 495 ns  Iteration: 6  Instance: /cpu_tb/uut/xalu
+#    Time: 495 ns  Iteration: 6  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Note: Reset released
-#    Time: 505 ns  Iteration: 1  Instance: /cpu_tb
+#    Time: 505 ns  Iteration: 1  Instance: /snake_tb
 # ** Warning: NUMERIC_STD.TO_SIGNED: vector truncated
-#    Time: 505 ns  Iteration: 2  Instance: /cpu_tb/uut/xalu
+#    Time: 505 ns  Iteration: 2  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
-#    Time: 1125 ns  Iteration: 4  Instance: /cpu_tb/uut/xalu
+#    Time: 1125 ns  Iteration: 4  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: NUMERIC_STD."<": metavalue detected, returning FALSE
-#    Time: 1125 ns  Iteration: 4  Instance: /cpu_tb/uut/xalu
+#    Time: 1125 ns  Iteration: 4  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
-#    Time: 1305 ns  Iteration: 4  Instance: /cpu_tb/uut/xalu
+#    Time: 1305 ns  Iteration: 4  Instance: /snake_tb/uut/cpu_inst/xalu
 # ** Warning: NUMERIC_STD."<": metavalue detected, returning FALSE
-#    Time: 1305 ns  Iteration: 4  Instance: /cpu_tb/uut/xalu
+#    Time: 1305 ns  Iteration: 4  Instance: /snake_tb/uut/cpu_inst/xalu

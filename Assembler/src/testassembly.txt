@@ -31,3 +31,7 @@ LSL #2, Gr5	; ska bli 32696
 STORE 305, Gr5	; spara Gr5 på minnesplats 305
 RAND #32, Gr5	; Gr5 får en random mellan 0 och 32
 LOAD 305, Gr5	; Gr5 får tillbaka 4087
+LOAD #$21, Gr15;
+LOAD #$1111, Gr14;
+GSTORE #0, Gr14;
+

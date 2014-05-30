@@ -37,8 +37,8 @@ architecture behv of snake is
 			clk, rst : in STD_LOGIC;
 			uart_in : in STD_LOGIC;
 			uart_word_ready: out STD_LOGIC; --aktivt låg!
-			to_bus: out STD_LOGIC_VECTOR(n-1 downto 0);
-			should_write_bus: in STD_LOGIC;
+			dbus: out STD_LOGIC_VECTOR(15 downto 0);
+			tobus: in STD_LOGIC_VECTOR(3 downto 0);
 			debug_signal : out STD_LOGIC_VECTOR(15 downto 0)
 			);
 	end component;
@@ -72,11 +72,9 @@ architecture behv of snake is
 		port (
 			clk, rst : in STD_LOGIC;
 			--tile type
-			dbus_in : in STD_LOGIC_VECTOR ( 15 downto 0 ); 
-			--borde aldrig vara något annat än Z. ta bort?
-			dbus_out: out STD_LOGIC_VECTOR (15 downto 0); 
+			dbus : in STD_LOGIC_VECTOR ( 15 downto 0 ); 
 			-- fr mikrokontroller
-			should_read_dbus, should_write_dbus : in STD_LOGIC; 
+			frombus : in STD_LOGIC_VECTOR(3 downto 0);
 			--fr Gadr 
 			write_adr: in STD_LOGIC_VECTOR (9 downto 0); 
 			-- fr GPU
@@ -104,10 +102,23 @@ architecture behv of snake is
 		);
 	end component;	
 
+	component cpu
+		port (
+			clk : in std_logic;
+			buss : inout std_logic_vector(15 downto 0);
+			frombus : inout std_logic_vector(3 downto 0);
+			tobus : inout std_logic_vector(3 downto 0);
+			flags : inout std_logic_vector(6 downto 0);
+			gr15 : out std_logic_vector(15 downto 0)
+		);
+	end component;
+
 	--interna signaler mellan komponenterna
 	signal dbus : STD_LOGIC_VECTOR(15 downto 0) := X"0000"; --buss
 	signal flags : STD_LOGIC_VECTOR(6 downto 0) := "0000000";
 	signal frombus : STD_LOGIC_VECTOR(3 downto 0) := "1000";
+	signal tobus : STD_LOGIC_VECTOR(3 downto 0) := "1000";
+	signal gr15 : STD_LOGIC_VECTOR(15 downto 0) := X"0000"; 
 
 	signal uart_word_ready : STD_LOGIC;
 	signal uart_should_write_bus : STD_LOGIC;
@@ -134,18 +145,19 @@ begin
 --	miso2_tmp <= miso2;
 --	miso3_tmp <= miso3;
 --	miso4_tmp <= miso4;
-	spi_inst : spimaster 
-		generic map( amount => 2)
-		port map( 	
-			clk => clk,
-			buss => dbus,
-			flags => flags,
-			frombus => frombus,
-			miso => miso,
-			sclk => sclk,
-			mosi => mosi,
-			ss => ss
-		);
+
+--	spi_inst : spimaster 
+--		generic map( amount => 4)
+--		port map( 	
+--			clk => clk,
+--			buss => dbus,
+--			flags => flags,
+--			frombus => frombus,
+--			miso => miso,
+--			sclk => sclk,
+--			mosi => mosi,
+--			ss => ss
+--		);
 
 --	spi_tst : spi
 --		port map ( 	
@@ -158,40 +170,38 @@ begin
 --			ss => ss
 --		);
 
-	uart_inst : UART generic map(16) port map(
-		clk => clk,
-		rst => rst,
-		uart_in => uart_in,
-		uart_word_ready => uart_word_ready,
-		to_bus => dbus,
-		should_write_bus => uart_should_write_bus,
-		debug_signal => baked_value
-		);
+--	uart_inst : UART generic map(16) port map(
+--		clk => clk,
+--		rst => rst,
+--		uart_in => uart_in,
+--		uart_word_ready => uart_word_ready,
+--		dbus => dbus,
+--		tobus => tobus,
+--		debug_signal => baked_value
+--		);
 	
-	gmem_inst : GMEM port map( 
-		clk => clk,
-		rst => rst,
-		dbus_in => dbus,
-		dbus_out => dbus,
-		should_read_dbus => '0', --FIXA
-		should_write_dbus => '0', 
-		write_adr => B"00000_00000", --FIXA
-		read_adr => gpu_read_adr,
-		tile_type_out => gmem_tile_type_out
-		);
+--	gmem_inst : GMEM port map( 
+--		clk => clk,
+--		rst => rst,
+--		dbus => dbus,
+--		frombus => frombus,
+--		write_adr => gr15(9 downto 0),
+--		read_adr => gpu_read_adr,
+--		tile_type_out => gmem_tile_type_out
+--		);
 
-	gpu_inst : GPU port map(
-		clk => clk,
-		rst => rst,
-		tile_type => gmem_tile_type_out, --fr gmem
-		gmem_adr => gpu_read_adr, --till gmem
-		vgaRed => vgaRed,
-		vgaGreen => vgaGreen,
-		vgaBlue => vgaBlue,
-		Hsync => Hsync,
-		Vsync => Vsync,
-		bg_color => sw --switch-knappar kontrollerar bakgrundsfärg
-		);
+--	gpu_inst : GPU port map(
+--		clk => clk,
+--		rst => rst,
+--		tile_type => gmem_tile_type_out, --fr gmem
+--		gmem_adr => gpu_read_adr, --till gmem
+--		vgaRed => vgaRed,
+--		vgaGreen => vgaGreen,
+--		vgaBlue => vgaBlue,
+--		Hsync => Hsync,
+--		Vsync => Vsync,
+--		bg_color => sw --switch-knappar kontrollerar bakgrundsfärg
+--		);
 
 	
 	--baked_value <= "0" & sw(7 downto 5) & "0" & sw(4 downto 2) & "00" & sw(1 downto 0) & "000" & rst;
@@ -203,6 +213,16 @@ begin
 		--value => baked_value
 		value => dbus
 		);
+
+	cpu_inst : cpu port map(
+		clk => clk,
+		buss => dbus,
+		frombus => frombus,
+		tobus => tobus,
+		flags => flags,
+		gr15 => gr15
+		);
+
 
 end behv;		
  
