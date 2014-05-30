@@ -15,7 +15,8 @@ TOGMEM
 	STORE $F01, Gr13;
 	LOAD $F01, Gr15; ladda in Y till Gr15.
 	OR $F00, Gr15; ORa in X-delen
-	BRA Gr14; returnera
+	STORE $AF8, Gr14 ;lägg returnadressen på ett ställe i minnet
+	BRA $AF8; returnera
 
 ;----------------------------------
 
@@ -35,7 +36,8 @@ FROMGMEM
 	AND #$001F, Gr12; ANDa bort y-delen från x
 	LOAD $F00, Gr13;
 	LSR #5, Gr13; Shifta bort y-delen till LSBs
-	BRA Gr14;
+	STORE $AF8, Gr14 ;lägg returnadressen på ett ställe i minnet
+	BRA $AF8;
 
 ;----------------------------------
 
@@ -73,7 +75,8 @@ GETOBSTACLEBYGMEM
 	BNE #WASNOTOBSTACLE; om så inte var fallet
 	LOAD #$FFFF, Gr11; annars (var hinder där)
 WASNOTOBSTACLE
-	BRA Gr14; return
+	STORE $AF8, Gr14 ;lägg returnadressen på ett ställe i minnet
+	BRA $AF8; return
 	
 	
 ;-------------------------------------------------------------------

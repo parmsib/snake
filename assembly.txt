@@ -12,6 +12,11 @@
 
 ;karta över PM:
 ;programmet börjar på 0 och växer neråt
+;return adress ligger på $AF8
+;Orm1 head ligger på $AF9
+;Orm1 tail ligger på $AFA
+;Orm2 head ligger på $AFB
+;Orm2 tail ligger på $AFC
 ;Score ligger på $AFD
 ;Orm1 föregående håll ligger på $AFE
 ;Orm2 föregående håll ligger på $AFF
@@ -159,7 +164,7 @@ RESETSNAKESLOOP
 	STORE $C00, Gr1, Gr0; sätt 0 på cur i orm1
 	STORE $C40, Gr1, Gr0; - || -          orm2
 	ADD #1, Gr0; inkrementera countern
-	CMP #62; kolla om kommit genom hela arrayen
+	CMP #64; kolla om kommit genom hela arrayen
 	BNE #RESETSNAKESLOOP; om vi inte är färdiga, gör om
 	;annars (vi är färdiga), gå vidare
 
@@ -170,19 +175,19 @@ RESETSNAKESLOOP
 SETSTARTRETURN1
 	STORE $C00, Gr15; spara X, Y på första stället i orm1-array
 	LOAD #0, Gr0; sätt orm1 head och tail-pekare till 0
-	STORE $C3E, Gr0; head
-	STORE $C3F, Gr0; tail
+	STORE $AF9, Gr0; head
+	STORE $AFA, Gr0; tail
 	
 	
-	LOAD #28, Gr12; X och Y för orm2 start
-	LOAD #28, Gr13;
+	LOAD #27, Gr12; X och Y för orm2 start
+	LOAD #27, Gr13;
 	LOAD #SETSTARTRETURN2, Gr14;
 	BRA #TOGMEM;
 SETSTARTRETURN2
 	STORE $C40, Gr15; spara X, Y på första stället i orm1-array
-	LOAD #0, Gr0; sätt orm1 head och tail-pekare till 0
-	STORE $C7E, Gr0; head
-	STORE $C7F, Gr0; tail	
+	LOAD #0, Gr0; sätt orm2 head och tail-pekare till 0
+	STORE $AFB, Gr0; head
+	STORE $AFC, Gr0; tail	
 
 ;----------------PRINTA KARTAN
 PRINTMAP
@@ -224,7 +229,7 @@ GAMELOOP
 
 SNAKELOADOLD1
 	;först spara positionen gamla huvudet är på. 
-	LOAD $C3E, Gr0; ladda head-pointern till Gr0
+	LOAD $AF9, Gr0; ladda head-pointern till Gr0
 	;dags att förberade subrutinkall till FROMGMEM
 	LOAD $C00, Gr15, Gr0; ladda Gr15 med gamla huvudets position (Gr0 som index)
 	LOAD #SNAKERETURNA, Gr14; returadress
@@ -287,12 +292,12 @@ SNAKERETURNB
 	;nu ligger nya huvud-positionerna  $D00 och $D01
 	;dags att flytta fram head och lägga in rätt värde på head-platsen i arraysen
 	
-	LOAD $C3E, Gr0; orm 1 head pointer till gr0
+	LOAD $AF9, Gr0; orm 1 head pointer till gr0
 	ADD #1, Gr0; 
-	MOD #62, Gr0; cirkulär lista. orm-array max 62 lång.
+	MOD #64, Gr0; cirkulär lista. orm-array max 62 lång.
 	LOAD $D00, Gr1; ladda in nya huvudpos till Gr1
 	STORE $C00, Gr1, Gr0; spara nya huvudpos på huvudplatsen i orm-arrayen
-	STORE $C3E, Gr0; lägg tillbaka nya huvudplatsen
+	STORE $AF9, Gr0; lägg tillbaka nya huvudplatsen
 	
 ;PASTA IN ORM 2 HÄR!
 	
@@ -353,11 +358,11 @@ SNAKEHITRETURN1
 	BRA #MENU; förlorat, gå till menyn
 	
 SNAKEMOVETAIL1
-	LOAD $C3F, Gr0; ladda in svanspekaren för orm 1
+	LOAD $AFA, Gr0; ladda in svanspekaren för orm 1
 	LOAD $C00, Gr15, Gr0; ladda gamla svanspos tills senare
 	ADD #1, Gr0; öka pekaren med ett
 	MOD #62, Gr0; cirkulär array
-	STORE $C3F, Gr0; lägg tillbaka inkrementerad pekre
+	STORE $AFA, Gr0; lägg tillbaka inkrementerad pekre
 	
 	;dags att måla tomt där svansen var
 	;har redan gamla svansposen i Gr15
@@ -365,8 +370,8 @@ SNAKEMOVETAIL1
 	GSTORE Gr8; 
 
 SNAKECHECKHITPLAYER1
-	LOAD $C7F, Gr0; ladda andra ormens tail-pointer, som loopas över
-	LOAD $C3E, Gr2; ladda denna orms huvud-pointer
+	LOAD $AFC, Gr0; ladda andra ormens tail-pointer, som loopas över
+	LOAD $AF9, Gr2; ladda denna orms huvud-pointer
 	LOAD $C00, Gr2, Gr2; ladda denna orms huvudpos
 	STORE $D00, Gr2; spara huvudpos på $D00 (var antagligen redan pos på $D00)
 SNAKEHITLOOP1
@@ -381,8 +386,8 @@ SNAKELOOPCONTINUE1
 	GSTORE Gr8; rita orm2-tile på cur dels pos.
 	;sätt fram current-pointern och kolla slut etc
 	ADD #1, Gr0;
-	MOD #62, Gr0; cirkulär lista
-	CMP $C7E, Gr0; Jämför nuvarande dels pointer med headpointer
+	MOD #64, Gr0; cirkulär lista
+	CMP $AFB, Gr0; Jämför nuvarande dels pointer med headpointer
 	BNE #SNAKEHITLOOP1; om inte samma, fortsätt loopa
 	;annars (samma, loopat klart), fortsätt programmet
 	
