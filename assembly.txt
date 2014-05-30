@@ -52,10 +52,12 @@ MENULOOPXRETURN
 	;Behöver indexera minnesrymden som innehåller menybilden.
 	STORE $D00, Gr13, 0; Lägg y * (32bitar = 8 words) i Gr2 som är word-index i statiska bilden
 	LOAD $D00, Gr2;
-	MUL #8, Gr2;
+	;MUL #8, Gr2;
+	LSL #3, Gr2;
 	STORE $D00, Gr12; Lägg till x // 4 till Gr3, för att få rätt word-offset i x-led
 	LOAD $D00, Gr3; 
-	DIV #4, Gr3; heltalsdivision (avrunda nedåt)
+	;DIV #4, Gr3; heltalsdivision (avrunda nedåt)
+	LSR #2, Gr3;
 	STORE $D00, Gr3;
 	ADD $D00, Gr2;
 	;nu innehåller Gr2 hela adressen till det word som vår sökta tile ligger i
@@ -63,12 +65,14 @@ MENULOOPXRETURN
 	;behöver ta reda på vilken tile i detta word vi är ute efter
 	STORE $D00, Gr12; Spara (x mod 4) - 1 till Gr3, vilket är tile-index i wordet
 	LOAD $D00, Gr3;
-	MOD #4, Gr3;
+	;MOD #4, Gr3;
+	AND #$0003, Gr3; MOD #4
 	SUB #1, Gr3;
 	;nu innehåller Gr3 tile-index i wordet
 	
 	LOAD $B00, Gr4, Gr2; Ladda in rätt word från bilden till register 4
-	MUL #4, Gr3; multiplicera tile-index för att få hur långt vi måste shifta i wordet
+	;MUL #4, Gr3; multiplicera tile-index för att få hur långt vi måste shifta i wordet
+	LSL #2, Gr3;
 	STORE $D00, Gr4; Shifta wordet så att vår tile hamnar längs till vänster (MSBs, vilket är vad GMEMet tar från bussen)
 	LSL $D00, Gr4
 	AND Gr4, #$F000; ANDa bort de bitar som låg efter vår tile i wordet
@@ -88,6 +92,8 @@ MENULOOPXRETURN
 	LOAD #0, Gr12; nollställ X, på nästa rad
 	BNE #MENULOOPX; om vi inte loopat färdigt på Y, fortsätt loopa
 	;annars (vi har loopat färdigt), gå vidare
+	
+	;---------------------
 	
 	
 	
@@ -294,7 +300,8 @@ SNAKERETURNB
 	
 	LOAD $AF9, Gr0; orm 1 head pointer till gr0
 	ADD #1, Gr0; 
-	MOD #64, Gr0; cirkulär lista. orm-array max 62 lång.
+	;MOD #64, Gr0; cirkulär lista. orm-array max 62 lång.
+	AND #$003F, Gr0; MOD 64
 	LOAD $D00, Gr1; ladda in nya huvudpos till Gr1
 	STORE $C00, Gr1, Gr0; spara nya huvudpos på huvudplatsen i orm-arrayen
 	STORE $AF9, Gr0; lägg tillbaka nya huvudplatsen
@@ -361,7 +368,8 @@ SNAKEMOVETAIL1
 	LOAD $AFA, Gr0; ladda in svanspekaren för orm 1
 	LOAD $C00, Gr15, Gr0; ladda gamla svanspos tills senare
 	ADD #1, Gr0; öka pekaren med ett
-	MOD #62, Gr0; cirkulär array
+	;MOD #64, Gr0; cirkulär array
+	AND #$003F, Gr0; MOD
 	STORE $AFA, Gr0; lägg tillbaka inkrementerad pekre
 	
 	;dags att måla tomt där svansen var
@@ -386,7 +394,8 @@ SNAKELOOPCONTINUE1
 	GSTORE Gr8; rita orm2-tile på cur dels pos.
 	;sätt fram current-pointern och kolla slut etc
 	ADD #1, Gr0;
-	MOD #64, Gr0; cirkulär lista
+	;MOD #64, Gr0; cirkulär lista
+	AND #$003F, Gr0; MOD
 	CMP $AFB, Gr0; Jämför nuvarande dels pointer med headpointer
 	BNE #SNAKEHITLOOP1; om inte samma, fortsätt loopa
 	;annars (samma, loopat klart), fortsätt programmet
