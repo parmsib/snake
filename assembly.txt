@@ -420,6 +420,8 @@ GAMEWAITLOOPU
 	;Måla orm på alla ställen mellan head och tail i arraysen CHECK
 	
 	
+INCLUDE util.asm
+
 
 
 
