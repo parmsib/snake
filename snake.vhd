@@ -20,7 +20,8 @@ entity snake is
 		--
 		sw : in STD_LOGIC_VECTOR(7 downto 0); --spakar på kortet (kontrollerar bakgrundsfärg);
 		ss, mosi, sclk : out STD_LOGIC_VECTOR(3 downto 0);
-		miso : in STD_LOGIC_VECTOR(3 downto 0)
+		miso : in STD_LOGIC_VECTOR(3 downto 0);
+		Led : out STD_LOGIC_VECTOR(3 downto 0)
 		);
             
 		
@@ -145,6 +146,7 @@ begin
 --	miso2_tmp <= miso2;
 --	miso3_tmp <= miso3;
 --	miso4_tmp <= miso4;
+	Led(3 downto 0) <= flags(6 downto 3);
 
 	spi_inst : spimaster 
 		generic map( amount => 4)
@@ -180,28 +182,28 @@ begin
 		debug_signal => baked_value
 		);
 	
-	gmem_inst : GMEM port map( 
-		clk => clk,
-		rst => rst,
-		dbus => dbus,
-		frombus => frombus,
-		write_adr => gr15(9 downto 0),
-		read_adr => gpu_read_adr,
-		tile_type_out => gmem_tile_type_out
-		);
+--	gmem_inst : GMEM port map( 
+--		clk => clk,
+--		rst => rst,
+--		dbus => dbus,
+--		frombus => frombus,
+--		write_adr => gr15(9 downto 0),
+--		read_adr => gpu_read_adr,
+--		tile_type_out => gmem_tile_type_out
+--		);
 
-	gpu_inst : GPU port map(
-		clk => clk,
-		rst => rst,
-		tile_type => gmem_tile_type_out, --fr gmem
-		gmem_adr => gpu_read_adr, --till gmem
-		vgaRed => vgaRed,
-		vgaGreen => vgaGreen,
-		vgaBlue => vgaBlue,
-		Hsync => Hsync,
-		Vsync => Vsync,
-		bg_color => sw --switch-knappar kontrollerar bakgrundsfärg
-		);
+--	gpu_inst : GPU port map(
+--		clk => clk,
+--		rst => rst,
+--		tile_type => gmem_tile_type_out, --fr gmem
+--		gmem_adr => gpu_read_adr, --till gmem
+--		vgaRed => vgaRed,
+--		vgaGreen => vgaGreen,
+--		vgaBlue => vgaBlue,
+--		Hsync => Hsync,
+--		Vsync => Vsync,
+--		bg_color => sw --switch-knappar kontrollerar bakgrundsfärg
+--		);
 
 	
 	--baked_value <= "0" & sw(7 downto 5) & "0" & sw(4 downto 2) & "00" & sw(1 downto 0) & "000" & rst;
@@ -211,7 +213,7 @@ begin
 		seg => seg,
 		an => an,
 		--value => baked_value
-		value => dbus
+		value => gr15
 		);
 
 	cpu_inst : cpu port map(

@@ -5,153 +5,154 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="info" file="Xst" num="3010" delta="new" >&quot;<arg fmt="%s" index="1">/edu/tobhu543/TSEA83/projekt/snake.vhd</arg>&quot; line <arg fmt="%d" index="2">173</arg>: Output port &lt;<arg fmt="%s" index="3">debug_signal</arg>&gt; of the instance &lt;<arg fmt="%s" index="4">uart_inst</arg>&gt; is unconnected or connected to loadless signal.
+<msg type="warning" file="HDLCompiler" num="1127" delta="old" >"/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../CPU/upc.vhd" Line 205: Assignment to <arg fmt="%s" index="1">alu_tmp</arg> ignored, since the identifier is never used
 </msg>
 
-<msg type="info" file="Xst" num="3010" delta="new" >&quot;<arg fmt="%s" index="1">/edu/tobhu543/TSEA83/projekt/snake.vhd</arg>&quot; line <arg fmt="%d" index="2">173</arg>: Output port &lt;<arg fmt="%s" index="3">uart_word_ready</arg>&gt; of the instance &lt;<arg fmt="%s" index="4">uart_inst</arg>&gt; is unconnected or connected to loadless signal.
+<msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">sw&lt;7:0&gt;</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 </msg>
 
-<msg type="warning" file="Xst" num="2563" delta="new" >Inout &lt;<arg fmt="%s" index="1">flags</arg>&gt; is never assigned. Tied to value <arg fmt="%s" index="2">Z</arg>.
+<msg type="info" file="Xst" num="3010" delta="old" >&quot;<arg fmt="%s" index="1">/edu/tobhu543/TSEA83/projekt/snake.vhd</arg>&quot; line <arg fmt="%d" index="2">175</arg>: Output port &lt;<arg fmt="%s" index="3">dbus</arg>&gt; of the instance &lt;<arg fmt="%s" index="4">uart_inst</arg>&gt; is unconnected or connected to loadless signal.
 </msg>
 
-<msg type="warning" file="Xst" num="647" delta="new" >Input &lt;<arg fmt="%s" index="1">dbus&lt;11:0&gt;</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+<msg type="info" file="Xst" num="3010" delta="old" >&quot;<arg fmt="%s" index="1">/edu/tobhu543/TSEA83/projekt/snake.vhd</arg>&quot; line <arg fmt="%d" index="2">175</arg>: Output port &lt;<arg fmt="%s" index="3">debug_signal</arg>&gt; of the instance &lt;<arg fmt="%s" index="4">uart_inst</arg>&gt; is unconnected or connected to loadless signal.
 </msg>
 
-<msg type="warning" file="Xst" num="647" delta="new" >Input &lt;<arg fmt="%s" index="1">rst</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+<msg type="info" file="Xst" num="3010" delta="old" >&quot;<arg fmt="%s" index="1">/edu/tobhu543/TSEA83/projekt/snake.vhd</arg>&quot; line <arg fmt="%d" index="2">175</arg>: Output port &lt;<arg fmt="%s" index="3">uart_word_ready</arg>&gt; of the instance &lt;<arg fmt="%s" index="4">uart_inst</arg>&gt; is unconnected or connected to loadless signal.
 </msg>
 
-<msg type="info" file="Xst" num="2774" delta="new" >HDL ADVISOR - <arg fmt="%s" index="1">KEEP</arg> <arg fmt="%s" index="2">property</arg> attached to signal <arg fmt="%s" index="3">dflags&lt;2&gt;</arg> may hinder XST clustering optimizations.
+<msg type="warning" file="Xst" num="2563" delta="old" >Inout &lt;<arg fmt="%s" index="1">flags</arg>&gt; is never assigned. Tied to value <arg fmt="%s" index="2">Z</arg>.
 </msg>
 
-<msg type="info" file="Xst" num="3019" delta="new" >HDL ADVISOR - <arg fmt="%s" index="1">256</arg> flip-flops were inferred for signal &lt;<arg fmt="%s" index="2">gr</arg>&gt;. You may be trying to describe a RAM in a way that is incompatible with block and distributed RAM resources available on Xilinx devices, or with a specific template that is not supported. Please review the Xilinx resources documentation and the XST user manual for coding guidelines. Taking advantage of RAM resources will lead to improved device usage and reduced synthesis time.
+<msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">rst</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 </msg>
 
-<msg type="info" file="Xst" num="3019" delta="new" >HDL ADVISOR - <arg fmt="%s" index="1">256</arg> flip-flops were inferred for signal &lt;<arg fmt="%s" index="2">gr</arg>&gt;. You may be trying to describe a RAM in a way that is incompatible with block and distributed RAM resources available on Xilinx devices, or with a specific template that is not supported. Please review the Xilinx resources documentation and the XST user manual for coding guidelines. Taking advantage of RAM resources will lead to improved device usage and reduced synthesis time.
+<msg type="info" file="Xst" num="2774" delta="old" >HDL ADVISOR - <arg fmt="%s" index="1">KEEP</arg> <arg fmt="%s" index="2">property</arg> attached to signal <arg fmt="%s" index="3">dflags&lt;2&gt;</arg> may hinder XST clustering optimizations.
 </msg>
 
-<msg type="warning" file="Xst" num="737" delta="new" >Found <arg fmt="%d" index="1">1</arg>-bit latch for signal &lt;<arg fmt="%s" index="2">alu_out_extra&lt;16&gt;</arg>&gt;. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+<msg type="info" file="Xst" num="3019" delta="old" >HDL ADVISOR - <arg fmt="%s" index="1">256</arg> flip-flops were inferred for signal &lt;<arg fmt="%s" index="2">gr</arg>&gt;. You may be trying to describe a RAM in a way that is incompatible with block and distributed RAM resources available on Xilinx devices, or with a specific template that is not supported. Please review the Xilinx resources documentation and the XST user manual for coding guidelines. Taking advantage of RAM resources will lead to improved device usage and reduced synthesis time.
 </msg>
 
-<msg type="info" file="Xst" num="3031" delta="new" >HDL ADVISOR - The RAM &lt;<arg fmt="%s" index="1">Mram_output</arg>&gt; will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+<msg type="info" file="Xst" num="3019" delta="old" >HDL ADVISOR - <arg fmt="%s" index="1">256</arg> flip-flops were inferred for signal &lt;<arg fmt="%s" index="2">gr</arg>&gt;. You may be trying to describe a RAM in a way that is incompatible with block and distributed RAM resources available on Xilinx devices, or with a specific template that is not supported. Please review the Xilinx resources documentation and the XST user manual for coding guidelines. Taking advantage of RAM resources will lead to improved device usage and reduced synthesis time.
 </msg>
 
-<msg type="info" file="Xst" num="3031" delta="new" >HDL ADVISOR - The RAM &lt;<arg fmt="%s" index="1">Mram_output</arg>&gt; will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+<msg type="warning" file="Xst" num="737" delta="old" >Found <arg fmt="%d" index="1">1</arg>-bit latch for signal &lt;<arg fmt="%s" index="2">alu_out_extra&lt;16&gt;</arg>&gt;. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 </msg>
 
-<msg type="info" file="Xst" num="3048" delta="new" >The small RAM &lt;<arg fmt="%s" index="1">Mram_v[3]_GND_92_o_wide_mux_3_OUT</arg>&gt; will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
+<msg type="info" file="Xst" num="3031" delta="old" >HDL ADVISOR - The RAM &lt;<arg fmt="%s" index="1">Mram_output</arg>&gt; will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
 </msg>
 
-<msg type="info" file="Xst" num="3048" delta="new" >The small RAM &lt;<arg fmt="%s" index="1">Mram_counter_r[17]_PWR_19_o_wide_mux_4_OUT</arg>&gt; will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
+<msg type="info" file="Xst" num="3031" delta="old" >HDL ADVISOR - The RAM &lt;<arg fmt="%s" index="1">Mram_output</arg>&gt; will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
 </msg>
 
-<msg type="info" file="Xst" num="3031" delta="new" >HDL ADVISOR - The RAM &lt;<arg fmt="%s" index="1">Mram_pmem</arg>&gt; will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+<msg type="info" file="Xst" num="3048" delta="old" >The small RAM &lt;<arg fmt="%s" index="1">Mram_v[3]_GND_62_o_wide_mux_3_OUT</arg>&gt; will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
 </msg>
 
-<msg type="info" file="Xst" num="3040" delta="new" >The RAM &lt;<arg fmt="%s" index="1">Mram_n0068</arg>&gt; will be implemented as a BLOCK RAM, absorbing the following register(s):</msg>
-
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">breg_2</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="info" file="Xst" num="3048" delta="old" >The small RAM &lt;<arg fmt="%s" index="1">Mram_counter_r[17]_PWR_16_o_wide_mux_4_OUT</arg>&gt; will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">breg_3</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="info" file="Xst" num="3040" delta="old" >The RAM &lt;<arg fmt="%s" index="1">Mram_pmem</arg>&gt; will be implemented as a BLOCK RAM, absorbing the following register(s):</msg>
+
+<msg type="info" file="Xst" num="3040" delta="old" >The RAM &lt;<arg fmt="%s" index="1">Mram_n0051</arg>&gt; will be implemented as a BLOCK RAM, absorbing the following register(s):</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">breg_2</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">breg_4</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">breg_3</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">breg_5</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">breg_4</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">breg_6</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">breg_5</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">breg_7</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">breg_6</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">yreg_0</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">breg_7</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">yreg_1</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">yreg_0</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">yreg_2</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">yreg_1</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">yreg_3</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">yreg_2</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">yreg_4</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">yreg_3</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">yreg_5</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">yreg_4</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">yreg_6</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">yreg_5</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">yreg_7</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">yreg_6</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">xreg_0</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">yreg_7</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">xreg_1</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">xreg_0</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">xreg_2</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">xreg_1</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">xreg_3</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">xreg_2</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">xreg_4</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">xreg_3</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">xreg_5</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">xreg_4</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">xreg_6</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">xreg_5</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">xreg_7</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">xreg_6</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2042" delta="new" >Unit <arg fmt="%s" index="1">spimaster</arg>: <arg fmt="%d" index="2">16</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
-
-<msg type="warning" file="Xst" num="2042" delta="new" >Unit <arg fmt="%s" index="1">UART</arg>: <arg fmt="%d" index="2">16</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
-
-<msg type="warning" file="Xst" num="2042" delta="new" >Unit <arg fmt="%s" index="1">spi</arg>: <arg fmt="%d" index="2">2</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
-
-<msg type="warning" file="Xst" num="2183" delta="new" >Unit <arg fmt="%s" index="1">spi</arg>: the following tristate(s) are NOT replaced by logic (Please refer to Answer Record 20048 for more information): </msg>
-
-<msg type="warning" file="Xst" num="2040" delta="new" >Unit <arg fmt="%s" index="1">grx</arg>: <arg fmt="%d" index="2">16</arg> multi-source signals are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
-
-<msg type="warning" file="Xst" num="2042" delta="new" >Unit <arg fmt="%s" index="1">alu</arg>: <arg fmt="%d" index="2">18</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
-
-<msg type="warning" file="Xst" num="2183" delta="new" >Unit <arg fmt="%s" index="1">alu</arg>: the following tristate(s) are NOT replaced by logic (Please refer to Answer Record 20048 for more information): </msg>
-
-<msg type="warning" file="Xst" num="2042" delta="new" >Unit <arg fmt="%s" index="1">pm</arg>: <arg fmt="%d" index="2">16</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
-
-<msg type="warning" file="Xst" num="2042" delta="new" >Unit <arg fmt="%s" index="1">ir</arg>: <arg fmt="%d" index="2">16</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
-
-<msg type="warning" file="Xst" num="2042" delta="new" >Unit <arg fmt="%s" index="1">asr</arg>: <arg fmt="%d" index="2">16</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
-
-<msg type="warning" file="Xst" num="2042" delta="new" >Unit <arg fmt="%s" index="1">pc</arg>: <arg fmt="%d" index="2">16</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
-
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">uart_inst/uart_word_flipflop</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">snake</arg>&gt;.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">xreg_7</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">spi</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2677" delta="new" >Node &lt;<arg fmt="%s" index="1">uart_inst/shiftreg/regi_0</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">snake</arg>&gt;.
+<msg type="warning" file="Xst" num="2040" delta="old" >Unit <arg fmt="%s" index="1">snake</arg>: <arg fmt="%d" index="2">16</arg> multi-source signals are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
+
+<msg type="warning" file="Xst" num="2042" delta="old" >Unit <arg fmt="%s" index="1">UART</arg>: <arg fmt="%d" index="2">16</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
+
+<msg type="warning" file="Xst" num="2042" delta="old" >Unit <arg fmt="%s" index="1">pc</arg>: <arg fmt="%d" index="2">16</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
+
+<msg type="warning" file="Xst" num="2042" delta="old" >Unit <arg fmt="%s" index="1">asr</arg>: <arg fmt="%d" index="2">16</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
+
+<msg type="warning" file="Xst" num="2042" delta="old" >Unit <arg fmt="%s" index="1">ir</arg>: <arg fmt="%d" index="2">16</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
+
+<msg type="warning" file="Xst" num="2042" delta="old" >Unit <arg fmt="%s" index="1">pm</arg>: <arg fmt="%d" index="2">32</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
+
+<msg type="warning" file="Xst" num="2042" delta="old" >Unit <arg fmt="%s" index="1">alu</arg>: <arg fmt="%d" index="2">18</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
+
+<msg type="warning" file="Xst" num="2183" delta="old" >Unit <arg fmt="%s" index="1">alu</arg>: the following tristate(s) are NOT replaced by logic (Please refer to Answer Record 20048 for more information): </msg>
+
+<msg type="warning" file="Xst" num="2040" delta="old" >Unit <arg fmt="%s" index="1">grx</arg>: <arg fmt="%d" index="2">16</arg> multi-source signals are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">uart_inst/uart_word_flipflop</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">snake</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2170" delta="new" >Unit <arg fmt="%s" index="1">cpu_inst</arg> : the following signal(s) form a combinatorial loop: </msg>
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">uart_inst/shiftreg/regi_0</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">snake</arg>&gt;.
+</msg>
 
-<msg type="warning" file="Xst" num="2170" delta="new" >Unit <arg fmt="%s" index="1">cpu_inst</arg> : the following signal(s) form a combinatorial loop: </msg>
+<msg type="warning" file="Xst" num="2170" delta="old" >Unit <arg fmt="%s" index="1">cpu_inst</arg> : the following signal(s) form a combinatorial loop: </msg>
 
-<msg type="warning" file="Xst" num="2170" delta="new" >Unit <arg fmt="%s" index="1">cpu_inst</arg> : the following signal(s) form a combinatorial loop: </msg>
+<msg type="warning" file="Xst" num="2170" delta="old" >Unit <arg fmt="%s" index="1">cpu_inst</arg> : the following signal(s) form a combinatorial loop: </msg>
 
-<msg type="warning" file="Xst" num="2170" delta="new" >Unit <arg fmt="%s" index="1">cpu_inst</arg> : the following signal(s) form a combinatorial loop: </msg>
+<msg type="warning" file="Xst" num="2170" delta="old" >Unit <arg fmt="%s" index="1">cpu_inst</arg> : the following signal(s) form a combinatorial loop: </msg>
 
-<msg type="info" file="Xst" num="2169" delta="new" >HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+<msg type="warning" file="Xst" num="2170" delta="old" >Unit <arg fmt="%s" index="1">cpu_inst</arg> : the following signal(s) form a combinatorial loop: </msg>
+
+<msg type="info" file="Xst" num="2169" delta="old" >HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
 </msg>
 
 </messages>
