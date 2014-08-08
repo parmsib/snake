@@ -99,13 +99,14 @@ MENULOOPXRETURN
 	
 MENULOOP
 	SPI Gr0; ladda SPI-data till gr0
-	CMP #UP, Gr0;
+	AND #$000F, Gr0; anda bort andra joysticks
+	CMP #1, Gr0;
 	BEQ #UPDIRSPEED;
-	CMP #RIGHT, Gr0;
+	CMP #2, Gr0;
 	BEQ #RIGHTDIRSPEED;
-	CMP #DOWN, Gr0;
+	CMP #3, Gr0;
 	BEQ #DOWNDIRSPEED;
-	CMP #LEFT, Gr0;
+	CMP #4, Gr0;
 	BEQ #LEFTDIRSPEED;
 	BRA #MENULOOP; var inget håll, fortsätt kolla.
 
@@ -135,8 +136,7 @@ UARTLOOP
 	BOU #UARTREADY ;kolla om uart har ett word redo att hämtas
 	BRA #UARTLOOP ;fortsätt vänta
 UARTREADY
-	;TODO: Gör nedanstående instruktion
-	LOADUART Gr1; ladda Uart-wordet till Gr1
+	UART Gr1; ladda Uart-wordet till Gr1
 	STORE #$C80, Gr1, Gr0; Lägg till wordet på rätt ställe. använder Gr0 som index
 	ADD #1, Gr0; incrementera countern
 	CMP #64, Gr0; kolla om vi är färdiga
@@ -170,7 +170,7 @@ RESETSNAKESLOOP
 	STORE $C00, Gr1, Gr0; sätt 0 på cur i orm1
 	STORE $C40, Gr1, Gr0; - || -          orm2
 	ADD #1, Gr0; inkrementera countern
-	CMP #64; kolla om kommit genom hela arrayen
+	CMP #64, Gr0; kolla om kommit genom hela arrayen
 	BNE #RESETSNAKESLOOP; om vi inte är färdiga, gör om
 	;annars (vi är färdiga), gå vidare
 
@@ -246,13 +246,14 @@ SNAKERETURNA
 	; ska ge dem rätt värde utifrån rörelseriktning
 	
 	SPI Gr0;
-	CMP #UP, Gr0;
+	AND #$000F, Gr0; anda bort andra joysticks
+	CMP #1, Gr0;
 	BEQ #SNAKEUP1;
-	CMP #RIGHT, Gr0;
+	CMP #2, Gr0;
 	BEQ #SNAKERIGHT1;
-	CMP #DOWN, Gr0;
+	CMP #3, Gr0;
 	BEQ #SNAKEDOWN1;
-	CMP #LEFT, Gr0;
+	CMP #4, Gr0;
 	BEQ #SNAKELEFT1;
 	;annars (inget håll nedtryckt):
 	LOAD $AFE, Gr1; ladda in gammal direction
@@ -292,7 +293,61 @@ SNAKERETURNB
 	;Nu ligger första ormens nya huvudposition i Gr15, formaterat för Gmem
 	STORE $D00, Gr15; Spara huvudets position för senare användning
 	
-; PASTA IN ORM2 HÄR!
+	; ORM 2: ---------------------------------------------------------------------------------------
+SNAKELOADOLD2
+	;först spara positionen gamla huvudet är på. 
+	LOAD $AFB, Gr0; ladda head-pointern till Gr0
+	;dags att förberade subrutinkall till FROMGMEM
+	LOAD $C40, Gr15, Gr0; ladda Gr15 med gamla huvudets position (Gr0 som index)
+	LOAD #SNAKERETURN2A, Gr14; returadress
+	BRA #FROMGMEM; Lägger X, Y i Gr12, Gr13
+SNAKERETURN2A
+
+	; nu: Gr12, Gr13 innehåller X, Y
+	; ska ge dem rätt värde utifrån rörelseriktning
+	
+	SPI Gr0;
+	AND #$00F0, Gr0; anda bort andra joysticks
+	CMP #1, Gr0;
+	BEQ #SNAKEUP2;
+	CMP #2, Gr0;
+	BEQ #SNAKERIGHT2;
+	CMP #3, Gr0;
+	BEQ #SNAKEDOWN2;
+	CMP #4, Gr0;
+	BEQ #SNAKELEFT2;
+	;annars (inget håll nedtryckt):
+	LOAD $AFF, Gr1; ladda in gammal direction
+	CMP #0, Gr1;
+	BEQ #SNAKEUP2;
+	CMP #1, Gr1;
+	BEQ #SNAKERIGHT2;
+	CMP #2, Gr1;
+	BEQ #SNAKEDOWN2;
+	CMP #3, Gr1;
+	BEQ #SNAKELEFT2;
+	;har vi inte hittat nåt håll än, you dun goofed
+	
+SNAKEUP2
+	SUB #1, Gr13; minska Y med 1
+	BRA #SNAKESTOREHEADPOS2
+SNAKERIGHT2
+	ADD #1, Gr12; öka X med 1
+	BRA #SNAKESTOREHEADPOS2
+SNAKEDOWN2
+	ADD #1, Gr13; öka Y med 1
+	BRA #SNAKESTOREHEADPOS2
+SNAKELEFT2
+	SUB #1, Gr12; minska X med 1
+	BRA #SNAKESTOREHEADPOS2
+
+	
+SNAKESTOREHEADPOS2
+	LOAD #SNAKERETURNB2, Gr14;
+	BRA #TOGMEM; formatera tillbaka till GMEM-form
+SNAKERETURNB2
+	;Nu ligger andra ormens nya huvudposition i Gr15, formaterat för Gmem
+	STORE $D01; Spara huvudets position för senare användning	
 	
 	
 	;nu ligger nya huvud-positionerna  $D00 och $D01
@@ -306,7 +361,7 @@ SNAKERETURNB
 	STORE $C00, Gr1, Gr0; spara nya huvudpos på huvudplatsen i orm-arrayen
 	STORE $AF9, Gr0; lägg tillbaka nya huvudplatsen
 	
-;PASTA IN ORM 2 HÄR!
+	; /orm 2-----------------------------------------------------------
 	
 	;Dags att kolla kollision med kartan eller äpple
 	
