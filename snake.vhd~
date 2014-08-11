@@ -20,7 +20,8 @@ entity snake is
 		--
 		sw : in STD_LOGIC_VECTOR(7 downto 0); --spakar på kortet (kontrollerar bakgrundsfärg);
 		ss, mosi, sclk : out STD_LOGIC_VECTOR(3 downto 0);
-		miso : in STD_LOGIC_VECTOR(3 downto 0)
+		miso : in STD_LOGIC_VECTOR(3 downto 0);
+		Led : out STD_LOGIC_VECTOR(3 downto 0);
 		);
             
 		
@@ -145,19 +146,20 @@ begin
 --	miso2_tmp <= miso2;
 --	miso3_tmp <= miso3;
 --	miso4_tmp <= miso4;
+	Led(3 downto 0) <= flags(6 downto 3);
 
---	spi_inst : spimaster 
---		generic map( amount => 4)
---		port map( 	
---			clk => clk,
---			buss => dbus,
---			flags => flags,
---			frombus => frombus,
---			miso => miso,
---			sclk => sclk,
---			mosi => mosi,
---			ss => ss
---		);
+	spi_inst : spimaster 
+		generic map( amount => 4)
+		port map( 	
+			clk => clk,
+			buss => dbus,
+			flags => flags,
+			frombus => frombus,
+			miso => miso,
+			sclk => sclk,
+			mosi => mosi,
+			ss => ss
+		);
 
 --	spi_tst : spi
 --		port map ( 	
@@ -170,15 +172,15 @@ begin
 --			ss => ss
 --		);
 
---	uart_inst : UART generic map(16) port map(
---		clk => clk,
---		rst => rst,
---		uart_in => uart_in,
---		uart_word_ready => uart_word_ready,
---		dbus => dbus,
---		tobus => tobus,
---		debug_signal => baked_value
---		);
+	uart_inst : UART generic map(16) port map(
+		clk => clk,
+		rst => rst,
+		uart_in => uart_in,
+		uart_word_ready => uart_word_ready,
+		dbus => dbus,
+		tobus => tobus,
+		debug_signal => baked_value
+		);
 	
 --	gmem_inst : GMEM port map( 
 --		clk => clk,
@@ -211,7 +213,7 @@ begin
 		seg => seg,
 		an => an,
 		--value => baked_value
-		value => dbus
+		value => gr15
 		);
 
 	cpu_inst : cpu port map(

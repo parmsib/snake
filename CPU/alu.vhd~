@@ -26,7 +26,7 @@ architecture behav of alu is
 	signal random_reg_new : std_logic_vector(31 downto 0) := (31 => '1', others => '0');
 	signal random_tmp : std_logic := '0';
 	signal random_out : std_logic_vector(31 downto 0) := (others => '0');
-	signal flags_vippor : std_logic_vector(6 downto 0) := "0000000";
+	signal flags_vippor : std_logic_vector(6 downto 3) := "0000";
 begin
 
 	signed_buss <= signed(buss);

@@ -12,10 +12,10 @@ architecture behav of kr2 is
 	type ROM is array (0 to 3) of std_logic_vector(7 downto 0);
 	
 	constant C2 : ROM := (
-		0 => B"0000_0011",
-		1 => B"0000_0100",
-		2 => B"0000_0110",
-		3 => B"0000_1001"
+		0 => B"0000_0100",
+		1 => B"0000_0101",
+		2 => B"1000_1100",
+		3 => B"0000_1011"
 	);
 	
 	
