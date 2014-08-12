@@ -63,11 +63,11 @@ MENULOOPXRETURN
 	;nu innehåller Gr2 hela adressen till det word som vår sökta tile ligger i
 	
 	;behöver ta reda på vilken tile i detta word vi är ute efter
-	STORE $D00, Gr12; Spara (x mod 4) - 1 till Gr3, vilket är tile-index i wordet
+	STORE $D00, Gr12; Spara (x mod 4) till Gr3, vilket är tile-index i wordet
 	LOAD $D00, Gr3;
 	;MOD #4, Gr3;
 	AND #$0003, Gr3; MOD #4
-	SUB #1, Gr3;
+	;SUB #1, Gr3;
 	;nu innehåller Gr3 tile-index i wordet
 	
 	LOAD $B00, Gr4, Gr2; Ladda in rätt word från bilden till register 4
