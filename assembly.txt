@@ -57,17 +57,17 @@ MENULOOPXRETURN
 	STORE $D00, Gr12; Lägg till x // 4 till Gr3, för att få rätt word-offset i x-led
 	LOAD $D00, Gr3; 
 	;DIV #4, Gr3; heltalsdivision (avrunda nedåt)
-	LSR #2, Gr3;
+	LSR #2, Gr3; heltalsdivision
 	STORE $D00, Gr3;
 	ADD $D00, Gr2;
 	;nu innehåller Gr2 hela adressen till det word som vår sökta tile ligger i
 	
 	;behöver ta reda på vilken tile i detta word vi är ute efter
-	STORE $D00, Gr12; Spara (x mod 4) - 1 till Gr3, vilket är tile-index i wordet
+	STORE $D00, Gr12; Spara (x mod 4) till Gr3, vilket är tile-index i wordet
 	LOAD $D00, Gr3;
 	;MOD #4, Gr3;
 	AND #$0003, Gr3; MOD #4
-	SUB #1, Gr3;
+	;SUB #1, Gr3;
 	;nu innehåller Gr3 tile-index i wordet
 	
 	LOAD $B00, Gr4, Gr2; Ladda in rätt word från bilden till register 4
@@ -347,19 +347,19 @@ SNAKESTOREHEADPOS2
 	BRA #TOGMEM; formatera tillbaka till GMEM-form
 SNAKERETURNB2
 	;Nu ligger andra ormens nya huvudposition i Gr15, formaterat för Gmem
-	STORE $D01; Spara huvudets position för senare användning	
+	STORE $D01, Gr15; Spara huvudets position för senare användning	
 	
 	
 	;nu ligger nya huvud-positionerna  $D00 och $D01
 	;dags att flytta fram head och lägga in rätt värde på head-platsen i arraysen
 	
-	LOAD $AF9, Gr0; orm 1 head pointer till gr0
+	LOAD $AFB, Gr0; orm 2 head pointer till gr0
 	ADD #1, Gr0; 
 	;MOD #64, Gr0; cirkulär lista. orm-array max 62 lång.
 	AND #$003F, Gr0; MOD 64
-	LOAD $D00, Gr1; ladda in nya huvudpos till Gr1
-	STORE $C00, Gr1, Gr0; spara nya huvudpos på huvudplatsen i orm-arrayen
-	STORE $AF9, Gr0; lägg tillbaka nya huvudplatsen
+	LOAD $D01, Gr1; ladda in nya huvudpos till Gr1
+	STORE $C40, Gr1, Gr0; spara nya huvudpos på huvudplatsen i orm-arrayen
+	STORE $AFB, Gr0; lägg tillbaka nya huvudplatsen
 	
 	; /orm 2-----------------------------------------------------------
 	
@@ -368,12 +368,18 @@ SNAKERETURNB2
 ;-------------ÄPPLE
 	
 	;äpple
-	LOAD $D00, Gr0; ladda huvudets position till Gr0
+	LOAD $D00, Gr0; ladda orm1s huvudposition till Gr0
 	CMP $CC0, Gr0; jämför med äpplets position
-	BNE #SNAKECHECKMAP1; om ej träff, gå vidare
-	;annars (om träff) fixa äpple
+	BEQ #APPLEHIT; om träff, hoppa dit
+	;annars, testa också orm2s huvud
+	LOAD $D01, Gr0; ladda andra ormens huvud
+	CMP $CC0, Gr0; jämför med äpplets position
+	BNE #SNAKECHECKMAP1; om ej träff, hoppa förbi träff
+	;annars (om träff) går vi automatiskt till APPLEHIT
 	;--fixa score
+APPLEHIT
 	LOAD $AFD, Gr3; ladda Score till Gr3
+	ADD #1, Gr3; öka med ett
 	ADD #1, Gr3; öka med ett
 	STORE $AFD, Gr3; spara tillbaka den inkrementade scoren
 	;--fixa nytt äpple
@@ -415,9 +421,19 @@ SNAKECHECKMAP1
 SNAKEHITRETURN1
 	;nu ligger det FFFF i Gr11 om det är ett hinder på pos
 	CMP #$FFFF, Gr11;
-	BNE #SNAKEMOVETAIL; om inte hinder i vägen, gå vidare
-	;annars (hinder i vägen)
-	BRA #MENU; förlorat, gå till menyn
+	BEQ #MEUN; om hinder i vägen, gå till menyn
+	;annars, testa med andra spelarens huvud
+	;förbered GETOBSTACLEBYGMEM igen
+	LOAD $D01, Gr14; orm2s huvudpos sen tidigare
+	LOAD #SNAKEHITRETURN2, Gr14; returnadress
+	BRA #GETOBSTACLEBYGMEM; gör kallet
+SNAKEHITRETURN2
+	;nu ligger det FFFF i gr11 om det är ett hinder på orm2s huvudpos
+	CMP #$FFFF, Gr11;
+	BEQ #MENU; om hinder i vägen, har vi förlorat
+	;annars, gå vidare
+
+	;orm 1: ----------------------------------------------------------
 	
 SNAKEMOVETAIL1
 	LOAD $AFA, Gr0; ladda in svanspekaren för orm 1
@@ -455,8 +471,42 @@ SNAKELOOPCONTINUE1
 	BNE #SNAKEHITLOOP1; om inte samma, fortsätt loopa
 	;annars (samma, loopat klart), fortsätt programmet
 	
-;PASTA ORM 2 HÄR!
-
+	;orm2: ---------------------------------------------------------------------------
+	
+SNAKEMOVETAIL2
+	LOAD $C7F, Gr0; ladda in svanspekaren för orm 1
+	LOAD $C40, Gr15, Gr0; ladda gamla svanspos tills senare
+	ADD #1, Gr0; öka den med ett
+	STORE $C3F, Gr0; lägg tillbaka igen
+	
+	;dags att måla tomt där svansen var
+	;har redan gamla svansposen i Gr15
+	GSTORE #$0000; sudda, med tile 0000
+	
+SNAKECHECKHITPLAYER2
+	LOAD $C3E, Gr0; ladda andra ormens head-pointer, som loopas över
+	;LOAD $C7F, Gr1; tail-pointer, som skall loopas till
+	LOAD $C7E, Gr2; ladda denna orms huvud-pointer
+	LOAD $C40, Gr2, Gr2; ladda denna orms huvudpos
+	STORE $D00, Gr2; spara huvudpos på $D00
+SNAKEHITLOOP2
+	LOAD $C00, Gr3, Gr0; ladda nuvarande dels pos
+	CMP $D00, Gr3; jämför current dels pos med huvudpos
+	BNE #SNAKELOOPCONTINUE2; om inte träff
+	BRA #MENU; annars
+SNAKELOOPCONTINUE2
+	;kan passa på att rita ut ormen när vi ändår loopar genom den
+	LOAD $C40, Gr15, Gr0; spara cur pos i Gr15, för att rita ut till GMEM
+	GSTORE #$0002; rita orm2-tile på cur pos.
+	;sätt fram cur-pointern och kolla slut etc
+	ADD #1, Gr0;
+	MOD #62, Gr0; cirkulär lista
+	CMP $C3F, Gr0; Jämför nuvarande dels pointer med tailpointer
+	BNE #SNAKEHITLOOP2; om inte samma, fortsätt loopa
+	;annars (samma), fortsätt
+	
+	;/orm2--------------------------------------------------------------
+	
 ;--------------------------SPELHASTIGHET----------------
 ; us och ms är egentligen verkligen inte en mikro eller millisekund
 ; de är mycket större än så
