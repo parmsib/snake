@@ -57,7 +57,7 @@ MENULOOPXRETURN
 	STORE $D00, Gr12; Lägg till x // 4 till Gr3, för att få rätt word-offset i x-led
 	LOAD $D00, Gr3; 
 	;DIV #4, Gr3; heltalsdivision (avrunda nedåt)
-	LSR #2, Gr3;
+	LSR #2, Gr3; heltalsdivision
 	STORE $D00, Gr3;
 	ADD $D00, Gr2;
 	;nu innehåller Gr2 hela adressen till det word som vår sökta tile ligger i
