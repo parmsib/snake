@@ -1,0 +1,6 @@
+	LOAD #$000F, Gr0;
+	LOAD #66, Gr15; plats 2, 2
+	GSTORE Gr0;
+	LOAD #916, Gr0;
+	GSTORE Gr0;
+	

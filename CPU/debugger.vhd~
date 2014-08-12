@@ -1,0 +1,22 @@
+library ieee ;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+
+entity debugger is
+	port (
+		clk : in std_logic;
+		outbuss : out std_logic_vector(15 downto 0);
+		bspi : in std_logic_vector(15 downto 0);
+		buart : in std_logic_vector(15 downto 0);
+		frombus : inout std_logic_vector(3 downto 0);
+		tobus : inout std_logic_vector(3 downto 0);
+		flags : inout std_logic_vector(6 downto 0);
+		gr15 : out std_logic_vector(15 downto 0)
+		);
+end debugger;
+
+architecture behav of debugger is
+
+begin
+
+end behav;

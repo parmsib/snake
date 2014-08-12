@@ -1,0 +1,1329 @@
+
+   *** Important settings for the Xilinx Backend module ***
+
+   Synthesis top module: snake
+   FPGA part (PART): xc6slx16-3-csg324
+   Constraints file: lab.ucf
+
+nice -n 19 make -f Makefile lab-synthdir/layoutdefault/design.twr PROJNAME="lab" S="snake.vhd GPU/GPU.vhd GMEM/GMEM.vhd CPU/cpu.vhd CPU/alu.vhd CPU/asr.vhd CPU/grx.vhd CPU/ir.vhd CPU/kr2.vhd CPU/pm.vhd CPU/pm.vhd CPU/kr1.vhd CPU/pc.vhd CPU/upc.vhd leddriver.vhd SPI/spi.vhd SPI/spimaster.vhd UART/UART.vhd Common/shiftregister.vhd Common/register.vhd" U="lab.ucf" XST_OPT="" PART="xc6slx16-3-csg324" INCDIRS=""
+make[1]: Entering directory `/edu/tobhu543/TSEA83/projekt'
+
+*** Creating synthesis scripts ***
+
+mkdir -p lab-synthdir/xst/synth
+echo "-top $(basename $(echo snake.vhd | sed 's/\..*$//'))" >> lab-synthdir/xst/synth/design.scr.tmp
+echo "-p xc6slx16-3-csg324" >> lab-synthdir/xst/synth/design.scr.tmp
+echo  >> lab-synthdir/xst/synth/design.scr.tmp
+rm -f lab-synthdir/xst/synth/design.prj
+touch lab-synthdir/xst/synth/design.prj
+echo 'vhdl work "../../../snake.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../GPU/GPU.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../GMEM/GMEM.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../CPU/cpu.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../CPU/alu.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../CPU/asr.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../CPU/grx.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../CPU/ir.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../CPU/kr2.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../CPU/pm.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../CPU/pm.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../CPU/kr1.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../CPU/pc.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../CPU/upc.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../leddriver.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../SPI/spi.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../SPI/spimaster.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../UART/UART.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../Common/shiftregister.vhd"' >> lab-synthdir/xst/synth/design.prj;  echo 'vhdl work "../../../Common/register.vhd"' >> lab-synthdir/xst/synth/design.prj;
+mv lab-synthdir/xst/synth/design.scr.tmp lab-synthdir/xst/synth/design.scr
+
+*** Synthesizing ***
+
+rm -rf lab-synthdir/xst/synth/tmpdir
+mkdir -p lab-synthdir/xst/synth/tmpdir
+rm -rf lab-synthdir/xst/synth/xst
+mkdir -p lab-synthdir/xst/synth/xst
+cd lab-synthdir/xst/synth; source /sw/xilinx/ise_14.2i/ISE_DS/settings64.sh; xst -ifn design.scr -ofn design.syr
+Release 12.4 - xst M.81d (lin64)
+Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to tmpdir
+
+
+Total REAL time to Xst completion: 3.00 secs
+Total CPU time to Xst completion: 0.09 secs
+ 
+--> 
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Parsing
+  3) HDL Elaboration
+  4) HDL Synthesis
+       4.1) HDL Synthesis Report
+  5) Advanced HDL Synthesis
+       5.1) Advanced HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Partition Report
+  8) Design Summary
+       8.1) Primitive and Black Box Usage
+       8.2) Device utilization summary
+       8.3) Partition Resource Summary
+       8.4) Timing Report
+            8.4.1) Clock Information
+            8.4.2) Asynchronous Control Signals Information
+            8.4.3) Timing Summary
+            8.4.4) Timing Details
+            8.4.5) Cross Clock Domains Report
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "design.prj"
+
+---- Target Parameters
+Output File Name                   : "design.ngc"
+Target Device                      : xc6slx16-3-csg324
+
+---- Source Options
+Top Module Name                    : snake
+
+=========================================================================
+
+WARNING:Xst:29 - Optimization Effort not specified
+The following parameters have been added:
+Optimization Goal                  : SPEED
+
+=========================================================================
+
+=========================================================================
+*                          HDL Parsing                                  *
+=========================================================================
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../snake.vhd" into library work
+Parsing entity <snake>.
+Parsing architecture <behv> of entity <snake>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../GPU/GPU.vhd" into library work
+Parsing entity <GPU>.
+Parsing architecture <behv> of entity <gpu>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../GMEM/GMEM.vhd" into library work
+Parsing entity <GMEM>.
+Parsing architecture <GMbehv> of entity <gmem>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../CPU/cpu.vhd" into library work
+Parsing entity <cpu>.
+Parsing architecture <behav> of entity <cpu>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../CPU/alu.vhd" into library work
+Parsing entity <alu>.
+Parsing architecture <behav> of entity <alu>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../CPU/asr.vhd" into library work
+Parsing entity <asr>.
+Parsing architecture <behav> of entity <asr>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../CPU/grx.vhd" into library work
+Parsing entity <grx>.
+Parsing architecture <behav> of entity <grx>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../CPU/ir.vhd" into library work
+Parsing entity <ir>.
+Parsing architecture <behav> of entity <ir>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../CPU/kr2.vhd" into library work
+Parsing entity <kr2>.
+Parsing architecture <behav> of entity <kr2>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../CPU/pm.vhd" into library work
+Parsing entity <pm>.
+Parsing architecture <behav> of entity <pm>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../CPU/pm.vhd" into library work
+Parsing entity <pm>.
+Parsing architecture <behav> of entity <pm>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../CPU/kr1.vhd" into library work
+Parsing entity <kr1>.
+Parsing architecture <behav> of entity <kr1>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../CPU/pc.vhd" into library work
+Parsing entity <pc>.
+Parsing architecture <behav> of entity <pc>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../CPU/upc.vhd" into library work
+Parsing entity <upc>.
+Parsing architecture <behav> of entity <upc>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../leddriver.vhd" into library work
+Parsing entity <leddriver>.
+Parsing architecture <Behavioral> of entity <leddriver>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../SPI/spi.vhd" into library work
+Parsing entity <spi>.
+Parsing architecture <behav> of entity <spi>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../SPI/spimaster.vhd" into library work
+Parsing entity <spimaster>.
+Parsing architecture <behav> of entity <spimaster>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../UART/UART.vhd" into library work
+Parsing entity <UART>.
+Parsing architecture <behav> of entity <uart>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../Common/shiftregister.vhd" into library work
+Parsing entity <shiftregi>.
+Parsing architecture <behav> of entity <shiftregi>.
+Parsing VHDL file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/xst/synth/../../../Common/register.vhd" into library work
+Parsing entity <regi>.
+Parsing architecture <behav> of entity <regi>.
+
+=========================================================================
+*                            HDL Elaboration                            *
+=========================================================================
+
+Elaborating entity <snake> (architecture <behv>) from library <work>.
+
+Elaborating entity <leddriver> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <cpu> (architecture <behav>) from library <work>.
+
+Elaborating entity <grx> (architecture <behav>) from library <work>.
+
+Elaborating entity <alu> (architecture <behav>) from library <work>.
+
+Elaborating entity <pm> (architecture <behav>) from library <work>.
+
+Elaborating entity <kr1> (architecture <behav>) from library <work>.
+
+Elaborating entity <kr2> (architecture <behav>) from library <work>.
+
+Elaborating entity <upc> (architecture <behav>) from library <work>.
+
+Elaborating entity <ir> (architecture <behav>) from library <work>.
+
+Elaborating entity <asr> (architecture <behav>) from library <work>.
+
+Elaborating entity <pc> (architecture <behav>) from library <work>.
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <snake>.
+    Related source file is "/edu/tobhu543/TSEA83/projekt/snake.vhd".
+WARNING:Xst:647 - Input <uart_in> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+    Summary:
+	no macro.
+Unit <snake> synthesized.
+
+Synthesizing Unit <leddriver>.
+    Related source file is "/edu/tobhu543/TSEA83/projekt/leddriver.vhd".
+WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+    Found 7-bit register for signal <segments>.
+    Found 4-bit register for signal <an>.
+    Found 18-bit register for signal <counter_r>.
+    Found 18-bit adder for signal <counter_r[17]_GND_7_o_add_2_OUT> created at line 1241.
+    Found 16x7-bit Read Only RAM for signal <v[3]_GND_7_o_wide_mux_3_OUT>
+    Found 4x4-bit Read Only RAM for signal <counter_r[17]_PWR_7_o_wide_mux_4_OUT>
+    Found 1-bit 4-to-1 multiplexer for signal <v<3>> created at line 39.
+    Found 1-bit 4-to-1 multiplexer for signal <v<2>> created at line 39.
+    Found 1-bit 4-to-1 multiplexer for signal <v<1>> created at line 39.
+    Found 1-bit 4-to-1 multiplexer for signal <v<0>> created at line 39.
+    Summary:
+	inferred   2 RAM(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred  29 D-type flip-flop(s).
+	inferred   4 Multiplexer(s).
+Unit <leddriver> synthesized.
+
+Synthesizing Unit <cpu>.
+    Related source file is "/edu/tobhu543/TSEA83/projekt/CPU/cpu.vhd".
+WARNING:Xst:2935 - Signal 'dflags<1:0>', unconnected in block 'cpu', is tied to its initial value (00).
+    Summary:
+	no macro.
+Unit <cpu> synthesized.
+
+Synthesizing Unit <grx>.
+    Related source file is "/edu/tobhu543/TSEA83/projekt/CPU/grx.vhd".
+WARNING:Xst:647 - Input <ind<3:0>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+    Found 16-bit register for signal <gr<1>>.
+    Found 16-bit register for signal <gr<2>>.
+    Found 16-bit register for signal <gr<3>>.
+    Found 16-bit register for signal <gr<4>>.
+    Found 16-bit register for signal <gr<5>>.
+    Found 16-bit register for signal <gr<6>>.
+    Found 16-bit register for signal <gr<7>>.
+    Found 16-bit register for signal <gr<8>>.
+    Found 16-bit register for signal <gr<9>>.
+    Found 16-bit register for signal <gr<10>>.
+    Found 16-bit register for signal <gr<11>>.
+    Found 16-bit register for signal <gr<12>>.
+    Found 16-bit register for signal <gr<13>>.
+    Found 16-bit register for signal <gr<14>>.
+    Found 16-bit register for signal <gr<15>>.
+    Found 16-bit register for signal <gr<0>>.
+INFO:Xst:3019 - HDL ADVISOR - 256 flip-flops were inferred for signal <gr>. You may be trying to describe a RAM in a way that is incompatible with block and distributed RAM resources available on Xilinx devices, or with a specific template that is not supported. Please review the Xilinx resources documentation and the XST user manual for coding guidelines. Taking advantage of RAM resources will lead to improved device usage and reduced synthesis time.
+    Found 16-bit 16-to-1 multiplexer for signal <at[3]_gr[15][15]_wide_mux_51_OUT> created at line 33.
+    Found 1-bit tristate buffer for signal <buss<15>> created at line 33
+    Found 1-bit tristate buffer for signal <buss<14>> created at line 33
+    Found 1-bit tristate buffer for signal <buss<13>> created at line 33
+    Found 1-bit tristate buffer for signal <buss<12>> created at line 33
+    Found 1-bit tristate buffer for signal <buss<11>> created at line 33
+    Found 1-bit tristate buffer for signal <buss<10>> created at line 33
+    Found 1-bit tristate buffer for signal <buss<9>> created at line 33
+    Found 1-bit tristate buffer for signal <buss<8>> created at line 33
+    Found 1-bit tristate buffer for signal <buss<7>> created at line 33
+    Found 1-bit tristate buffer for signal <buss<6>> created at line 33
+    Found 1-bit tristate buffer for signal <buss<5>> created at line 33
+    Found 1-bit tristate buffer for signal <buss<4>> created at line 33
+    Found 1-bit tristate buffer for signal <buss<3>> created at line 33
+    Found 1-bit tristate buffer for signal <buss<2>> created at line 33
+    Found 1-bit tristate buffer for signal <buss<1>> created at line 33
+    Found 1-bit tristate buffer for signal <buss<0>> created at line 33
+    Summary:
+	inferred 256 D-type flip-flop(s).
+	inferred   1 Multiplexer(s).
+	inferred  16 Tristate(s).
+Unit <grx> synthesized.
+
+Synthesizing Unit <alu>.
+    Related source file is "/edu/tobhu543/TSEA83/projekt/CPU/alu.vhd".
+WARNING:Xst:647 - Input <flags<2>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <flags<1>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <flags<0>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+    Found 4-bit register for signal <flags_vippor>.
+    Found 1-bit register for signal <random_tmp>.
+    Found 32-bit register for signal <random_reg>.
+    Found 16-bit register for signal <ar>.
+    Found 16-bit adder for signal <ar[15]_signed_buss[15]_add_29_OUT> created at line 69.
+    Found 16-bit subtractor for signal <ar[15]_signed_buss[15]_sub_36_OUT<15:0>> created at line 66.
+    Found 16-bit subtractor for signal <PWR_11_o_signed_buss[15]_sub_41_OUT<15:0>> created at line 1326.
+    Found 1-bit tristate buffer for signal <buss<15>> created at line 58
+    Found 1-bit tristate buffer for signal <buss<14>> created at line 58
+    Found 1-bit tristate buffer for signal <buss<13>> created at line 58
+    Found 1-bit tristate buffer for signal <buss<12>> created at line 58
+    Found 1-bit tristate buffer for signal <buss<11>> created at line 58
+    Found 1-bit tristate buffer for signal <buss<10>> created at line 58
+    Found 1-bit tristate buffer for signal <buss<9>> created at line 58
+    Found 1-bit tristate buffer for signal <buss<8>> created at line 58
+    Found 1-bit tristate buffer for signal <buss<7>> created at line 58
+    Found 1-bit tristate buffer for signal <buss<6>> created at line 58
+    Found 1-bit tristate buffer for signal <buss<5>> created at line 58
+    Found 1-bit tristate buffer for signal <buss<4>> created at line 58
+    Found 1-bit tristate buffer for signal <buss<3>> created at line 58
+    Found 1-bit tristate buffer for signal <buss<2>> created at line 58
+    Found 1-bit tristate buffer for signal <buss<1>> created at line 58
+    Found 1-bit tristate buffer for signal <buss<0>> created at line 58
+    Found 16-bit comparator greater for signal <n> created at line 104
+    Summary:
+	inferred   3 Adder/Subtractor(s).
+	inferred  53 D-type flip-flop(s).
+	inferred   1 Comparator(s).
+	inferred  15 Multiplexer(s).
+	inferred  16 Tristate(s).
+Unit <alu> synthesized.
+
+Synthesizing Unit <pm>.
+    Related source file is "/edu/tobhu543/TSEA83/projekt/CPU/pm.vhd".
+    Found 4096x16-bit single-port RAM <Mram_pmem> for signal <pmem>.
+    Found 16-bit register for signal <out_tmp>.
+    Found 1-bit tristate buffer for signal <buss<15>> created at line 48
+    Found 1-bit tristate buffer for signal <buss<14>> created at line 48
+    Found 1-bit tristate buffer for signal <buss<13>> created at line 48
+    Found 1-bit tristate buffer for signal <buss<12>> created at line 48
+    Found 1-bit tristate buffer for signal <buss<11>> created at line 48
+    Found 1-bit tristate buffer for signal <buss<10>> created at line 48
+    Found 1-bit tristate buffer for signal <buss<9>> created at line 48
+    Found 1-bit tristate buffer for signal <buss<8>> created at line 48
+    Found 1-bit tristate buffer for signal <buss<7>> created at line 48
+    Found 1-bit tristate buffer for signal <buss<6>> created at line 48
+    Found 1-bit tristate buffer for signal <buss<5>> created at line 48
+    Found 1-bit tristate buffer for signal <buss<4>> created at line 48
+    Found 1-bit tristate buffer for signal <buss<3>> created at line 48
+    Found 1-bit tristate buffer for signal <buss<2>> created at line 48
+    Found 1-bit tristate buffer for signal <buss<1>> created at line 48
+    Found 1-bit tristate buffer for signal <buss<0>> created at line 48
+    Found 1-bit tristate buffer for signal <in_tmp<15>> created at line 49
+    Found 1-bit tristate buffer for signal <in_tmp<14>> created at line 49
+    Found 1-bit tristate buffer for signal <in_tmp<13>> created at line 49
+    Found 1-bit tristate buffer for signal <in_tmp<12>> created at line 49
+    Found 1-bit tristate buffer for signal <in_tmp<11>> created at line 49
+    Found 1-bit tristate buffer for signal <in_tmp<10>> created at line 49
+    Found 1-bit tristate buffer for signal <in_tmp<9>> created at line 49
+    Found 1-bit tristate buffer for signal <in_tmp<8>> created at line 49
+    Found 1-bit tristate buffer for signal <in_tmp<7>> created at line 49
+    Found 1-bit tristate buffer for signal <in_tmp<6>> created at line 49
+    Found 1-bit tristate buffer for signal <in_tmp<5>> created at line 49
+    Found 1-bit tristate buffer for signal <in_tmp<4>> created at line 49
+    Found 1-bit tristate buffer for signal <in_tmp<3>> created at line 49
+    Found 1-bit tristate buffer for signal <in_tmp<2>> created at line 49
+    Found 1-bit tristate buffer for signal <in_tmp<1>> created at line 49
+    Found 1-bit tristate buffer for signal <in_tmp<0>> created at line 49
+    Summary:
+	inferred   1 RAM(s).
+	inferred  16 D-type flip-flop(s).
+	inferred  32 Tristate(s).
+Unit <pm> synthesized.
+
+Synthesizing Unit <kr1>.
+    Related source file is "/edu/tobhu543/TSEA83/projekt/CPU/kr1.vhd".
+    Found 64x8-bit Read Only RAM for signal <output>
+    Summary:
+	inferred   1 RAM(s).
+Unit <kr1> synthesized.
+
+Synthesizing Unit <kr2>.
+    Related source file is "/edu/tobhu543/TSEA83/projekt/CPU/kr2.vhd".
+    Found 4x8-bit Read Only RAM for signal <output>
+    Summary:
+	inferred   1 RAM(s).
+Unit <kr2> synthesized.
+
+Synthesizing Unit <upc>.
+    Related source file is "/edu/tobhu543/TSEA83/projekt/CPU/upc.vhd".
+    Found 4-bit register for signal <tobus_tmp>.
+    Found 4-bit register for signal <frombus_tmp>.
+    Found 1-bit register for signal <p_tmp>.
+    Found 1-bit register for signal <flags<2>>.
+    Found 16-bit register for signal <lc>.
+    Found 8-bit register for signal <upc>.
+    Found 4-bit register for signal <alu_tmp>.
+    Found 8-bit adder for signal <upc[7]_upc[7]_mux_64_OUT> created at line 273.
+    Found 16-bit subtractor for signal <GND_78_o_GND_78_o_sub_9_OUT<15:0>> created at line 216.
+    Found 256x27-bit Read Only RAM for signal <n0068>
+    Found 16-bit comparator lessequal for signal <n0053> created at line 284
+    Summary:
+	inferred   1 RAM(s).
+	inferred   2 Adder/Subtractor(s).
+	inferred  38 D-type flip-flop(s).
+	inferred   1 Comparator(s).
+	inferred  18 Multiplexer(s).
+Unit <upc> synthesized.
+
+Synthesizing Unit <ir>.
+    Related source file is "/edu/tobhu543/TSEA83/projekt/CPU/ir.vhd".
+    Found 16-bit register for signal <val>.
+    Found 1-bit tristate buffer for signal <buss<15>> created at line 30
+    Found 1-bit tristate buffer for signal <buss<14>> created at line 30
+    Found 1-bit tristate buffer for signal <buss<13>> created at line 30
+    Found 1-bit tristate buffer for signal <buss<12>> created at line 30
+    Found 1-bit tristate buffer for signal <buss<11>> created at line 30
+    Found 1-bit tristate buffer for signal <buss<10>> created at line 30
+    Found 1-bit tristate buffer for signal <buss<9>> created at line 30
+    Found 1-bit tristate buffer for signal <buss<8>> created at line 30
+    Found 1-bit tristate buffer for signal <buss<7>> created at line 30
+    Found 1-bit tristate buffer for signal <buss<6>> created at line 30
+    Found 1-bit tristate buffer for signal <buss<5>> created at line 30
+    Found 1-bit tristate buffer for signal <buss<4>> created at line 30
+    Found 1-bit tristate buffer for signal <buss<3>> created at line 30
+    Found 1-bit tristate buffer for signal <buss<2>> created at line 30
+    Found 1-bit tristate buffer for signal <buss<1>> created at line 30
+    Found 1-bit tristate buffer for signal <buss<0>> created at line 30
+    Summary:
+	inferred  16 D-type flip-flop(s).
+	inferred   1 Multiplexer(s).
+	inferred  16 Tristate(s).
+Unit <ir> synthesized.
+
+Synthesizing Unit <asr>.
+    Related source file is "/edu/tobhu543/TSEA83/projekt/CPU/asr.vhd".
+    Found 12-bit register for signal <val>.
+    Found 1-bit tristate buffer for signal <buss<15>> created at line 27
+    Found 1-bit tristate buffer for signal <buss<14>> created at line 27
+    Found 1-bit tristate buffer for signal <buss<13>> created at line 27
+    Found 1-bit tristate buffer for signal <buss<12>> created at line 27
+    Found 1-bit tristate buffer for signal <buss<11>> created at line 27
+    Found 1-bit tristate buffer for signal <buss<10>> created at line 27
+    Found 1-bit tristate buffer for signal <buss<9>> created at line 27
+    Found 1-bit tristate buffer for signal <buss<8>> created at line 27
+    Found 1-bit tristate buffer for signal <buss<7>> created at line 27
+    Found 1-bit tristate buffer for signal <buss<6>> created at line 27
+    Found 1-bit tristate buffer for signal <buss<5>> created at line 27
+    Found 1-bit tristate buffer for signal <buss<4>> created at line 27
+    Found 1-bit tristate buffer for signal <buss<3>> created at line 27
+    Found 1-bit tristate buffer for signal <buss<2>> created at line 27
+    Found 1-bit tristate buffer for signal <buss<1>> created at line 27
+    Found 1-bit tristate buffer for signal <buss<0>> created at line 27
+    Summary:
+	inferred  12 D-type flip-flop(s).
+	inferred  16 Tristate(s).
+Unit <asr> synthesized.
+
+Synthesizing Unit <pc>.
+    Related source file is "/edu/tobhu543/TSEA83/projekt/CPU/pc.vhd".
+    Found 12-bit register for signal <val>.
+    Found 12-bit adder for signal <val[11]_GND_113_o_add_0_OUT> created at line 23.
+    Found 1-bit tristate buffer for signal <buss<15>> created at line 34
+    Found 1-bit tristate buffer for signal <buss<14>> created at line 34
+    Found 1-bit tristate buffer for signal <buss<13>> created at line 34
+    Found 1-bit tristate buffer for signal <buss<12>> created at line 34
+    Found 1-bit tristate buffer for signal <buss<11>> created at line 34
+    Found 1-bit tristate buffer for signal <buss<10>> created at line 34
+    Found 1-bit tristate buffer for signal <buss<9>> created at line 34
+    Found 1-bit tristate buffer for signal <buss<8>> created at line 34
+    Found 1-bit tristate buffer for signal <buss<7>> created at line 34
+    Found 1-bit tristate buffer for signal <buss<6>> created at line 34
+    Found 1-bit tristate buffer for signal <buss<5>> created at line 34
+    Found 1-bit tristate buffer for signal <buss<4>> created at line 34
+    Found 1-bit tristate buffer for signal <buss<3>> created at line 34
+    Found 1-bit tristate buffer for signal <buss<2>> created at line 34
+    Found 1-bit tristate buffer for signal <buss<1>> created at line 34
+    Found 1-bit tristate buffer for signal <buss<0>> created at line 34
+    Summary:
+	inferred   1 Adder/Subtractor(s).
+	inferred  12 D-type flip-flop(s).
+	inferred   1 Multiplexer(s).
+	inferred  16 Tristate(s).
+Unit <pc> synthesized.
+RTL-Simplification CPUSTAT: 0.05 
+RTL-BasicInf CPUSTAT: 0.23 
+RTL-BasicOpt CPUSTAT: 0.00 
+RTL-Remain-Bus CPUSTAT: 0.00 
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# RAMs                                                 : 6
+ 16x7-bit single-port Read Only RAM                    : 1
+ 256x27-bit single-port Read Only RAM                  : 1
+ 4096x16-bit single-port RAM                           : 1
+ 4x4-bit single-port Read Only RAM                     : 1
+ 4x8-bit single-port Read Only RAM                     : 1
+ 64x8-bit single-port Read Only RAM                    : 1
+# Adders/Subtractors                                   : 7
+ 12-bit adder                                          : 1
+ 16-bit adder                                          : 1
+ 16-bit subtractor                                     : 3
+ 18-bit adder                                          : 1
+ 8-bit adder                                           : 1
+# Registers                                            : 34
+ 1-bit register                                        : 3
+ 12-bit register                                       : 2
+ 16-bit register                                       : 20
+ 18-bit register                                       : 1
+ 32-bit register                                       : 1
+ 4-bit register                                        : 5
+ 7-bit register                                        : 1
+ 8-bit register                                        : 1
+# Comparators                                          : 2
+ 16-bit comparator greater                             : 1
+ 16-bit comparator lessequal                           : 1
+# Multiplexers                                         : 40
+ 1-bit 4-to-1 multiplexer                              : 4
+ 12-bit 2-to-1 multiplexer                             : 1
+ 16-bit 16-to-1 multiplexer                            : 1
+ 16-bit 2-to-1 multiplexer                             : 17
+ 32-bit 2-to-1 multiplexer                             : 1
+ 8-bit 2-to-1 multiplexer                              : 16
+# Tristates                                            : 112
+ 1-bit tristate buffer                                 : 112
+# Xors                                                 : 3
+ 1-bit xor2                                            : 1
+ 4-bit xor2                                            : 2
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+
+Synthesizing (advanced) Unit <kr1>.
+INFO:Xst:3031 - HDL ADVISOR - The RAM <Mram_output> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+    -----------------------------------------------------------------------
+    | ram_type           | Distributed                         |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 64-word x 8-bit                     |          |
+    |     weA            | connected to signal <GND>           | high     |
+    |     addrA          | connected to signal <index>         |          |
+    |     diA            | connected to signal <GND>           |          |
+    |     doA            | connected to signal <output>        |          |
+    -----------------------------------------------------------------------
+Unit <kr1> synthesized (advanced).
+
+Synthesizing (advanced) Unit <kr2>.
+INFO:Xst:3031 - HDL ADVISOR - The RAM <Mram_output> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+    -----------------------------------------------------------------------
+    | ram_type           | Distributed                         |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 4-word x 8-bit                      |          |
+    |     weA            | connected to signal <GND>           | high     |
+    |     addrA          | connected to signal <index>         |          |
+    |     diA            | connected to signal <GND>           |          |
+    |     doA            | connected to signal <output>        |          |
+    -----------------------------------------------------------------------
+Unit <kr2> synthesized (advanced).
+
+Synthesizing (advanced) Unit <leddriver>.
+The following registers are absorbed into counter <counter_r>: 1 register on signal <counter_r>.
+INFO:Xst:3048 - The small RAM <Mram_v[3]_GND_7_o_wide_mux_3_OUT> will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
+    -----------------------------------------------------------------------
+    | ram_type           | Distributed                         |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 16-word x 7-bit                     |          |
+    |     weA            | connected to signal <GND>           | high     |
+    |     addrA          | connected to signal <v>             |          |
+    |     diA            | connected to signal <GND>           |          |
+    |     doA            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+INFO:Xst:3048 - The small RAM <Mram_counter_r[17]_PWR_7_o_wide_mux_4_OUT> will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
+    -----------------------------------------------------------------------
+    | ram_type           | Distributed                         |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 4-word x 4-bit                      |          |
+    |     weA            | connected to signal <GND>           | high     |
+    |     addrA          | connected to signal <counter_r>     |          |
+    |     diA            | connected to signal <GND>           |          |
+    |     doA            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+Unit <leddriver> synthesized (advanced).
+
+Synthesizing (advanced) Unit <pc>.
+The following registers are absorbed into counter <val>: 1 register on signal <val>.
+Unit <pc> synthesized (advanced).
+
+Synthesizing (advanced) Unit <pm>.
+INFO:Xst:3040 - The RAM <Mram_pmem> will be implemented as a BLOCK RAM, absorbing the following register(s): <out_tmp>
+    -----------------------------------------------------------------------
+    | ram_type           | Block                               |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 4096-word x 16-bit                  |          |
+    |     mode           | read-first                          |          |
+    |     clkA           | connected to signal <clk>           | rise     |
+    |     weA            | connected to internal node          | high     |
+    |     addrA          | connected to signal <adr>           |          |
+    |     diA            | connected to signal <in_tmp>        |          |
+    |     doA            | connected to signal <out_tmp>       |          |
+    -----------------------------------------------------------------------
+    | optimization       | speed                               |          |
+    -----------------------------------------------------------------------
+Unit <pm> synthesized (advanced).
+
+Synthesizing (advanced) Unit <upc>.
+The following registers are absorbed into counter <lc>: 1 register on signal <lc>.
+INFO:Xst:3040 - The RAM <Mram_n0068> will be implemented as a BLOCK RAM, absorbing the following register(s): <upc>
+    -----------------------------------------------------------------------
+    | ram_type           | Block                               |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 256-word x 27-bit                   |          |
+    |     mode           | write-first                         |          |
+    |     clkA           | connected to signal <clk>           | rise     |
+    |     enA            | connected to internal node          | low      |
+    |     weA            | connected to signal <GND>           | high     |
+    |     addrA          | connected to signal <upc[7]_upc[7]_mux_76_OUT> |          |
+    |     diA            | connected to signal <GND>           |          |
+    |     doA            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+    | optimization       | speed                               |          |
+    -----------------------------------------------------------------------
+Unit <upc> synthesized (advanced).
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# RAMs                                                 : 6
+ 16x7-bit single-port distributed Read Only RAM        : 1
+ 256x27-bit single-port block Read Only RAM            : 1
+ 4096x16-bit single-port block RAM                     : 1
+ 4x4-bit single-port distributed Read Only RAM         : 1
+ 4x8-bit single-port distributed Read Only RAM         : 1
+ 64x8-bit single-port distributed Read Only RAM        : 1
+# Adders/Subtractors                                   : 4
+ 16-bit adder                                          : 1
+ 16-bit subtractor                                     : 2
+ 8-bit adder                                           : 1
+# Counters                                             : 3
+ 12-bit up counter                                     : 1
+ 16-bit down counter                                   : 1
+ 18-bit up counter                                     : 1
+# Registers                                            : 370
+ Flip-Flops                                            : 370
+# Comparators                                          : 2
+ 16-bit comparator greater                             : 1
+ 16-bit comparator lessequal                           : 1
+# Multiplexers                                         : 83
+ 1-bit 16-to-1 multiplexer                             : 16
+ 1-bit 2-to-1 multiplexer                              : 32
+ 1-bit 4-to-1 multiplexer                              : 4
+ 16-bit 2-to-1 multiplexer                             : 14
+ 32-bit 2-to-1 multiplexer                             : 1
+ 8-bit 2-to-1 multiplexer                              : 16
+# Xors                                                 : 3
+ 1-bit xor2                                            : 1
+ 4-bit xor2                                            : 2
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1293 - FF/Latch <flags_vippor_4> has a constant value of 0 in block <alu>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:2042 - Unit pc: 16 internal tristates are replaced by logic (pull-up yes): buss<0>, buss<10>, buss<11>, buss<12>, buss<13>, buss<14>, buss<15>, buss<1>, buss<2>, buss<3>, buss<4>, buss<5>, buss<6>, buss<7>, buss<8>, buss<9>.
+WARNING:Xst:2042 - Unit asr: 16 internal tristates are replaced by logic (pull-up yes): buss<0>, buss<10>, buss<11>, buss<12>, buss<13>, buss<14>, buss<15>, buss<1>, buss<2>, buss<3>, buss<4>, buss<5>, buss<6>, buss<7>, buss<8>, buss<9>.
+WARNING:Xst:2042 - Unit ir: 16 internal tristates are replaced by logic (pull-up yes): buss<0>, buss<10>, buss<11>, buss<12>, buss<13>, buss<14>, buss<15>, buss<1>, buss<2>, buss<3>, buss<4>, buss<5>, buss<6>, buss<7>, buss<8>, buss<9>.
+WARNING:Xst:2042 - Unit pm: 32 internal tristates are replaced by logic (pull-up yes): buss<0>, buss<10>, buss<11>, buss<12>, buss<13>, buss<14>, buss<15>, buss<1>, buss<2>, buss<3>, buss<4>, buss<5>, buss<6>, buss<7>, buss<8>, buss<9>, in_tmp<0>, in_tmp<10>, in_tmp<11>, in_tmp<12>, in_tmp<13>, in_tmp<14>, in_tmp<15>, in_tmp<1>, in_tmp<2>, in_tmp<3>, in_tmp<4>, in_tmp<5>, in_tmp<6>, in_tmp<7>, in_tmp<8>, in_tmp<9>.
+WARNING:Xst:2042 - Unit alu: 16 internal tristates are replaced by logic (pull-up yes): buss<0>, buss<10>, buss<11>, buss<12>, buss<13>, buss<14>, buss<15>, buss<1>, buss<2>, buss<3>, buss<4>, buss<5>, buss<6>, buss<7>, buss<8>, buss<9>.
+WARNING:Xst:2042 - Unit grx: 16 internal tristates are replaced by logic (pull-up yes): buss<0>, buss<10>, buss<11>, buss<12>, buss<13>, buss<14>, buss<15>, buss<1>, buss<2>, buss<3>, buss<4>, buss<5>, buss<6>, buss<7>, buss<8>, buss<9>.
+
+Optimizing unit <snake> ...
+
+Optimizing unit <leddriver> ...
+
+Optimizing unit <cpu> ...
+
+Optimizing unit <upc> ...
+
+Mapping all equations...
+WARNING:Xst:2170 - Unit cpu_inst : the following signal(s) form a combinatorial loop: snake/cpu_inst/xgrx/at[3]_gr[15][15]_wide_mux_51_OUT<7>, snake/cpu_inst/intbuss<7>, snake/cpu_inst/xgrx/mux13_4_f7, snake/cpu_inst/xgrx/at[3]_gr[15][15]_wide_mux_51_OUT<13>, snake/cpu_inst/xgrx/mux4_4_f7, snake/cpu_inst/op<3>, snake/cpu_inst/grat<1>, snake/cpu_inst/intbuss<13>, snake/cpu_inst/xgrx/mux4_6, kr1sig<0>, snake/cpu_inst/xgrx/mux13_6, op<3>.
+WARNING:Xst:2170 - Unit cpu_inst : the following signal(s) form a combinatorial loop: snake/cpu_inst/xgrx/mux12_6, snake/cpu_inst/xgrx/at[3]_gr[15][15]_wide_mux_51_OUT<6>, snake/cpu_inst/grat<0>, snake/cpu_inst/xgrx/mux1_6, snake/cpu_inst/xgrx/mux12_4_f7, snake/cpu_inst/xgrx/at[3]_gr[15][15]_wide_mux_51_OUT<10>, snake/cpu_inst/intbuss<6>, kr1sig<1>, snake/cpu_inst/xgrx/mux1_4_f7, snake/cpu_inst/op<0>, snake/cpu_inst/intbuss<10>, op<0>.
+WARNING:Xst:2170 - Unit cpu_inst : the following signal(s) form a combinatorial loop: snake/cpu_inst/intbuss<14>, kr1sig<2>, snake/cpu_inst/xgrx/mux5_4_f7, snake/cpu_inst/intbuss<8>, snake/cpu_inst/grat<2>, op<4>, snake/cpu_inst/op<4>, snake/cpu_inst/xgrx/at[3]_gr[15][15]_wide_mux_51_OUT<14>, snake/cpu_inst/xgrx/mux14_4_f7, snake/cpu_inst/xgrx/at[3]_gr[15][15]_wide_mux_51_OUT<8>.
+WARNING:Xst:2170 - Unit cpu_inst : the following signal(s) form a combinatorial loop: snake/cpu_inst/intbuss<12>, snake/cpu_inst/intbuss<9>, snake/cpu_inst/xgrx/at[3]_gr[15][15]_wide_mux_51_OUT<9>, op<2>, snake/cpu_inst/op<2>, snake/cpu_inst/grat<3>, snake/cpu_inst/xgrx/at[3]_gr[15][15]_wide_mux_51_OUT<12>, kr1sig<3>, snake/cpu_inst/intbuss<9>LogicTrst1.
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 0) on block snake, actual ratio is 8.
+FlipFlop cpu_inst/xupc/frombus_tmp_0 has been replicated 1 time(s)
+FlipFlop cpu_inst/xupc/frombus_tmp_1 has been replicated 1 time(s)
+FlipFlop cpu_inst/xupc/frombus_tmp_2 has been replicated 1 time(s)
+FlipFlop cpu_inst/xupc/frombus_tmp_3 has been replicated 1 time(s)
+FlipFlop cpu_inst/xupc/tobus_tmp_0 has been replicated 1 time(s)
+FlipFlop cpu_inst/xupc/tobus_tmp_1 has been replicated 1 time(s)
+FlipFlop cpu_inst/xupc/tobus_tmp_2 has been replicated 1 time(s)
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 422
+ Flip-Flops                                            : 422
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Design Summary                             *
+=========================================================================
+
+Top Level Output File Name         : design.ngc
+
+Primitive and Black Box Usage:
+------------------------------
+# BELS                             : 816
+#      GND                         : 1
+#      INV                         : 2
+#      LUT1                        : 17
+#      LUT2                        : 18
+#      LUT3                        : 23
+#      LUT4                        : 84
+#      LUT5                        : 155
+#      LUT6                        : 313
+#      MUXCY                       : 73
+#      MUXF7                       : 44
+#      MUXF8                       : 7
+#      VCC                         : 1
+#      XORCY                       : 78
+# FlipFlops/Latches                : 422
+#      FD                          : 83
+#      FDE                         : 339
+# RAMS                             : 5
+#      RAMB16BWER                  : 5
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 17
+#      OBUF                        : 17
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 6slx16csg324-3 
+
+
+Slice Logic Utilization: 
+ Number of Slice Registers:             422  out of  18224     2%  
+ Number of Slice LUTs:                  612  out of   9112     6%  
+    Number used as Logic:               612  out of   9112     6%  
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:    884
+   Number with an unused Flip Flop:     462  out of    884    52%  
+   Number with an unused LUT:           272  out of    884    30%  
+   Number of fully used LUT-FF pairs:   150  out of    884    16%  
+   Number of unique control sets:        24
+
+IO Utilization: 
+ Number of IOs:                          30
+ Number of bonded IOBs:                  18  out of    232     7%  
+
+Specific Feature Utilization:
+ Number of Block RAM/FIFO:                5  out of     32    15%  
+    Number using Block RAM only:          5
+ Number of BUFG/BUFGCTRLs:                1  out of     16     6%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+Timing Report
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | BUFGP                  | 427   |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -3
+
+   Minimum period: 26.927ns (Maximum Frequency: 37.137MHz)
+   Minimum input arrival time before clock: No path found
+   Maximum output required time after clock: 3.634ns
+   Maximum combinational path delay: No path found
+
+Timing Details:
+---------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clk'
+  Clock period: 26.927ns (frequency: 37.137MHz)
+  Total number of paths / destination ports: 13389655 / 850
+-------------------------------------------------------------------------
+Delay:               26.927ns (Levels of Logic = 22)
+  Source:            cpu_inst/xpm/Mram_pmem3 (RAM)
+  Destination:       cpu_inst/xalu/flags_vippor_6 (FF)
+  Source Clock:      clk rising
+  Destination Clock: clk rising
+
+  Data Path: cpu_inst/xpm/Mram_pmem3 to cpu_inst/xalu/flags_vippor_6
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     RAMB16BWER:CLKA->DOA0    1   1.850   0.580  cpu_inst/xpm/Mram_pmem3 (cpu_inst/xpm/out_tmp<8>)
+     LUT6:I5->O            1   0.205   0.580  cpu_inst/intbuss<8>LogicTrst2 (cpu_inst/intbuss<8>LogicTrst1)
+     LUT6:I5->O           26   0.205   1.207  cpu_inst/intbuss<8>LogicTrst4 (cpu_inst/intbuss<8>)
+     LUT3:I2->O           71   0.205   1.686  cpu_inst/xir/mux1411 (cpu_inst/grat<2>)
+     MUXF7:S->O            2   0.148   0.961  cpu_inst/xgrx/mux13_3_f7 (cpu_inst/xgrx/mux13_3_f7)
+     LUT6:I1->O            1   0.203   0.000  cpu_inst/xir/mux13111 (cpu_inst/xir/mux1311)
+     MUXF7:I1->O          71   0.140   2.051  cpu_inst/xir/mux1311_f7 (cpu_inst/grat<1>)
+     LUT6:I0->O            1   0.203   0.000  cpu_inst/xgrx/mux15_4 (cpu_inst/xgrx/mux15_4)
+     MUXF7:I1->O           1   0.140   0.000  cpu_inst/xgrx/mux15_3_f7 (cpu_inst/xgrx/mux15_3_f7)
+     MUXF8:I1->O           1   0.152   0.684  cpu_inst/xgrx/mux15_2_f8 (cpu_inst/xgrx/at[3]_gr[15][15]_wide_mux_51_OUT<9>)
+     LUT6:I4->O            2   0.203   0.617  cpu_inst/intbuss<9>LogicTrst2 (cpu_inst/intbuss<9>LogicTrst1)
+     LUT6:I5->O            1   0.205   0.000  cpu_inst/xir/mux15111 (cpu_inst/xir/mux1511)
+     MUXF7:I1->O          50   0.140   1.912  cpu_inst/xir/mux1511_f7 (cpu_inst/grat<3>)
+     LUT6:I0->O           26   0.203   1.207  cpu_inst/intbuss<6>LogicTrst4 (cpu_inst/intbuss<6>)
+     LUT3:I2->O           91   0.205   2.182  cpu_inst/xir/mux1211 (cpu_inst/grat<0>)
+     LUT6:I0->O            3   0.203   0.879  cpu_inst/xgrx/mux2_4_f7_SW0 (N147)
+     LUT4:I1->O            1   0.205   0.944  cpu_inst/intbuss<11>LogicTrst4_SW2 (N216)
+     LUT6:I0->O           26   0.203   1.571  cpu_inst/intbuss<11>LogicTrst4 (cpu_inst/intbuss<11>)
+     LUT6:I0->O           19   0.203   1.176  cpu_inst/xalu/alu_styr[3]_signed_buss[15]_AND_35_o4 (cpu_inst/xalu/alu_styr[3]_signed_buss[15]_AND_35_o4)
+     LUT6:I4->O           12   0.203   0.909  cpu_inst/xalu/alu_styr[3]_signed_buss[15]_AND_35_o171 (cpu_inst/N6)
+     LUT5:I4->O            2   0.205   0.961  cpu_inst/xalu/Mmux_alu_out64 (cpu_inst/xalu/alu_out<11>)
+     LUT6:I1->O            1   0.203   0.684  cpu_inst/xalu/z1_SW0_SW0_SW0 (N273)
+     LUT6:I4->O            1   0.203   0.000  cpu_inst/xalu/z3 (cpu_inst/xalu/z)
+     FDE:D                     0.102          cpu_inst/xalu/flags_vippor_6
+    ----------------------------------------
+    Total                     26.927ns (6.137ns logic, 20.790ns route)
+                                       (22.8% logic, 77.2% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+  Total number of paths / destination ports: 14 / 14
+-------------------------------------------------------------------------
+Offset:              3.634ns (Levels of Logic = 1)
+  Source:            cpu_inst/xalu/flags_vippor_6 (FF)
+  Destination:       Led<3> (PAD)
+  Source Clock:      clk rising
+
+  Data Path: cpu_inst/xalu/flags_vippor_6 to Led<3>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q              2   0.447   0.616  cpu_inst/xalu/flags_vippor_6 (cpu_inst/xalu/flags_vippor_6)
+     OBUF:I->O                 2.571          Led_3_OBUF (Led<3>)
+    ----------------------------------------
+    Total                      3.634ns (3.018ns logic, 0.616ns route)
+                                       (83.0% logic, 17.0% route)
+
+=========================================================================
+
+Cross Clock Domains Report:
+--------------------------
+
+Clock to Setup on destination clock clk
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+clk            |   26.927|         |         |         |
+---------------+---------+---------+---------+---------+
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 12.00 secs
+Total CPU time to Xst completion: 8.68 secs
+ 
+--> 
+
+
+Total memory usage is 477088 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   19 (   0 filtered)
+Number of infos    :    7 (   0 filtered)
+
+mkdir -p lab-synthdir/synth
+cp lab-synthdir/xst/synth/design.ngc lab-synthdir/synth/design.ngc
+
+*** Producing NGD file ***
+
+rm -rf lab-synthdir/layoutdefault/_ngo
+mkdir -p lab-synthdir/layoutdefault/_ngo
+if [ "lab.ucf" == "" ]; then \
+		cd lab-synthdir/layoutdefault; source /sw/xilinx/ise_14.2i/ISE_DS/settings64.sh; ngdbuild -sd . -dd _ngo -nt timestamp -p xc6slx16-3-csg324 ../synth/design.ngc  design.ngd;\
+	else \
+		cd lab-synthdir/layoutdefault; source /sw/xilinx/ise_14.2i/ISE_DS/settings64.sh; ngdbuild -sd . -dd _ngo -nt timestamp -p xc6slx16-3-csg324 -uc ../../lab.ucf ../synth/design.ngc  design.ngd;\
+	fi
+Release 12.4 - ngdbuild M.81d (lin64)
+Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
+
+Command Line: /sw/xilinx/ise_12.4i/ISE_DS/ISE/bin/lin64/unwrapped/ngdbuild -sd .
+-dd _ngo -nt timestamp -p xc6slx16-3-csg324 -uc ../../lab.ucf
+../synth/design.ngc design.ngd
+
+Reading NGO file "/edu/tobhu543/TSEA83/projekt/lab-synthdir/synth/design.ngc"
+...
+Gathering constraint information from source properties...
+Done.
+
+Annotating constraints to design from ucf file "../../lab.ucf" ...
+Resolving constraint associations...
+Checking Constraint Associations...
+Done...
+
+Checking expanded design ...
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Writing NGD file "design.ngd" ...
+Total REAL time to NGDBUILD completion:  2 sec
+Total CPU time to NGDBUILD completion:   2 sec
+
+Writing NGDBUILD log file "design.bld"...
+
+NGDBUILD done.
+
+*** Mapping design ***
+
+cd lab-synthdir/layoutdefault;source /sw/xilinx/ise_14.2i/ISE_DS/settings64.sh; map -detail -u -p  xc6slx16-3-csg324 -pr b -c 100 -o design_map.ncd design.ngd design.pcf
+Release 12.4 - Map M.81d (lin64)
+Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
+Using target part "6slx16csg324-3".
+Mapping design into LUTs...
+Writing file design_map.ngm...
+Running directed packing...
+Running delay-based LUT packing...
+Updating timing models...
+INFO:Map:215 - The Interim Design Summary has been generated in the MAP Report
+   (.mrp).
+Running timing-driven placement...
+Total REAL time at the beginning of Placer: 6 secs 
+Total CPU  time at the beginning of Placer: 4 secs 
+
+Phase 1.1  Initial Placement Analysis
+Phase 1.1  Initial Placement Analysis (Checksum:41e102e9) REAL time: 7 secs 
+
+Phase 2.7  Design Feasibility Check
+Phase 2.7  Design Feasibility Check (Checksum:41e102e9) REAL time: 7 secs 
+
+Phase 3.31  Local Placement Optimization
+Phase 3.31  Local Placement Optimization (Checksum:41e102e9) REAL time: 7 secs 
+
+Phase 4.2  Initial Placement for Architecture Specific Features
+
+Phase 4.2  Initial Placement for Architecture Specific Features
+(Checksum:fa768396) REAL time: 8 secs 
+
+Phase 5.36  Local Placement Optimization
+Phase 5.36  Local Placement Optimization (Checksum:fa768396) REAL time: 8 secs 
+
+Phase 6.30  Global Clock Region Assignment
+Phase 6.30  Global Clock Region Assignment (Checksum:fa768396) REAL time: 8 secs 
+
+Phase 7.3  Local Placement Optimization
+Phase 7.3  Local Placement Optimization (Checksum:fa768396) REAL time: 8 secs 
+
+Phase 8.5  Local Placement Optimization
+Phase 8.5  Local Placement Optimization (Checksum:fa768396) REAL time: 8 secs 
+
+Phase 9.8  Global Placement
+.................................................................
+.............................................................................
+.......................................................................................................................................................................................
+....................
+Phase 9.8  Global Placement (Checksum:4ff50069) REAL time: 12 secs 
+
+Phase 10.5  Local Placement Optimization
+Phase 10.5  Local Placement Optimization (Checksum:4ff50069) REAL time: 12 secs 
+
+Phase 11.18  Placement Optimization
+Phase 11.18  Placement Optimization (Checksum:585d9baf) REAL time: 28 secs 
+
+Phase 12.5  Local Placement Optimization
+Phase 12.5  Local Placement Optimization (Checksum:585d9baf) REAL time: 28 secs 
+
+Phase 13.34  Placement Validation
+Phase 13.34  Placement Validation (Checksum:2ef222b1) REAL time: 28 secs 
+
+Total REAL time to Placer completion: 28 secs 
+Total CPU  time to Placer completion: 26 secs 
+Running post-placement packing...
+Writing output files...
+
+Design Summary:
+Number of errors:      0
+Number of warnings:    2
+Slice Logic Utilization:
+  Number of Slice Registers:                   411 out of  18,224    2%
+    Number used as Flip Flops:                 411
+    Number used as Latches:                      0
+    Number used as Latch-thrus:                  0
+    Number used as AND/OR logics:                0
+  Number of Slice LUTs:                        568 out of   9,112    6%
+    Number used as logic:                      557 out of   9,112    6%
+      Number using O6 output only:             461
+      Number using O5 output only:              16
+      Number using O5 and O6:                   80
+      Number used as ROM:                        0
+    Number used as Memory:                       0 out of   2,176    0%
+    Number used exclusively as route-thrus:     11
+      Number with same-slice register load:      8
+      Number with same-slice carry load:         1
+      Number with other load:                    2
+
+Slice Logic Distribution:
+  Number of occupied Slices:                   188 out of   2,278    8%
+  Number of LUT Flip Flop pairs used:          630
+    Number with an unused Flip Flop:           234 out of     630   37%
+    Number with an unused LUT:                  62 out of     630    9%
+    Number of fully used LUT-FF pairs:         334 out of     630   53%
+    Number of unique control sets:              24
+    Number of slice register sites lost
+      to control set restrictions:              13 out of  18,224    1%
+
+  A LUT Flip Flop pair for this architecture represents one LUT paired with
+  one Flip Flop within a slice.  A control set is a unique combination of
+  clock, reset, set, and enable signals for a registered element.
+  The Slice Logic Distribution report is not meaningful if the design is
+  over-mapped for a non-slice resource or if Placement fails.
+
+IO Utilization:
+  Number of bonded IOBs:                        20 out of     232    8%
+    Number of LOCed IOBs:                       20 out of      20  100%
+    IOB Flip Flops:                             11
+
+Specific Feature Utilization:
+  Number of RAMB16BWERs:                         5 out of      32   15%
+  Number of RAMB8BWERs:                          0 out of      64    0%
+  Number of BUFIO2/BUFIO2_2CLKs:                 0 out of      32    0%
+  Number of BUFIO2FB/BUFIO2FB_2CLKs:             0 out of      32    0%
+  Number of BUFG/BUFGMUXs:                       1 out of      16    6%
+    Number used as BUFGs:                        1
+    Number used as BUFGMUX:                      0
+  Number of DCM/DCM_CLKGENs:                     0 out of       4    0%
+  Number of ILOGIC2/ISERDES2s:                   0 out of     248    0%
+  Number of IODELAY2/IODRP2/IODRP2_MCBs:         0 out of     248    0%
+  Number of OLOGIC2/OSERDES2s:                  11 out of     248    4%
+    Number used as OLOGIC2s:                    11
+    Number used as OSERDES2s:                    0
+  Number of BSCANs:                              0 out of       4    0%
+  Number of BUFHs:                               0 out of     128    0%
+  Number of BUFPLLs:                             0 out of       8    0%
+  Number of BUFPLL_MCBs:                         0 out of       4    0%
+  Number of DSP48A1s:                            0 out of      32    0%
+  Number of ICAPs:                               0 out of       1    0%
+  Number of MCBs:                                0 out of       2    0%
+  Number of PCILOGICSEs:                         0 out of       2    0%
+  Number of PLL_ADVs:                            0 out of       2    0%
+  Number of PMVs:                                0 out of       1    0%
+  Number of STARTUPs:                            0 out of       1    0%
+  Number of SUSPEND_SYNCs:                       0 out of       1    0%
+
+Average Fanout of Non-Clock Nets:                3.89
+
+Peak Memory Usage:  587 MB
+Total REAL time to MAP completion:  29 secs 
+Total CPU time to MAP completion:   27 secs 
+
+Mapping completed.
+See MAP report file "design_map.mrp" for details.
+
+*** Routing design ***
+
+cd lab-synthdir/layoutdefault; source /sw/xilinx/ise_14.2i/ISE_DS/settings64.sh; par -nopad -w  -ol high design_map.ncd design.ncd design.pcf 
+Release 12.4 - par M.81d (lin64)
+Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
+
+
+
+Constraints file: design.pcf.
+Loading device for application Rf_Device from file '6slx16.nph' in environment /sw/xilinx/ise_12.4i/ISE_DS/ISE/.
+   "snake" is an NCD, version 3.2, device xc6slx16, package csg324, speed -3
+
+Initializing temperature to 85.000 Celsius. (default - Range: 0.000 to 85.000 Celsius)
+Initializing voltage to 1.140 Volts. (default - Range: 1.140 to 1.260 Volts)
+
+
+Device speed data version:  "PRODUCTION 1.15 2010-12-02".
+
+
+
+Device Utilization Summary:
+
+Slice Logic Utilization:
+  Number of Slice Registers:                   411 out of  18,224    2%
+    Number used as Flip Flops:                 411
+    Number used as Latches:                      0
+    Number used as Latch-thrus:                  0
+    Number used as AND/OR logics:                0
+  Number of Slice LUTs:                        568 out of   9,112    6%
+    Number used as logic:                      557 out of   9,112    6%
+      Number using O6 output only:             461
+      Number using O5 output only:              16
+      Number using O5 and O6:                   80
+      Number used as ROM:                        0
+    Number used as Memory:                       0 out of   2,176    0%
+    Number used exclusively as route-thrus:     11
+      Number with same-slice register load:      8
+      Number with same-slice carry load:         1
+      Number with other load:                    2
+
+Slice Logic Distribution:
+  Number of occupied Slices:                   188 out of   2,278    8%
+  Number of LUT Flip Flop pairs used:          630
+    Number with an unused Flip Flop:           234 out of     630   37%
+    Number with an unused LUT:                  62 out of     630    9%
+    Number of fully used LUT-FF pairs:         334 out of     630   53%
+    Number of slice register sites lost
+      to control set restrictions:               0 out of  18,224    0%
+
+  A LUT Flip Flop pair for this architecture represents one LUT paired with
+  one Flip Flop within a slice.  A control set is a unique combination of
+  clock, reset, set, and enable signals for a registered element.
+  The Slice Logic Distribution report is not meaningful if the design is
+  over-mapped for a non-slice resource or if Placement fails.
+
+IO Utilization:
+  Number of bonded IOBs:                        20 out of     232    8%
+    Number of LOCed IOBs:                       20 out of      20  100%
+    IOB Flip Flops:                             11
+
+Specific Feature Utilization:
+  Number of RAMB16BWERs:                         5 out of      32   15%
+  Number of RAMB8BWERs:                          0 out of      64    0%
+  Number of BUFIO2/BUFIO2_2CLKs:                 0 out of      32    0%
+  Number of BUFIO2FB/BUFIO2FB_2CLKs:             0 out of      32    0%
+  Number of BUFG/BUFGMUXs:                       1 out of      16    6%
+    Number used as BUFGs:                        1
+    Number used as BUFGMUX:                      0
+  Number of DCM/DCM_CLKGENs:                     0 out of       4    0%
+  Number of ILOGIC2/ISERDES2s:                   0 out of     248    0%
+  Number of IODELAY2/IODRP2/IODRP2_MCBs:         0 out of     248    0%
+  Number of OLOGIC2/OSERDES2s:                  11 out of     248    4%
+    Number used as OLOGIC2s:                    11
+    Number used as OSERDES2s:                    0
+  Number of BSCANs:                              0 out of       4    0%
+  Number of BUFHs:                               0 out of     128    0%
+  Number of BUFPLLs:                             0 out of       8    0%
+  Number of BUFPLL_MCBs:                         0 out of       4    0%
+  Number of DSP48A1s:                            0 out of      32    0%
+  Number of ICAPs:                               0 out of       1    0%
+  Number of MCBs:                                0 out of       2    0%
+  Number of PCILOGICSEs:                         0 out of       2    0%
+  Number of PLL_ADVs:                            0 out of       2    0%
+  Number of PMVs:                                0 out of       1    0%
+  Number of STARTUPs:                            0 out of       1    0%
+  Number of SUSPEND_SYNCs:                       0 out of       1    0%
+
+
+Overall effort level (-ol):   High 
+Router effort level (-rl):    High 
+
+Starting initial Timing Analysis.  REAL time: 3 secs 
+Finished initial Timing Analysis.  REAL time: 3 secs 
+
+WARNING:Par:288 - The signal rst_IBUF has no load.  PAR will not attempt to route this signal.
+WARNING:Par:288 - The signal uart_in_IBUF has no load.  PAR will not attempt to route this signal.
+Starting Router
+
+
+Phase  1  : 3870 unrouted;      REAL time: 4 secs 
+
+Phase  2  : 3525 unrouted;      REAL time: 4 secs 
+
+Phase  3  : 1127 unrouted;      REAL time: 5 secs 
+
+Phase  4  : 1171 unrouted; (Setup:2076211, Hold:0, Component Switching Limit:0)     REAL time: 6 secs 
+
+Updating file: design.ncd with current fully routed design.
+
+Phase  5  : 0 unrouted; (Setup:2044844, Hold:0, Component Switching Limit:0)     REAL time: 11 secs 
+
+Phase  6  : 0 unrouted; (Setup:1963342, Hold:0, Component Switching Limit:0)     REAL time: 12 secs 
+
+Updating file: design.ncd with current fully routed design.
+
+Phase  7  : 0 unrouted; (Setup:1963342, Hold:0, Component Switching Limit:0)     REAL time: 16 secs 
+
+Phase  8  : 0 unrouted; (Setup:1963342, Hold:0, Component Switching Limit:0)     REAL time: 16 secs 
+
+Phase  9  : 0 unrouted; (Setup:1963342, Hold:0, Component Switching Limit:0)     REAL time: 16 secs 
+
+Phase 10  : 0 unrouted; (Setup:1941083, Hold:0, Component Switching Limit:0)     REAL time: 16 secs 
+Total REAL time to Router completion: 16 secs 
+Total CPU time to Router completion: 16 secs 
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+Generating "PAR" statistics.
+
+**************************
+Generating Clock Report
+**************************
+
++---------------------+--------------+------+------+------------+-------------+
+|        Clock Net    |   Resource   |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
++---------------------+--------------+------+------+------------+-------------+
+|           clk_BUFGP | BUFGMUX_X3Y13| No   |  179 |  0.530     |  1.379      |
++---------------------+--------------+------+------+------------+-------------+
+
+* Net Skew is the difference between the minimum and maximum routing
+only delays for the net. Note this is different from Clock Skew which
+is reported in TRCE timing report. Clock Skew is the difference between
+the minimum and maximum path delays which includes logic delays.
+
+Timing Score: 1941083 (Setup: 1941083, Hold: 0, Component Switching Limit: 0)
+
+WARNING:Par:468 - Your design did not meet timing.  The following are some suggestions to assist you to meet timing in your design.
+
+   Review the timing report using Timing Analyzer (In ISE select "Post-Place &
+   Route Static Timing Report"). Go to the failing constraint(s) and evaluate the failing paths for each constraint.
+
+   Try the Design Goal and Strategies for Timing Performance(In ISE select Project -> Design Goals & Strategies) to ensure the best options
+   are set in the tools for timing closure.
+
+   Use the Xilinx "SmartXplorer" script to try special combinations of
+   options known to produce very good results.
+
+   Visit the Xilinx technical support web at http://support.xilinx.com and go to
+   either "Troubleshoot->Tech Tips->Timing & Constraints" or "
+   TechXclusives->Timing Closure" for tips and suggestions for meeting timing
+   in your design.
+
+Asterisk (*) preceding a constraint indicates it was not met.
+   This may be due to a setup or hold violation.
+
+----------------------------------------------------------------------------------------------------------
+  Constraint                                |    Check    | Worst Case |  Best Case | Timing |   Timing   
+                                            |             |    Slack   | Achievable | Errors |    Score   
+----------------------------------------------------------------------------------------------------------
+* TS_sys_clk_pin = PERIOD TIMEGRP "sys_clk_ | SETUP       |    -6.380ns|    16.380ns|     685|     1941083
+  pin" 100 MHz HIGH 50%                     | HOLD        |     0.438ns|            |       0|           0
+----------------------------------------------------------------------------------------------------------
+
+
+1 constraint not met.
+
+
+
+All signals are completely routed.
+
+WARNING:Par:283 - There are 2 loadless signals in this design. This design will cause Bitgen to issue DRC warnings.
+
+Total REAL time to PAR completion: 17 secs 
+Total CPU time to PAR completion: 17 secs 
+
+Peak Memory Usage:  504 MB
+
+Placer: Placement generated during map.
+Routing: Completed - No errors found.
+Timing: Completed - 685 errors found.
+
+Number of error messages: 0
+Number of warning messages: 5
+Number of info messages: 0
+
+Writing design to file design.ncd
+
+
+
+PAR done!
+
+*** Running static timing analysis ***
+
+cd lab-synthdir/layoutdefault; source /sw/xilinx/ise_14.2i/ISE_DS/settings64.sh; trce -v 1000 design.ncd design.pcf
+Release 12.4 - Trace  (lin64)
+Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
+
+
+Loading device for application Rf_Device from file '6slx16.nph' in environment
+/sw/xilinx/ise_12.4i/ISE_DS/ISE/.
+   "snake" is an NCD, version 3.2, device xc6slx16, package csg324, speed -3
+--------------------------------------------------------------------------------
+Release 12.4 Trace  (lin64)
+Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
+
+/sw/xilinx/ise_12.4i/ISE_DS/ISE/bin/lin64/unwrapped/trce -v 1000 design.ncd
+design.pcf
+
+
+Design file:              design.ncd
+Physical constraint file: design.pcf
+Device,speed:             xc6slx16,-3 (PRODUCTION 1.15 2010-12-02)
+Report level:             verbose report, limited to 1000 items per constraint
+--------------------------------------------------------------------------------
+
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths option. All paths that are not constrained will be reported in
+   the unconstrained paths section(s) of the report.
+INFO:Timing:3339 - The clock-to-out numbers in this timing report are based on a 50 Ohm transmission line loading model.  For the details of
+   this model, and for more information on accounting for different loading conditions, please see the device datasheet.
+
+
+Timing summary:
+---------------
+
+Timing errors: 685  Score: 1941083 (Setup/Max: 1941083, Hold: 0)
+
+Constraints cover 13390252 paths, 0 nets, and 3666 connections
+
+Design statistics:
+   Minimum period:  16.380ns (Maximum frequency:  61.050MHz)
+
+
+Analysis completed Mon Aug 11 16:55:52 2014
+--------------------------------------------------------------------------------
+
+Generating Report ...
+
+Number of warnings: 0
+Number of info messages: 2
+Total time: 14 secs 
+rm lab-synthdir/layoutdefault/design.ngd lab-synthdir/layoutdefault/design_map.ncd
+make[1]: Leaving directory `/edu/tobhu543/TSEA83/projekt'
