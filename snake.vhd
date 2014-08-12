@@ -4,7 +4,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 use ieee.std_logic_unsigned.all;
 
-
+use work.grx_types.all;
+use work.debugpak.all;
 
 entity snake is 
 	Port (	clk, rst : in STD_LOGIC;
@@ -19,9 +20,10 @@ entity snake is
 		uart_in: in STD_LOGIC;
 		--
 		sw : in STD_LOGIC_VECTOR(7 downto 0); --spakar på kortet (kontrollerar bakgrundsfärg);
+		btnu : in std_logic;
 		ss, mosi, sclk : out STD_LOGIC_VECTOR(3 downto 0);
 		miso : in STD_LOGIC_VECTOR(3 downto 0);
-		Led : out STD_LOGIC_VECTOR(3 downto 0)
+		Led : out STD_LOGIC_VECTOR(4 downto 0)
 		);
             
 		
@@ -31,6 +33,17 @@ end snake;
 
 
 architecture behv of snake is
+
+	component debugger is
+		Port (
+			clk : in std_logic;
+			indata : in inpdata;
+			sw : in std_logic_vector(7 downto 0);
+			btn : in std_logic;
+			outdata : out std_logic_vector(15 downto 0);
+			outflag : out std_logic
+			);
+	end component;
 
 	component UART is
 		generic ( N : natural);
@@ -48,7 +61,7 @@ architecture behv of snake is
 		generic ( amount : integer := 2);
 		port ( 	clk : in std_logic;
 			buss : inout std_logic_vector(15 downto 0);
-			flags : inout std_logic_vector(6 downto 0);
+			--flags : inout std_logic_vector(6 downto 0);
 			frombus : in std_logic_vector(3 downto 0);
 			miso : in std_logic_vector(amount-1 downto 0);
 			sclk : out std_logic_vector(amount-1 downto 0);
@@ -95,7 +108,7 @@ architecture behv of snake is
 	component spi
 		port ( 	clk : in std_logic;
 			buss : inout std_logic_vector(3 downto 0);
-			flags : inout std_logic_vector(6 downto 0);
+			--flags : inout std_logic_vector(6 downto 0);
 			miso : in std_logic;
 			sclk : out std_logic;
 			mosi : out std_logic;
@@ -106,11 +119,17 @@ architecture behv of snake is
 	component cpu
 		port (
 			clk : in std_logic;
-			buss : inout std_logic_vector(15 downto 0);
+			outbuss : out std_logic_vector(15 downto 0);
+			bspi : in std_logic_vector(15 downto 0);
+			buart : in std_logic_vector(15 downto 0);
 			frombus : inout std_logic_vector(3 downto 0);
 			tobus : inout std_logic_vector(3 downto 0);
 			flags : inout std_logic_vector(6 downto 0);
-			gr15 : out std_logic_vector(15 downto 0)
+			gr15 : out std_logic_vector(15 downto 0);
+			grs : out GRX16;
+			dpc : out std_logic_vector(15 downto 0);
+			deflag : in std_logic;
+			debtn : in std_logic
 		);
 	end component;
 
@@ -140,6 +159,15 @@ architecture behv of snake is
 	signal spitest_bool : std_logic := '1';
 	signal slowclk : std_logic := '0';
 	signal slowclk_cnt : std_logic_vector(26 downto 0) := "000000000000000000000000000";
+
+	signal bspi : std_logic_vector(15 downto 0) := "0000000000000000";
+	signal buart : std_logic_vector(15 downto 0) := "0000000000000000";
+
+
+	signal dedata : std_logic_vector(15 downto 0) := "0000000000000000";
+	signal deflag : std_logic := '0';
+	signal grs : GRX16;
+	signal dpc : std_logic_vector(15 downto 0) := "0000000000000000";
 begin
 
 --	dbus(15 downto 14) <= miso; --denna var utkommenterad inna jag kommenterade bort SPI
@@ -147,13 +175,14 @@ begin
 --	miso3_tmp <= miso3;
 --	miso4_tmp <= miso4;
 	Led(3 downto 0) <= flags(6 downto 3);
+	Led(4) <= '1';
 
 	spi_inst : spimaster 
 		generic map( amount => 4)
 		port map( 	
 			clk => clk,
-			buss => dbus,
-			flags => flags,
+			buss => bspi,
+			--flags => flags,
 			frombus => frombus,
 			miso => miso,
 			sclk => sclk,
@@ -177,33 +206,33 @@ begin
 		rst => rst,
 		uart_in => uart_in,
 		uart_word_ready => uart_word_ready,
-		dbus => dbus,
+		dbus => buart,
 		tobus => tobus,
 		debug_signal => baked_value
 		);
 	
---	gmem_inst : GMEM port map( 
---		clk => clk,
---		rst => rst,
---		dbus => dbus,
---		frombus => frombus,
---		write_adr => gr15(9 downto 0),
---		read_adr => gpu_read_adr,
---		tile_type_out => gmem_tile_type_out
---		);
+	gmem_inst : GMEM port map( 
+		clk => clk,
+		rst => rst,
+		dbus => dbus,
+		frombus => frombus,
+		write_adr => gr15(9 downto 0),
+		read_adr => gpu_read_adr,
+		tile_type_out => gmem_tile_type_out
+		);
 
---	gpu_inst : GPU port map(
---		clk => clk,
---		rst => rst,
---		tile_type => gmem_tile_type_out, --fr gmem
---		gmem_adr => gpu_read_adr, --till gmem
---		vgaRed => vgaRed,
---		vgaGreen => vgaGreen,
---		vgaBlue => vgaBlue,
---		Hsync => Hsync,
---		Vsync => Vsync,
---		bg_color => sw --switch-knappar kontrollerar bakgrundsfärg
---		);
+	gpu_inst : GPU port map(
+		clk => clk,
+		rst => rst,
+		tile_type => gmem_tile_type_out, --fr gmem
+		gmem_adr => gpu_read_adr, --till gmem
+		vgaRed => vgaRed,
+		vgaGreen => vgaGreen,
+		vgaBlue => vgaBlue,
+		Hsync => Hsync,
+		Vsync => Vsync,
+		bg_color => sw --switch-knappar kontrollerar bakgrundsfärg
+		);
 
 	
 	--baked_value <= "0" & sw(7 downto 5) & "0" & sw(4 downto 2) & "00" & sw(1 downto 0) & "000" & rst;
@@ -213,17 +242,48 @@ begin
 		seg => seg,
 		an => an,
 		--value => baked_value
-		value => gr15
+		value => dedata
 		);
 
 	cpu_inst : cpu port map(
 		clk => clk,
-		buss => dbus,
+		outbuss => dbus,
+		bspi => bspi,
+		buart => buart,
 		frombus => frombus,
 		tobus => tobus,
 		flags => flags,
-		gr15 => gr15
+		gr15 => gr15,
+		grs => grs,
+		dpc => dpc,
+		deflag => deflag,
+		debtn => btnu
 		);
+
+	debug_inst : debugger port map(
+		clk => clk,
+		indata(0) => grs(0),
+		indata(1) => grs(1),
+		indata(2) => grs(2),
+		indata(3) => grs(3),
+		indata(4) => grs(4),
+		indata(5) => grs(5),
+		indata(6) => grs(6),
+		indata(7) => grs(7),
+		indata(8) => grs(8),
+		indata(9) => grs(9),
+		indata(10) => grs(10),
+		indata(11) => grs(11),
+		indata(12) => grs(12),
+		indata(13) => grs(13),
+		indata(14) => grs(14),
+		indata(15) => grs(15),
+		indata(16) => dpc,
+		sw => sw,
+		btn => btnu,
+		outdata => dedata,
+		outflag => deflag
+	);
 
 
 end behv;		

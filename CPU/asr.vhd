@@ -3,9 +3,9 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
 entity asr is
-	port ( 	buss : inout std_logic_vector(15 downto 0);
+	port ( 	buss : in std_logic_vector(11 downto 0);
 			frombus : in std_logic_vector(3 downto 0);
-			tobus : in std_logic_vector(3 downto 0);
+			basr : out std_logic_vector(15 downto 0);
 			adr : out std_logic_vector(11 downto 0);
 			clk : in std_logic
 		);
@@ -24,7 +24,7 @@ begin
 			end if;
 		end if;
 	end process;
-	buss <= "0000" & val when tobus="0111" else "ZZZZZZZZZZZZZZZZ";
+	basr <= "0000" & val;
 	in_tmp <= buss(11 downto 0) when frombus="0111" else val;
 	adr <= val;
 end behav;

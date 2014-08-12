@@ -6,7 +6,7 @@ entity spimaster is
 	generic ( amount : integer := 2);
 	port ( 	clk : in std_logic;
 			buss : inout std_logic_vector(15 downto 0);
-			flags : inout std_logic_vector(6 downto 0);
+			--flags : inout std_logic_vector(6 downto 0);
 			frombus : in std_logic_vector(3 downto 0);
 			miso : in std_logic_vector(amount-1 downto 0);
 			sclk : out std_logic_vector(amount-1 downto 0);
@@ -19,7 +19,7 @@ architecture behav of spimaster is
 	component spi is
 		port ( 	clk : in std_logic;
 			buss : inout std_logic_vector(3 downto 0);
-			flags : inout std_logic_vector(6 downto 0);
+			--flags : inout std_logic_vector(6 downto 0);
 			miso : in std_logic;
 			sclk : out std_logic;
 			mosi : out std_logic;
@@ -41,10 +41,4 @@ begin
 	end generate SPIGEN;
 
 	buss <= outreg when frombus = "1000" else "ZZZZZZZZZZZZZZZZ";
-	process(clk) 
-	begin
-		if frombus = "1000" then
-			buss <= outreg;
-		end if;
-	end process;
 end behav;

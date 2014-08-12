@@ -39,9 +39,13 @@ public class Assemble
 	ArrayList<BufferedReader> brs = new ArrayList<BufferedReader>();
 	brs.add(new BufferedReader(new FileReader(args[0])));
 	String line = null;
-	int pmCounter = 0;
+	int pmCounter = 2;
 	HashMap<String, Integer> labels = new HashMap<String, Integer>();
 
+
+	//NOPS
+	writer.println("0 => B\"000000_0000_00_0000\", -- NOPs");
+	writer.println("1 => B\"000000_0000_00_0000\", -- NOPs");
 
 	String[] s = null;
 	while(brs.size() > 0) {
@@ -51,6 +55,9 @@ public class Assemble
 		try {
 		    line = line.trim();
 		    String ass = line.split(";")[0];
+			String comment = "";
+			if (line.split(";").length >= 2) 
+				String comment = line.split(";", 2)[1];
 		    if(!ass.equalsIgnoreCase("")) {
 			s = split(ass, " ");
 			String cmd = s[0].trim().toUpperCase();
@@ -114,12 +121,14 @@ public class Assemble
 				    opCode = "011000";
 			    else if(cmd.equalsIgnoreCase("SPI"))
 					opCode = "011001";
-			    else if(cmd.equalsIgnoreCase("LOADUART"))
+			    else if(cmd.equalsIgnoreCase("UART"))
 					opCode = "011010";
 				else if(cmd.equalsIgnoreCase("RAND"))
 					opCode = "011011";
+				else if(cmd.equalsIgnoreCase("BREAK"))
+					opCode = "011100";
 				else {
-				    labels.put(cmd, pmCounter);
+			    		labels.put(cmd, pmCounter);
 					cont = false;
 				writer.println("-- " + cmd);
 			    }
@@ -139,7 +148,7 @@ public class Assemble
 						    addmod = "10";
 						else if(s.length == 4)
 						    addmod = "11";
-						else if(s.length == 3)
+						else
 						    addmod = "01";
 					    arg1 = arg1.replace("#", "").replace("(", "").replace(")", "");
 					    if(arg1.charAt(0) == '$') {
@@ -176,7 +185,7 @@ public class Assemble
 					}
 				    }
 				    //System.out.println("wrote shit");
-				    writer.println(pmCounter + " => B\"" + opCode + "_" + grx + "_" + addmod + "_" + ind + "\"," + " -- \"" + ass + "\"");
+				    writer.println(pmCounter + " => B\"" + opCode + "_" + grx + "_" + addmod + "_" + ind + "\"," + " -- \"" + ass + "\"" + " ; " + comment);
 				    if (isInteger(operand))
 				    	writer.println((pmCounter + 1)+ " => \"" + operand + "\", -- " + Integer.parseInt(operand, 2));
 				    else

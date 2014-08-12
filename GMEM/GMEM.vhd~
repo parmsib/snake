@@ -24,20 +24,22 @@ architecture GMbehv of GMEM is
 
 	type GM_type is array (0 to 31, 0 to 31) of STD_LOGIC_VECTOR(3 downto 0); --Y X.  Indexerad först på Y, sen X
 	signal mem : GM_type := (
-		0 => (
-			others => "1111"
-		),
-		15 => (
-			15 => "1111",
-			others => "0000"
-		),
-		31 => (
-			others => "1111"
-		),
+		--0 => (
+	--		others => "1111"
+	--	),
+	--	15 => (
+	--		15 => "1111",
+	--		others => "0000"
+	--	),
+	--	31 => (
+	--		others => "1111"
+	--	),
 		others => (
-			others => "0000"
+			others => "0011"
 		)
 	); --en färgad cell i mitten nånstans och lite ram
+	signal adr_reg : std_logic_vector(9 downto 0); -- for block ram
+	signal data_reg : std_logic_vector(15 downto 0) := "0011000000000000"; -- for block ram
 	
 	
 begin
@@ -51,12 +53,19 @@ begin
 					end loop;
 				end loop;
 			elsif frombus = "1001" then
+				adr_reg <= write_adr;
+				data_reg <= dbus;
+
+
 				--write. address from write_adr. data from dbus
-				mem(	conv_integer(write_adr(9 downto 5)),
-					conv_integer(write_adr(4 downto 0))) <= dbus_in(15 downto 12);
+				--mem(	conv_integer(write_reg(9 downto 5)),
+				--	conv_integer(write_reg(4 downto 0))) <= dbus(15 downto 12);
 			end if;
+			mem(	conv_integer(adr_reg(4 downto 0)),
+				conv_integer(adr_reg(9 downto 5))) <= data_reg(15 downto 12);			
 		end if;
 	end process;
+
 --	dbus_out <= "ZZZZZZZZZZZZZZZZ"; --känns lite dumt
 	tile_type_out <= mem(	conv_integer(read_adr(9 downto 5)),
 				conv_integer(read_adr(4 downto 0)));

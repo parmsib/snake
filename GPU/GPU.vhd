@@ -32,7 +32,7 @@ architecture behv of GPU is
                 0 => ("111", "111", "11"),
                 1 => ("010", "010", "01"),
 		2 => ("000", "011", "01"),
-		3 => ("111", "111", "11"),
+		3 => ("000", "000", "11"),
                 4 => ("000", "011", "01"),
                 5 => ("000", "011", "01"),
                 6 => ("000", "011", "01"),
@@ -44,7 +44,7 @@ architecture behv of GPU is
                 12 => ("000", "011", "01"),
                 13 => ("000", "011", "01"),
                 14 => ("000", "011", "01"),
-		15 => ("000", "011", "01")
+		15 => ("000", "000", "00")
                 --15 => (bg_color(7 downto 5), bg_color(4 downto 2), bg_color(1 downto 0))
 		);
 
@@ -125,7 +125,7 @@ begin
 	Hsync <= hs;
         Vsync <= vs;
 
-	gmem_adr <= pxX(7 downto 3) & pxY(7 downto 3); --fixa sen
+	gmem_adr <= pxY(7 downto 3) & pxX(7 downto 3); --fixa sen
 	
 
 	--kombinatorik som kopplar tiletyp till färg

@@ -16,11 +16,12 @@ architecture behv of SNAKE_tb is
 		an : out STD_LOGIC_VECTOR(3 downto 0); --mux-variabel över vilken 7segment (tror jag)
                 seg : out std_logic_vector(7 downto 0);
 		--
-		uart_in: in STD_LOGIC;
+		uart_in: in STD_LOGIC
 		--
-		sw : in STD_LOGIC_VECTOR(7 downto 0); --spakar på kortet (kontrollerar bakgrundsfärg);
-		ss, mosi, sclk : out STD_LOGIC_VECTOR(3 downto 0);
-		miso : in STD_LOGIC_VECTOR(3 downto 0));                          
+		--sw : in STD_LOGIC_VECTOR(7 downto 0); --spakar på kortet (kontrollerar bakgrundsfärg);
+		--ss, mosi, sclk : out STD_LOGIC_VECTOR(3 downto 0);
+		--miso : in STD_LOGIC_VECTOR(3 downto 0)
+		);                          
 	end component;
 	
   SIGNAL clk : std_logic := '0';
@@ -64,13 +65,14 @@ begin
 		an => an, --mux-variabel över vilken 7segment (tror jag)
                 seg => seg,
 		--
-		uart_in => uart_in,
+		uart_in => uart_in
 		--
-		sw => sw, --spakar på kortet (kontrollerar bakgrundsfärg);
-		ss => ss, 
-		mosi => mosi, 
-		sclk => sclk,
-		miso => miso	);			
+		--sw => sw, --spakar på kortet (kontrollerar bakgrundsfärg);
+		--ss => ss, 
+		--mosi => mosi, 
+		--sclk => sclk,
+		--miso => miso	
+		);			
 					
 							
 	-- 100 MHz system clock

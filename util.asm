@@ -10,10 +10,10 @@
 ;Gr15: Adress formaterad för GMEM
 
 TOGMEM
-	LSL #5, Gr13; shifta ut Y-bitarna till sin rätta plats
 	STORE $F00, Gr12; spara undan X, och Y
 	STORE $F01, Gr13;
 	LOAD $F01, Gr15; ladda in Y till Gr15.
+	LSL #5, Gr15; shifta ut Y-bitarna till sin rätta plats
 	OR $F00, Gr15; ORa in X-delen
 	STORE $AF8, Gr14 ;lägg returnadressen på ett ställe i minnet
 	BRA $AF8; returnera
@@ -31,7 +31,7 @@ TOGMEM
 ;Gr13 Y-värde som vanligt ord
 
 FROMGMEM
-	STORE $F00, Gr14; spara undan in-värdet
+	STORE $F00, Gr15; spara undan in-värdet
 	LOAD $F00, Gr12; ladda till X
 	AND #$001F, Gr12; ANDa bort y-delen från x
 	LOAD $F00, Gr13;

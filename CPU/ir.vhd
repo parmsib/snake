@@ -3,9 +3,8 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
 entity ir is
-	port ( 	buss : inout std_logic_vector(15 downto 0);
+	port ( 	buss : in std_logic_vector(15 downto 0);
 			frombus : in std_logic_vector(3 downto 0);
-			tobus : in std_logic_vector(3 downto 0);
 			clk : in std_logic;
 			op : out std_logic_vector(5 downto 0);
 			grat : out std_logic_vector(3 downto 0);
@@ -27,7 +26,6 @@ begin
 			end if;
 		end if;
 	end process;
-	buss <= val when tobus="0001" else "ZZZZZZZZZZZZZZZZ";
 	in_tmp <= buss when frombus="0001" else val;
 	op <= in_tmp(15 downto 10);
 	grat <= in_tmp(9 downto 6);

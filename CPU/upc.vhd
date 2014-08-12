@@ -12,7 +12,9 @@ entity upc is
 			tobus : out std_logic_vector(3 downto 0);
 			frombus : out std_logic_vector(3 downto 0);
 			alu : out std_logic_vector(3 downto 0);
-			p : out std_logic
+			p : out std_logic;
+			haltUpc : in std_logic;
+			btn : in std_logic
 		);
 end upc;
 
@@ -187,6 +189,7 @@ architecture behav of upc is
 			130 => B"0000_1000_0110_0_00_0011_00000000",
 				-- GSTORE GrX(Data)
 			131 => B"0000_0110_1001_0_00_0011_00000000",
+			132 => B"0000_0000_0000_0_00_1111_00000000",
 			OTHERS => B"1111_1111_1111_1_11_1111_11111111"
 		);
 		
@@ -201,84 +204,114 @@ architecture behav of upc is
 	signal lc_tmp : std_logic_vector(15 downto 0) := "0000000000000000";
 	--signal upc_tmp : std_logic_vector(7 downto 0) := "0000000";
 	signal l_flag_tmp : std_logic := '0';
+
+	signal i_state : std_logic := '0';
+	signal halting : std_logic := '0';
+	signal oldHaltUpc : std_logic := '0';
+	signal lastBtnState : std_logic := '0';
 begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			alu_tmp <= um(conv_integer(upc))(26 downto 23);
-			tobus_tmp <= um(conv_integer(upc))(22 downto 19);
-			frombus_tmp <= um(conv_integer(upc))(18 downto 15);
-			p_tmp <= um(conv_integer(upc))(14);
-			flags(2) <= l_flag_tmp;
-			if um(conv_integer(upc))(13 downto 12) = "00" then
-				
-			elsif um(conv_integer(upc))(13 downto 12) = "01" then
-				lc <= lc - 1;
-			elsif um(conv_integer(upc))(13 downto 12) = "10" then
-				lc <= lc_tmp;
-			elsif um(conv_integer(upc))(13 downto 12) = "11" then
-				lc <= "00000000" & um(conv_integer(upc))(7 downto 0);
-			end if;
 			
-			if um(conv_integer(upc))(11 downto 8) = "0000" then
-				upc <= upc + 1;
-			elsif um(conv_integer(upc))(11 downto 8) = "0001" then
-				upc <= k1;
-			elsif um(conv_integer(upc))(11 downto 8) = "0010" then
-				upc <= k2;
-			elsif um(conv_integer(upc))(11 downto 8) = "0011" then
-				upc <= B"0000_0000";
-			elsif um(conv_integer(upc))(11 downto 8) = "0101" then
-				upc <= um(conv_integer(upc))(7 downto 0);
-			elsif um(conv_integer(upc))(11 downto 8) = "1000" then
-				if flags(6) = '1' then
-					upc <= um(conv_integer(upc))(7 downto 0);
-				else
-					upc <= upc + 1;
+			
+			if btn = '0' and lastBtnState = '1' then
+				halting <= '0';
+			else
+				if(oldHaltUpc = '0' and haltUpc = '1') then
+					halting <= '1';
 				end if;
-			elsif um(conv_integer(upc))(11 downto 8) = "1001" then
-				if flags(5) = '1' then
-					upc <= um(conv_integer(upc))(7 downto 0);
+			end if;
+			oldHaltUpc <= haltUpc;
+			lastBtnState <= btn;
+			if halting /= '1' then
+				if i_state = '0' then
+					tobus_tmp <= um(conv_integer(upc))(22 downto 19);
+					alu_tmp <= "0000";
+					p_tmp <= '0';
+					frombus_tmp <= "0000";
+					i_state <= '1';
 				else
-					upc <= upc + 1;
-				end if;
-			elsif um(conv_integer(upc))(11 downto 8) = "1010" then
-				if flags(4) = '1' then
-					upc <= um(conv_integer(upc))(7 downto 0);
-				else
-					upc <= upc + 1;
-				end if;
-			elsif um(conv_integer(upc))(11 downto 8) = "1011" then
-				if flags(3) = '1' then
-					upc <= um(conv_integer(upc))(7 downto 0);
-				else
-					upc <= upc + 1;
-				end if;
-			elsif um(conv_integer(upc))(11 downto 8) = "1100" then
-				if flags(2) = '1' then
-					upc <= um(conv_integer(upc))(7 downto 0);
-				else
-					upc <= upc + 1;
-				end if;
-			elsif um(conv_integer(upc))(11 downto 8) = "1101" then
-				if flags(1) = '1' then
-					upc <= um(conv_integer(upc))(7 downto 0);
-				else
-					upc <= upc + 1;
-				end if;
-			elsif um(conv_integer(upc))(11 downto 8) = "1110" then
-				if flags(0) = '1' then
-					upc <= um(conv_integer(upc))(7 downto 0);
-				else
-					upc <= upc + 1;
+					alu_tmp <= um(conv_integer(upc))(26 downto 23);
+					tobus_tmp <= um(conv_integer(upc))(22 downto 19);
+					frombus_tmp <= um(conv_integer(upc))(18 downto 15);
+					p_tmp <= um(conv_integer(upc))(14);
+					flags(2) <= l_flag_tmp;
+					if um(conv_integer(upc))(13 downto 12) = "00" then
+				
+					elsif um(conv_integer(upc))(13 downto 12) = "01" then
+						lc <= lc - 1;
+					elsif um(conv_integer(upc))(13 downto 12) = "10" then
+						lc <= lc_tmp;
+					elsif um(conv_integer(upc))(13 downto 12) = "11" then
+						lc <= "00000000" & um(conv_integer(upc))(7 downto 0);
+					end if;
+			
+					if um(conv_integer(upc))(11 downto 8) = "0000" then
+						upc <= upc + 1;
+					elsif um(conv_integer(upc))(11 downto 8) = "0001" then
+						upc <= k1;
+					elsif um(conv_integer(upc))(11 downto 8) = "0010" then
+						upc <= k2;
+					elsif um(conv_integer(upc))(11 downto 8) = "0011" then
+						upc <= B"0000_0000";
+					elsif um(conv_integer(upc))(11 downto 8) = "0101" then
+						upc <= um(conv_integer(upc))(7 downto 0);
+					elsif um(conv_integer(upc))(11 downto 8) = "1000" then
+						if flags(6) = '1' then
+							upc <= um(conv_integer(upc))(7 downto 0);
+						else
+							upc <= upc + 1;
+						end if;
+					elsif um(conv_integer(upc))(11 downto 8) = "1001" then
+						if flags(5) = '1' then
+							upc <= um(conv_integer(upc))(7 downto 0);
+						else
+							upc <= upc + 1;
+						end if;
+					elsif um(conv_integer(upc))(11 downto 8) = "1010" then
+						if flags(4) = '1' then
+							upc <= um(conv_integer(upc))(7 downto 0);
+						else
+							upc <= upc + 1;
+						end if;
+					elsif um(conv_integer(upc))(11 downto 8) = "1011" then
+						if flags(3) = '1' then
+							upc <= um(conv_integer(upc))(7 downto 0);
+						else
+							upc <= upc + 1;
+						end if;
+					elsif um(conv_integer(upc))(11 downto 8) = "1100" then
+						if flags(2) = '1' then
+							upc <= um(conv_integer(upc))(7 downto 0);
+						else
+							upc <= upc + 1;
+						end if;
+					elsif um(conv_integer(upc))(11 downto 8) = "1101" then
+						if flags(1) = '1' then
+							upc <= um(conv_integer(upc))(7 downto 0);
+						else
+							upc <= upc + 1;
+						end if;
+					elsif um(conv_integer(upc))(11 downto 8) = "1110" then
+						if flags(0) = '1' then
+							upc <= um(conv_integer(upc))(7 downto 0);
+						else
+							upc <= upc + 1;
+						end if;
+					elsif um(conv_integer(upc))(11 downto 8) = "1111" then
+						upc <= B"0000_0000";
+						halting <= '1';
+					end if;
+					i_state <= '0';
 				end if;
 			end if;
 		end if;
 	end process;
-	alu <= um(conv_integer(upc))(26 downto 23);
-	tobus <= um(conv_integer(upc))(22 downto 19);
-	frombus <= um(conv_integer(upc))(18 downto 15);
-	p <= um(conv_integer(upc))(14);
+	alu <= alu_tmp; --um(conv_integer(upc))(26 downto 23);
+	tobus <= tobus_tmp; --um(conv_integer(upc))(22 downto 19);
+	frombus <= frombus_tmp; --um(conv_integer(upc))(18 downto 15);
+	p <= p_tmp; --um(conv_integer(upc))(14);
 	lc_tmp <= buss when um(conv_integer(upc))(13 downto 12) = "10" else lc;
 	--upc <= upc;
 	l_flag_tmp <= '1' when signed(lc) <= 0 else '0';

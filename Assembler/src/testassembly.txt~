@@ -1,10 +1,16 @@
 LOAD #12345, Gr5 ; 12345 i Gr5
 ADD #$0f, Gr5 ; 12360 i Gr5
+BREAK #0, Gr1;
 SUB 300, Gr5 ; 12160 i Gr5  -- lägg 200 på plats 300
+BREAK #0, Gr1;
 CMP (301), Gr5 ; equal  -- lägg 302 på plats 301, lägg 12160 på plats 302
-AND 303, Gr5, Gr10; ska bli 128. -- lägg 3 i Gr10,  lägg 0xFF på 303
+BREAK #0, Gr1;
+AND 300, Gr5, Gr10; ska bli 128. -- lägg 3 i Gr10,  lägg 0xFF på 303
+BREAK #0, Gr1;
 OR #$0f, Gr5	; ska bli 143
+BREAK #0, Gr1;
 NOT Gr5		; ska bli -144
+BREAK #0, Gr1;
 BRA TEST1	; ska inte bli 0xFFFF
 LOAD #$FFFF, Gr15
 BRA TESTFAIL
@@ -24,11 +30,6 @@ BGE TEST4
 LOAD #$2FFF, Gr15
 BRA TESTFAIL
 TEST4
-CMP #0, Gr5
-BPL TEST5
-LOAD #$3FFF, Gr15
-BRA TESTFAIL
-TEST5
 LSR #3, Gr5	; ska bli 8174
 LSL #2, Gr5	; ska bli 32696
 STORE 305, Gr5	; spara Gr5 på minnesplats 305

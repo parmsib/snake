@@ -32,7 +32,7 @@ architecture behv of GPU is
                 0 => ("111", "111", "11"),
                 1 => ("010", "010", "01"),
 		2 => ("000", "011", "01"),
-		3 => ("111", "111", "11"),
+		3 => ("000", "000", "11"),
                 4 => ("000", "011", "01"),
                 5 => ("000", "011", "01"),
                 6 => ("000", "011", "01"),
@@ -44,14 +44,14 @@ architecture behv of GPU is
                 12 => ("000", "011", "01"),
                 13 => ("000", "011", "01"),
                 14 => ("000", "011", "01"),
-		15 => ("000", "011", "01")
+		15 => ("000", "000", "00")
                 --15 => (bg_color(7 downto 5), bg_color(4 downto 2), bg_color(1 downto 0))
 		);
 
 	
-	signal pxX, pxY : STD_LOGIC_VECTOR (9 downto 0);
-	signal hsync_pre, vsync_pre: STD_LOGIC;
-	signal clock_ctr : STD_LOGIC_VECTOR(1 downto 0);
+	signal pxX, pxY : STD_LOGIC_VECTOR (9 downto 0) := B"0000_0000_00";
+	signal hsync_pre, vsync_pre: STD_LOGIC := '1';
+	signal clock_ctr : STD_LOGIC_VECTOR(1 downto 0) := "00";
 
 --	signal vga_clock : STD_LOGIC;
 	-- signal tile_X : STD_LOGIC_VECTOR (7 downto 0);

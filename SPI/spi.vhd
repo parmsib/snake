@@ -5,7 +5,7 @@ use ieee.std_logic_unsigned.all;
 entity spi is
 	port ( 	clk : in std_logic;
 			buss : inout std_logic_vector(3 downto 0);
-			flags : inout std_logic_vector(6 downto 0);
+			--flags : in std_logic_vector(6 downto 0);
 			miso : in std_logic;
 			sclk : out std_logic;
 			mosi : out std_logic;
