@@ -57,17 +57,17 @@ MENULOOPXRETURN
 	STORE $D00, Gr12; Lägg till x // 4 till Gr3, för att få rätt word-offset i x-led
 	LOAD $D00, Gr3; 
 	;DIV #4, Gr3; heltalsdivision (avrunda nedåt)
-	LSR #2, Gr3;
+	LSR #2, Gr3; heltalsdivision
 	STORE $D00, Gr3;
 	ADD $D00, Gr2;
 	;nu innehåller Gr2 hela adressen till det word som vår sökta tile ligger i
 	
 	;behöver ta reda på vilken tile i detta word vi är ute efter
-	STORE $D00, Gr12; Spara (x mod 4) - 1 till Gr3, vilket är tile-index i wordet
+	STORE $D00, Gr12; Spara (x mod 4) till Gr3, vilket är tile-index i wordet
 	LOAD $D00, Gr3;
 	;MOD #4, Gr3;
 	AND #$0003, Gr3; MOD #4
-	SUB #1, Gr3;
+	;SUB #1, Gr3;
 	;nu innehåller Gr3 tile-index i wordet
 	
 	LOAD $B00, Gr4, Gr2; Ladda in rätt word från bilden till register 4
@@ -99,13 +99,14 @@ MENULOOPXRETURN
 	
 MENULOOP
 	SPI Gr0; ladda SPI-data till gr0
-	CMP #UP, Gr0;
+	AND #$000F, Gr0; anda bort andra joysticks
+	CMP #1, Gr0;
 	BEQ #UPDIRSPEED;
-	CMP #RIGHT, Gr0;
+	CMP #2, Gr0;
 	BEQ #RIGHTDIRSPEED;
-	CMP #DOWN, Gr0;
+	CMP #3, Gr0;
 	BEQ #DOWNDIRSPEED;
-	CMP #LEFT, Gr0;
+	CMP #4, Gr0;
 	BEQ #LEFTDIRSPEED;
 	BRA #MENULOOP; var inget håll, fortsätt kolla.
 
@@ -135,8 +136,7 @@ UARTLOOP
 	BOU #UARTREADY ;kolla om uart har ett word redo att hämtas
 	BRA #UARTLOOP ;fortsätt vänta
 UARTREADY
-	;TODO: Gör nedanstående instruktion
-	LOADUART Gr1; ladda Uart-wordet till Gr1
+	UART Gr1; ladda Uart-wordet till Gr1
 	STORE #$C80, Gr1, Gr0; Lägg till wordet på rätt ställe. använder Gr0 som index
 	ADD #1, Gr0; incrementera countern
 	CMP #64, Gr0; kolla om vi är färdiga
@@ -170,7 +170,7 @@ RESETSNAKESLOOP
 	STORE $C00, Gr1, Gr0; sätt 0 på cur i orm1
 	STORE $C40, Gr1, Gr0; - || -          orm2
 	ADD #1, Gr0; inkrementera countern
-	CMP #64; kolla om kommit genom hela arrayen
+	CMP #64, Gr0; kolla om kommit genom hela arrayen
 	BNE #RESETSNAKESLOOP; om vi inte är färdiga, gör om
 	;annars (vi är färdiga), gå vidare
 
@@ -246,13 +246,14 @@ SNAKERETURNA
 	; ska ge dem rätt värde utifrån rörelseriktning
 	
 	SPI Gr0;
-	CMP #UP, Gr0;
+	AND #$000F, Gr0; anda bort andra joysticks
+	CMP #1, Gr0;
 	BEQ #SNAKEUP1;
-	CMP #RIGHT, Gr0;
+	CMP #2, Gr0;
 	BEQ #SNAKERIGHT1;
-	CMP #DOWN, Gr0;
+	CMP #3, Gr0;
 	BEQ #SNAKEDOWN1;
-	CMP #LEFT, Gr0;
+	CMP #4, Gr0;
 	BEQ #SNAKELEFT1;
 	;annars (inget håll nedtryckt):
 	LOAD $AFE, Gr1; ladda in gammal direction
@@ -292,33 +293,93 @@ SNAKERETURNB
 	;Nu ligger första ormens nya huvudposition i Gr15, formaterat för Gmem
 	STORE $D00, Gr15; Spara huvudets position för senare användning
 	
-; PASTA IN ORM2 HÄR!
+	; ORM 2: ---------------------------------------------------------------------------------------
+SNAKELOADOLD2
+	;först spara positionen gamla huvudet är på. 
+	LOAD $AFB, Gr0; ladda head-pointern till Gr0
+	;dags att förberade subrutinkall till FROMGMEM
+	LOAD $C40, Gr15, Gr0; ladda Gr15 med gamla huvudets position (Gr0 som index)
+	LOAD #SNAKERETURN2A, Gr14; returadress
+	BRA #FROMGMEM; Lägger X, Y i Gr12, Gr13
+SNAKERETURN2A
+
+	; nu: Gr12, Gr13 innehåller X, Y
+	; ska ge dem rätt värde utifrån rörelseriktning
+	
+	SPI Gr0;
+	AND #$00F0, Gr0; anda bort andra joysticks
+	CMP #1, Gr0;
+	BEQ #SNAKEUP2;
+	CMP #2, Gr0;
+	BEQ #SNAKERIGHT2;
+	CMP #3, Gr0;
+	BEQ #SNAKEDOWN2;
+	CMP #4, Gr0;
+	BEQ #SNAKELEFT2;
+	;annars (inget håll nedtryckt):
+	LOAD $AFF, Gr1; ladda in gammal direction
+	CMP #0, Gr1;
+	BEQ #SNAKEUP2;
+	CMP #1, Gr1;
+	BEQ #SNAKERIGHT2;
+	CMP #2, Gr1;
+	BEQ #SNAKEDOWN2;
+	CMP #3, Gr1;
+	BEQ #SNAKELEFT2;
+	;har vi inte hittat nåt håll än, you dun goofed
+	
+SNAKEUP2
+	SUB #1, Gr13; minska Y med 1
+	BRA #SNAKESTOREHEADPOS2
+SNAKERIGHT2
+	ADD #1, Gr12; öka X med 1
+	BRA #SNAKESTOREHEADPOS2
+SNAKEDOWN2
+	ADD #1, Gr13; öka Y med 1
+	BRA #SNAKESTOREHEADPOS2
+SNAKELEFT2
+	SUB #1, Gr12; minska X med 1
+	BRA #SNAKESTOREHEADPOS2
+
+	
+SNAKESTOREHEADPOS2
+	LOAD #SNAKERETURNB2, Gr14;
+	BRA #TOGMEM; formatera tillbaka till GMEM-form
+SNAKERETURNB2
+	;Nu ligger andra ormens nya huvudposition i Gr15, formaterat för Gmem
+	STORE $D01, Gr15; Spara huvudets position för senare användning	
 	
 	
 	;nu ligger nya huvud-positionerna  $D00 och $D01
 	;dags att flytta fram head och lägga in rätt värde på head-platsen i arraysen
 	
-	LOAD $AF9, Gr0; orm 1 head pointer till gr0
+	LOAD $AFB, Gr0; orm 2 head pointer till gr0
 	ADD #1, Gr0; 
 	;MOD #64, Gr0; cirkulär lista. orm-array max 62 lång.
 	AND #$003F, Gr0; MOD 64
-	LOAD $D00, Gr1; ladda in nya huvudpos till Gr1
-	STORE $C00, Gr1, Gr0; spara nya huvudpos på huvudplatsen i orm-arrayen
-	STORE $AF9, Gr0; lägg tillbaka nya huvudplatsen
+	LOAD $D01, Gr1; ladda in nya huvudpos till Gr1
+	STORE $C40, Gr1, Gr0; spara nya huvudpos på huvudplatsen i orm-arrayen
+	STORE $AFB, Gr0; lägg tillbaka nya huvudplatsen
 	
-;PASTA IN ORM 2 HÄR!
+	; /orm 2-----------------------------------------------------------
 	
 	;Dags att kolla kollision med kartan eller äpple
 	
 ;-------------ÄPPLE
 	
 	;äpple
-	LOAD $D00, Gr0; ladda huvudets position till Gr0
+	LOAD $D00, Gr0; ladda orm1s huvudposition till Gr0
 	CMP $CC0, Gr0; jämför med äpplets position
-	BNE #SNAKECHECKMAP1; om ej träff, gå vidare
-	;annars (om träff) fixa äpple
+	BEQ #APPLEHIT; om träff, hoppa dit
+	;annars, testa också orm2s huvud
+	LOAD $D01, Gr0; ladda andra ormens huvud
+	CMP $CC0, Gr0; jämför med äpplets position
+	BNE #SNAKECHECKMAP1; om ej träff, hoppa förbi träff
+	;annars (om träff) går vi automatiskt till APPLEHIT
 	;--fixa score
+APPLEHIT
 	LOAD $AFD, Gr3; ladda Score till Gr3
+	ADD #1, Gr3; öka med ett
 	ADD #1, Gr3; öka med ett
 	STORE $AFD, Gr3; spara tillbaka den inkrementade scoren
 	;--fixa nytt äpple
@@ -360,9 +421,19 @@ SNAKECHECKMAP1
 SNAKEHITRETURN1
 	;nu ligger det FFFF i Gr11 om det är ett hinder på pos
 	CMP #$FFFF, Gr11;
-	BNE #SNAKEMOVETAIL; om inte hinder i vägen, gå vidare
-	;annars (hinder i vägen)
-	BRA #MENU; förlorat, gå till menyn
+	BEQ #MEUN; om hinder i vägen, gå till menyn
+	;annars, testa med andra spelarens huvud
+	;förbered GETOBSTACLEBYGMEM igen
+	LOAD $D01, Gr14; orm2s huvudpos sen tidigare
+	LOAD #SNAKEHITRETURN2, Gr14; returnadress
+	BRA #GETOBSTACLEBYGMEM; gör kallet
+SNAKEHITRETURN2
+	;nu ligger det FFFF i gr11 om det är ett hinder på orm2s huvudpos
+	CMP #$FFFF, Gr11;
+	BEQ #MENU; om hinder i vägen, har vi förlorat
+	;annars, gå vidare
+
+	;orm 1: ----------------------------------------------------------
 	
 SNAKEMOVETAIL1
 	LOAD $AFA, Gr0; ladda in svanspekaren för orm 1
@@ -400,8 +471,42 @@ SNAKELOOPCONTINUE1
 	BNE #SNAKEHITLOOP1; om inte samma, fortsätt loopa
 	;annars (samma, loopat klart), fortsätt programmet
 	
-;PASTA ORM 2 HÄR!
-
+	;orm2: ---------------------------------------------------------------------------
+	
+SNAKEMOVETAIL2
+	LOAD $C7F, Gr0; ladda in svanspekaren för orm 1
+	LOAD $C40, Gr15, Gr0; ladda gamla svanspos tills senare
+	ADD #1, Gr0; öka den med ett
+	STORE $C3F, Gr0; lägg tillbaka igen
+	
+	;dags att måla tomt där svansen var
+	;har redan gamla svansposen i Gr15
+	GSTORE #$0000; sudda, med tile 0000
+	
+SNAKECHECKHITPLAYER2
+	LOAD $C3E, Gr0; ladda andra ormens head-pointer, som loopas över
+	;LOAD $C7F, Gr1; tail-pointer, som skall loopas till
+	LOAD $C7E, Gr2; ladda denna orms huvud-pointer
+	LOAD $C40, Gr2, Gr2; ladda denna orms huvudpos
+	STORE $D00, Gr2; spara huvudpos på $D00
+SNAKEHITLOOP2
+	LOAD $C00, Gr3, Gr0; ladda nuvarande dels pos
+	CMP $D00, Gr3; jämför current dels pos med huvudpos
+	BNE #SNAKELOOPCONTINUE2; om inte träff
+	BRA #MENU; annars
+SNAKELOOPCONTINUE2
+	;kan passa på att rita ut ormen när vi ändår loopar genom den
+	LOAD $C40, Gr15, Gr0; spara cur pos i Gr15, för att rita ut till GMEM
+	GSTORE #$0002; rita orm2-tile på cur pos.
+	;sätt fram cur-pointern och kolla slut etc
+	ADD #1, Gr0;
+	MOD #62, Gr0; cirkulär lista
+	CMP $C3F, Gr0; Jämför nuvarande dels pointer med tailpointer
+	BNE #SNAKEHITLOOP2; om inte samma, fortsätt loopa
+	;annars (samma), fortsätt
+	
+	;/orm2--------------------------------------------------------------
+	
 ;--------------------------SPELHASTIGHET----------------
 ; us och ms är egentligen verkligen inte en mikro eller millisekund
 ; de är mycket större än så

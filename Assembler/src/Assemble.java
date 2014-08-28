@@ -41,6 +41,7 @@ public class Assemble
 	String line = null;
 	int pmCounter = 2;
 	HashMap<String, Integer> labels = new HashMap<String, Integer>();
+	int fileLineNr = 0;
 
 
 	//NOPS
@@ -52,6 +53,7 @@ public class Assemble
 	    //System.out.println(brs.size());
 	    //System.out.println(brs.get(brs.size() - 1).toString());
 	    while((line = brs.get(brs.size() - 1).readLine()) != null) {
+		fileLineNr++;
 		try {
 		    line = line.trim();
 		    String ass = line.split(";")[0];
@@ -201,6 +203,7 @@ public class Assemble
 				    System.out.println("The import-file \"" + file + "\" could not be found!");
 				    System.exit(0);
 				}
+				fileLineNr++;
 			    brs.add(new BufferedReader(new FileReader(file)));
 			}
 		    }
@@ -211,6 +214,8 @@ public class Assemble
 		    System.out.println();
 
 		    System.out.println(Arrays.toString(s));
+			System.out.println();
+			System.out.println("LineNr: " + fileLineNr);
 		    System.exit(0);
 		}
 	    }

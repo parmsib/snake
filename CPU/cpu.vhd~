@@ -57,7 +57,7 @@ architecture behav of cpu is
 			buss : in std_logic_vector(15 downto 0);
 			alu_styr : in std_logic_vector(3 downto 0);
 			balu : out std_logic_vector(15 downto 0);
-			flags : inout std_logic_vector(6 downto 0)
+			flags : inout std_logic_vector(6 downto 3)
 		);
 	end component;
 
@@ -146,7 +146,7 @@ architecture behav of cpu is
 	signal dfrombus : std_logic_vector(3 downto 0) := "0000";
 	signal dtobus : std_logic_vector(3 downto 0) := "0000";
 	signal dgr15 : std_logic_vector(15 downto 0) := "0000000000000000";
-	signal dflags : std_logic_vector(6 downto 0) := "0000000";
+	signal dflags : std_logic_vector(6 downto 0);
 
 	signal dgrs : GRX16;
 begin
@@ -162,16 +162,15 @@ begin
 		);
 
 	xgrx : grx port map (intbuss, grat, index, dfrombus, dtobus, bgrx, clk, dgr15, dgrs);
-	xalu : alu port map (clk, intbuss, dalu, balu, dflags);
+	xalu : alu port map (clk, intbuss, dalu, balu, flags(6 downto 3));
 	xpm : pm port map (intbuss, clk, dadr, dfrombus, bpm);
 	xkr1 : kr1 port map (op, kr1sig);
 	xkr2 : kr2 port map (m, kr2sig);
-	xupc : upc port map (clk, intbuss, dflags, kr1sig, kr2sig, dtobus, dfrombus, dalu, p, deflag);
+	xupc : upc port map (clk, intbuss, flags, kr1sig, kr2sig, dtobus, dfrombus, dalu, p, deflag, debtn);
 	xir : ir port map (intbuss, dfrombus, clk, op, grat, m, index);
 	xasr : asr port map (intbuss(11 downto 0), dfrombus, basr, dadr, clk);
 	xpc : pc port map (intbuss, dfrombus, bpc, clk, p);
-	
-	flags <= dflags;
+
 	gr15 <= dgr15;
 	outbuss <= intbuss;
 	tobus <= dtobus;

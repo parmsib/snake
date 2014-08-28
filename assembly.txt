@@ -308,6 +308,7 @@ SNAKERETURN2A
 	
 	SPI Gr0;
 	AND #$00F0, Gr0; anda bort andra joysticks
+	LSR #4, Gr0
 	CMP #1, Gr0;
 	BEQ #SNAKEUP2;
 	CMP #2, Gr0;

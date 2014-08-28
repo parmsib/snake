@@ -42,14 +42,16 @@ architecture behav of UART is
 	--värde på klockan när uart är idle
 	constant idle : STD_LOGIC_VECTOR(13 downto 0) := "11111111111111"; 
 	
-	signal count : STD_LOGIC_VECTOR(13 downto 0) := "00000000000000";
-	signal uart1, uart2: STD_LOGIC := '0';
+	signal count : STD_LOGIC_VECTOR(13 downto 0) := "11111111111111";
+	signal uart1 : STD_LOGIC := '0';
+	signal uart2 : STD_LOGIC := '0';
 	signal shift : STD_LOGIC := '0'; 
 	signal cur_byte : STD_LOGIC := '0';
 	signal shiftreg_out : STD_LOGIC_VECTOR(9 downto 0) := "0000000000";
-	signal regi1_out, regi2_out : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
+	signal regi1_out : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
+	signal regi2_out : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
 	signal load1, load2 : STD_LOGIC := '0'; --load1 är vänstra byte-registrets load-signal. etc
-	signal uart_word_flipflop : STD_LOGIC := '0';
+	signal uart_word_flipflop : STD_LOGIC := '1';
 	
 	
 begin
@@ -97,7 +99,7 @@ begin
 					count <= count + 1;
 				end if;
 				
-				--om vi har skickat ut ett word på bussen, sätt vippan tillbaks till hög
+				--om vi har skickat ut ett word på bussen, sätt vippan tillbaks till hög-
 				if tobus = "0101" then
 					uart_word_flipflop <= '1';
 				end if;
@@ -152,8 +154,7 @@ begin
 		output => regi2_out);
 
 		
-	dbus <=	regi1_out & regi2_out when tobus = "0101" else
-				"ZZZZZZZZZZZZZZZZ";
+	dbus <=	regi1_out & regi2_out;
 
 	debug_signal <= regi1_out & regi2_out;
 				

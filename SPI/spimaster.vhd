@@ -40,5 +40,5 @@ begin
 			);
 	end generate SPIGEN;
 
-	buss <= outreg when frombus = "1000" else "ZZZZZZZZZZZZZZZZ";
+	buss <= outreg;
 end behav;

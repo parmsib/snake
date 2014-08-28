@@ -21,8 +21,8 @@ entity snake is
 		--
 		sw : in STD_LOGIC_VECTOR(7 downto 0); --spakar på kortet (kontrollerar bakgrundsfärg);
 		btnu : in std_logic;
-		--ss, mosi, sclk : out STD_LOGIC_VECTOR(3 downto 0);
-		--miso : in STD_LOGIC_VECTOR(3 downto 0);
+		ss, mosi, sclk : out STD_LOGIC_VECTOR(3 downto 0);
+		miso : in STD_LOGIC_VECTOR(3 downto 0);
 		Led : out STD_LOGIC_VECTOR(4 downto 0)
 		);
             
@@ -174,8 +174,7 @@ begin
 --	miso2_tmp <= miso2;
 --	miso3_tmp <= miso3;
 --	miso4_tmp <= miso4;
-	Led(3 downto 0) <= flags(6 downto 3);
-	Led(4) <= '1';
+	Led(6 downto 0) <= flags(6 downto 0);
 
 	spi_inst : spimaster 
 		generic map( amount => 4)
@@ -205,7 +204,7 @@ begin
 		clk => clk,
 		rst => rst,
 		uart_in => uart_in,
-		uart_word_ready => uart_word_ready,
+		uart_word_ready => flags(1),
 		dbus => buart,
 		tobus => tobus,
 		debug_signal => baked_value
@@ -279,6 +278,8 @@ begin
 		indata(14) => grs(14),
 		indata(15) => grs(15),
 		indata(16) => dpc,
+		indata(17) => bspi,
+		indata(18) => buart,
 		sw => sw,
 		btn => btnu,
 		outdata => dedata,

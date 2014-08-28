@@ -41,6 +41,7 @@ public class Assemble
 	String line = null;
 	int pmCounter = 2;
 	HashMap<String, Integer> labels = new HashMap<String, Integer>();
+	int fileLineNr = 0;
 
 
 	//NOPS
@@ -52,12 +53,13 @@ public class Assemble
 	    //System.out.println(brs.size());
 	    //System.out.println(brs.get(brs.size() - 1).toString());
 	    while((line = brs.get(brs.size() - 1).readLine()) != null) {
+		fileLineNr++;
 		try {
 		    line = line.trim();
 		    String ass = line.split(";")[0];
 			String comment = "";
 			if (line.split(";").length >= 2) 
-				String comment = line.split(";", 2)[1];
+				comment = line.split(";", 2)[1];
 		    if(!ass.equalsIgnoreCase("")) {
 			s = split(ass, " ");
 			String cmd = s[0].trim().toUpperCase();
@@ -211,6 +213,8 @@ public class Assemble
 		    System.out.println();
 
 		    System.out.println(Arrays.toString(s));
+			System.out.println();
+			System.out.println("LineNr: " + fileLineNr);
 		    System.exit(0);
 		}
 	    }

@@ -32,7 +32,7 @@ begin
 		spi_inst : spi port map(
 				clk => clk,
 				buss => outreg((((i+1)*3)+i) downto ((i*3)+i)),
-				flags => flags,
+				--flags => flags,
 				miso => miso(i),
 				sclk => sclk(i),
 				mosi => mosi(i),

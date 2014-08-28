@@ -9,7 +9,7 @@ entity alu is
 			buss : in std_logic_vector(15 downto 0);
 			alu_styr : in std_logic_vector(3 downto 0);
 			balu : out std_logic_vector(15 downto 0);
-			flags : inout std_logic_vector(6 downto 0)
+			flags : inout std_logic_vector(6 downto 3)
 		);
 end alu;
 
@@ -22,8 +22,8 @@ architecture behav of alu is
 	signal n : std_logic := '0';
 	signal c : std_logic := '0';
 	signal o : std_logic := '0';
-	signal random_reg : std_logic_vector(31 downto 0) := (31 => '1', others => '0');
-	signal random_reg_new : std_logic_vector(31 downto 0) := (31 => '1', others => '0');
+	signal random_reg : std_logic_vector(31 downto 0) := (31 => '1', 19 => '1', 12 => '1', 5 => '1', 4 => '1', others => '0');
+	signal random_reg_new : std_logic_vector(31 downto 0) := (31 => '1', 19 => '1', 12 => '1', 5 => '1', 4 => '1', others => '0');
 	signal random_tmp : std_logic := '0';
 	signal random_out : std_logic_vector(31 downto 0) := (others => '0');
 	signal flags_vippor : std_logic_vector(6 downto 3) := "0000";
@@ -69,7 +69,7 @@ begin
 			signed(ar) + signed_buss when alu_styr="1000" else
 --				signed(random_reg(15 downto 0)) - 
 --					signed(random_reg(15 downto 0)) / signed_buss when alu_styr="1010" and signed_buss /= 0 else
-			signed(random_reg(15 downto 0)) when alu_styr="1010" and signed_buss /= 0 else
+			signed(random_reg(15 downto 0)) when alu_styr="1010" else
 			signed(ar(14 downto 0)) & '0' when alu_styr="1011" else
 			'0' & signed(ar(15 downto 1)) when alu_styr="1100" else
 			--signed(ar(7 downto 0)) * signed_buss(7 downto 0) when alu_styr="1101" else

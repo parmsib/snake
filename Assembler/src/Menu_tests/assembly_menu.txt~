@@ -97,7 +97,88 @@ MENULOOPXRETURN
 	;---------------------
 	
 
+		
+MENULOOP
+	SPI Gr0; ladda SPI-data till gr0
+	AND #$000F, Gr0; anda bort andra joysticks
+	CMP #1, Gr0;
+	BEQ #UPDIRSPEED;
+	CMP #2, Gr0;
+	BEQ #RIGHTDIRSPEED;
+	CMP #3, Gr0;
+	BEQ #DOWNDIRSPEED;
+	CMP #4, Gr0;
+	BEQ #LEFTDIRSPEED;
+	BRA #MENULOOP; var inget håll, fortsätt kolla.
+
+UPDIRSPEED
+	LOAD  #1000, Gr0;
+	BRA #STORESPEED;
+RIGHTDIRSPEED
+	LOAD  #800, Gr0;
+	BRA #STORESPEED,
+DOWNDIRSPEED
+	LOAD  #600, Gr0;
+	BRA #STORESPEED;
+LEFTDIRSPEED
+	LOAD  #400, Gr0;
+	BRA #STORESPEED;
+
+STORESPEED
+	STORE #$CC1, Gr0; lägg in vald hastighet på rätt minnesplats
+	;gå vidare till UART
+
+
+
+;-------------------------------------------UART-DELEN----------------
+	
+UART
+	;kartan består av 64 words. vi hämtar dem och räknar upp varje gång
+	LOAD #0, Gr0;
+UARTLOOP
+	BOU #UARTREADY ;kolla om uart har ett word redo att hämtas
+	BRA #UARTLOOP ;fortsätt vänta
+UARTREADY
+	UART Gr1; ladda Uart-wordet till Gr1
+	STORE #$C80, Gr1, Gr0; Lägg till wordet på rätt ställe. använder Gr0 som index
+	ADD #1, Gr0; incrementera countern
+	CMP #64, Gr0; kolla om vi är färdiga
+	BEQ #GAME; isf, hoppa till spelet
+	BRA #UARTLOOP; annars, fortsätt leta words
+
+;----------------PRINTA KARTAN
+PRINTMAP
+	LOAD #0, Gr0;
+	LOAD #0, Gr1;
+	
+PRINTMAPLOOPX
+	STORE $F00, Gr0; kopiera X och Y till in-register till TOGMEM
+	STORE $F01, Gr1;
+	LOAD $F00, Gr12;
+	LOAD $F01, Gr13;
+	LOAD #PRINTMAPRETURN, Gr14; return-adress
+	BRA #TOGMEM
+PRINTMAPRETURN
+	;nu har vi X och Y på GMEM-form i Gr15
+	LOAD #PRINTMAPRETURN2, Gr14;
+	BRA #GETOBSTACLEBYGMEM
+PRINTMAPRETURN2
+	;nu har vi FFFF i Gr11 om det är ett hinder på pos
+	GSTORE Gr11; F är tile-värdet för hinder
+	ADD #1, Gr0; öka X
+	CMP #32, Gr0; 
+	BNE #PRINTMAPLOOPX; om vi inte är färdiga med raden
+	;annars ( vi är färdiga med raden) fortsätt ner
+
+PRINTMAPLOOPY
+	LOAD #0, Gr0;
+	ADD #1, Gr1;
+	CMP #32, Gr1;
+	BNE #PRINTMAPLOOPX; om vi inte är färdiga, fortsätt loopa
+	;annars (vi är färdiga) gå vidare
+
+
 INFINITE
 	BRA #INFINITE; gaaaah oääääääändlig
 
-INCLUDE util.asm
+	INCLUDE util.asm

@@ -52,6 +52,7 @@ FROMGMEM
 
 GETOBSTACLEBYGMEM
 	STORE $F00, Gr15; spara GMEM-posen på F00
+	STORE $F01, Gr15; spara GMEM-posen på F01
 	LOAD $F00, Gr12; ladda ovanstående
 	;Gr12 får vara X
 	;Gr15 Y
@@ -79,6 +80,7 @@ GETOBSTACLEBYGMEM
 	LOAD #$FFFF, Gr11; annars (var hinder där)
 WASNOTOBSTACLE
 	STORE $AF8, Gr14 ;lägg returnadressen på ett ställe i minnet
+	LOAD $F01, Gr15
 	BRA $AF8; return
 	
 	
