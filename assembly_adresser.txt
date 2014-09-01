@@ -1,0 +1,30 @@
+
+$A00 - Ormfärgen
+$A04 - Riktning
+
+$A10 - Orm Head
+$A14 - Orm Tail
+$A18 - Orm Prev Riktning
+$A1C - Orm Score
+
+$E00 - Orm Array 1
+$E40 - Orm Array 2
+$E80 - Orm Array 3
+$EC0 - Orm Array 4
+
+$A20 - Äpple Pos
+$A21 - Current Orm
+
+$A31 - Spelhastighet
+$A32 - Antal Spelare
+
+$A50 - Orm Start Pos GMEM FORMAT
+$A54 - Orm Färger
+$A58 - Orm Start Rikting
+$A5C - Orm Start Pos Svans GMEM
+$A60 - Äpple Start Pos  (Decimalt 495)
+
+LOAD $A08, Gr12, Gr8
+
+
+ArrayPos = OrmNr * 64 + OrmHead

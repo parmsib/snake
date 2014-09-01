@@ -1,0 +1,766 @@
+m255
+K3
+13
+cModel Technology
+Z0 d/edu/tobhu543/TSEA83/projekt/lab-simdir
+T_opt
+Z1 VkdAf^KeL5?9b?ZkMA^47A2
+Z2 04 7 4 work uart_tb behv 1
+Z3 =1--540469fd-8afb9-11a4
+Z4 o-quiet -auto_acc_if_foreign -work work
+Z5 n@_opt
+Z6 OE;O;6.5c;42
+Ealu
+Z7 w1408358157
+Z8 DPx4 ieee 11 numeric_std 0 22 =NSdli^?T5OD8;4F<blj<3
+Z9 DPx4 ieee 15 std_logic_arith 0 22 GJbAT?7@hRQU9IQ702DT]2
+Z10 DPx4 ieee 18 std_logic_unsigned 0 22 hEMVMlaNCR^<OOoVNV;m90
+Z11 DPx4 ieee 14 std_logic_1164 0 22 GH1=`jDDBJ=`LM;:Ak`kf2
+Z12 8../CPU/alu.vhd
+Z13 F../CPU/alu.vhd
+l0
+L6
+Z14 VhWh;^GBenUXR^=m7zZMO60
+Z15 OE;C;6.5c;42
+32
+o+acc
+Z16 tExplicit 1
+Z17 !s100 d;Q_6][aG]YOhz`HUU]c50
+Abehav
+R8
+R9
+R10
+R11
+Z18 DEx4 work 3 alu 0 22 hWh;^GBenUXR^=m7zZMO60
+l30
+L16
+Z19 VcnFYJi:4;28L^hR7:D7@l2
+R15
+32
+Z20 Mx4 4 ieee 14 std_logic_1164
+Z21 Mx3 4 ieee 18 std_logic_unsigned
+Z22 Mx2 4 ieee 15 std_logic_arith
+Z23 Mx1 4 ieee 11 numeric_std
+o+acc
+R16
+Z24 !s100 ^C=H5khjz`kZVJZ038;:z3
+Easr
+Z25 w1407777502
+R9
+R10
+R11
+Z26 8../CPU/asr.vhd
+Z27 F../CPU/asr.vhd
+l0
+L5
+Z28 VD>N=6WAf6zNk1EZ2DI1hZ2
+R15
+32
+o+acc
+R16
+Z29 !s100 gEAb08mjZ7>N?dSHEX][b2
+Abehav
+R9
+R10
+R11
+Z30 DEx4 work 3 asr 0 22 D>N=6WAf6zNk1EZ2DI1hZ2
+l18
+L14
+Z31 VBec:JQ]C_73VmLSZTI`Jc0
+R15
+32
+Z32 Mx3 4 ieee 14 std_logic_1164
+Z33 Mx2 4 ieee 18 std_logic_unsigned
+Z34 Mx1 4 ieee 15 std_logic_arith
+o+acc
+R16
+Z35 !s100 VE7c8YO:U`0eE95HSiTAF2
+Ebuss
+Z36 w1407865971
+R9
+R10
+R11
+Z37 8../Buss/buss.vhd
+Z38 F../Buss/buss.vhd
+l0
+L5
+Z39 VgU0OZ0[2F3T_azoR]cj;N1
+R15
+32
+o+acc
+R16
+Z40 !s100 QQ]LCB@ZhQTO5BFK[IYaF0
+Abehav
+R9
+R10
+R11
+Z41 DEx4 work 4 buss 0 22 gU0OZ0[2F3T_azoR]cj;N1
+l24
+L22
+Z42 VTVdPRc]bLlzPB?E0c50J[0
+R15
+32
+R32
+R33
+R34
+o+acc
+R16
+Z43 !s100 b0Nj]n_0A=RgKKX44jeA=0
+Ecpu
+Z44 w1408025322
+Z45 DPx4 work 9 grx_types 0 22 JF06ZDJRZBTLHIa@R4lBc2
+R9
+R10
+R11
+Z46 8../CPU/cpu.vhd
+Z47 F../CPU/cpu.vhd
+l0
+L7
+Z48 Vo@e0m[O6:m0JPdN<ndO922
+R15
+32
+o+acc
+R16
+Z49 !s100 z2a`obLlOPPo>30AT]1Ln2
+Abehav
+R45
+R9
+R10
+R11
+Z50 DEx4 work 3 cpu 0 22 o@e0m[O6:m0JPdN<ndO922
+l152
+L24
+Z51 VzNRD=GTfg_M[ae:aS9T9f1
+R15
+32
+R20
+R21
+R22
+Z52 Mx1 4 work 9 grx_types
+o+acc
+R16
+Z53 !s100 h`GA:R94?zLe<FBn4Gd`R3
+Edebugger
+Z54 w1407844386
+Z55 DPx4 work 8 debugpak 0 22 gM3T@;DLA44AAYGeGgDKm2
+R9
+R10
+R11
+Z56 8../Debugger/debugger.vhd
+Z57 F../Debugger/debugger.vhd
+l0
+L7
+Z58 VXB:cGJKkAD5?]a9QRLl=_3
+R15
+32
+o+acc
+R16
+Z59 !s100 n<TX<o>UAI]S^ezOIV25J3
+Abehav
+R55
+R9
+R10
+R11
+Z60 DEx4 work 8 debugger 0 22 XB:cGJKkAD5?]a9QRLl=_3
+l24
+L18
+Z61 VH0gZEWAoCB?X:Nc_1cJLm1
+R15
+32
+R20
+R21
+R22
+Z62 Mx1 4 work 8 debugpak
+o+acc
+R16
+Z63 !s100 WTXn9?]NRaS]Wi5HeJQKl0
+Pdebugpak
+R11
+Z64 w1407834474
+Z65 8../Debugger/debugpak.vhd
+Z66 F../Debugger/debugpak.vhd
+l0
+L4
+Z67 VgM3T@;DLA44AAYGeGgDKm2
+R15
+32
+Z68 Mx1 4 ieee 14 std_logic_1164
+o+acc
+R16
+Z69 !s100 McjGW>^1oYBlQ4h^_z1?z1
+Egmem
+Z70 w1407861841
+R9
+R10
+R8
+R11
+Z71 8../GMEM/GMEM.vhd
+Z72 F../GMEM/GMEM.vhd
+l0
+L8
+Z73 V5>0Oc81DmSKnV52T@Q>hL1
+R15
+32
+o+acc
+R16
+Z74 !s100 :22]29LNd56Uc_3C9N2zk3
+Agmbehv
+R9
+R10
+R8
+R11
+Z75 DEx4 work 4 gmem 0 22 5>0Oc81DmSKnV52T@Q>hL1
+l45
+L23
+Z76 V1f`0Ja^U6K7_X3QCQV[4D3
+R15
+32
+R20
+Z77 Mx3 4 ieee 11 numeric_std
+R33
+R34
+o+acc
+R16
+Z78 !s100 a90zi3RO_W]Fl3f91e1eW3
+Egpu
+Z79 w1408979923
+R9
+R10
+R8
+R11
+Z80 8../GPU/GPU.vhd
+Z81 F../GPU/GPU.vhd
+l0
+L8
+Z82 ViGJa2N@KhFgN0K5E3T3Y32
+R15
+32
+o+acc
+R16
+Z83 !s100 5UI[??nQnSdnQkhfIXKzK0
+Abehv
+R9
+R10
+R8
+R11
+Z84 DEx4 work 3 gpu 0 22 iGJa2N@KhFgN0K5E3T3Y32
+l66
+L21
+Z85 VUEho06j4ffhRWBm58oXnZ0
+R15
+32
+R20
+R77
+R33
+R34
+o+acc
+R16
+Z86 !s100 aGAAe:Y57knNJ^g6kLjJ[1
+Egrx
+Z87 w1407835625
+R45
+R9
+R10
+R11
+Z88 8../CPU/grx.vhd
+Z89 F../CPU/grx.vhd
+l0
+L7
+Z90 V`[494SL<c^Q@^H5SV]aD<0
+R15
+32
+o+acc
+R16
+Z91 !s100 e;AHkgD@AedZc9dmi3e]j0
+Abehav
+R45
+R9
+R10
+R11
+Z92 DEx4 work 3 grx 0 22 `[494SL<c^Q@^H5SV]aD<0
+l27
+L20
+Z93 V=XGh3XdnL7N>1lmlziAVI2
+R15
+32
+R20
+R21
+R22
+R52
+o+acc
+R16
+Z94 !s100 Dce9oi6LmjkLJ?OL5=D4f0
+Pgrx_types
+R11
+Z95 w1407835577
+Z96 8../CPU/grx_types.vhd
+Z97 F../CPU/grx_types.vhd
+l0
+L4
+Z98 VJF06ZDJRZBTLHIa@R4lBc2
+R15
+32
+R68
+o+acc
+R16
+Z99 !s100 PlTT9FbN_hm0NTL_B[FP41
+Eir
+Z100 w1407773140
+R9
+R10
+R11
+Z101 8../CPU/ir.vhd
+Z102 F../CPU/ir.vhd
+l0
+L5
+Z103 V9mgb<IU4fR1:U=6@=M[W^0
+R15
+32
+o+acc
+R16
+Z104 !s100 G_87dm9bUJTMQGiiX8[;K0
+Abehav
+R9
+R10
+R11
+Z105 DEx4 work 2 ir 0 22 9mgb<IU4fR1:U=6@=M[W^0
+l20
+L16
+Z106 V<C0IdNWI0`9=3QYi`_5^h0
+R15
+32
+R32
+R33
+R34
+o+acc
+R16
+Z107 !s100 0;PHa<N3CoRYj@nLKRe4^2
+Ekr1
+Z108 w1407838722
+R9
+R10
+R11
+Z109 8../CPU/kr1.vhd
+Z110 F../CPU/kr1.vhd
+l0
+L5
+Z111 VzCTKdneG@SW]oOOeW146S0
+R15
+32
+o+acc
+R16
+Z112 !s100 J[kl=AkE:gEG<[eBjVdd82
+Abehav
+R9
+R10
+R11
+Z113 DEx4 work 3 kr1 0 22 zCTKdneG@SW]oOOeW146S0
+l47
+L11
+Z114 VA>d`bjQ:>QAh]DYBJzT6[3
+R15
+32
+R32
+R33
+R34
+o+acc
+R16
+Z115 !s100 ZQ41Dl:BUa4TA52R8dSIT0
+Ekr2
+Z116 w1407423916
+R9
+R10
+R11
+Z117 8../CPU/kr2.vhd
+Z118 F../CPU/kr2.vhd
+l0
+L5
+Z119 VJU[HW;@PfzZhBA@]hYclA1
+R15
+32
+o+acc
+R16
+Z120 !s100 n<P7G4XlzVjL?gGMPTAOF3
+Abehav
+R9
+R10
+R11
+Z121 DEx4 work 3 kr2 0 22 JU[HW;@PfzZhBA@]hYclA1
+l22
+L11
+Z122 VhoP1^N^TU>U_1XLPGSO5k3
+R15
+32
+R32
+R33
+R34
+o+acc
+R16
+Z123 !s100 ]VRa;0Yj^zYU[6oW5M`mZ0
+Eleddriver
+Z124 w1397560042
+R8
+R11
+Z125 8../leddriver.vhd
+Z126 F../leddriver.vhd
+l0
+L13
+Z127 V`m=f3::T7NU0@5_O]aebD2
+R15
+32
+o+acc
+R16
+Z128 !s100 b=fb4j6mk:9D_M?D[29e61
+Abehavioral
+R8
+R11
+Z129 DEx4 work 9 leddriver 0 22 `m=f3::T7NU0@5_O]aebD2
+l25
+L20
+Z130 V]JOQ`z5RQQSI7cc?L72Re3
+R15
+32
+Z131 Mx2 4 ieee 14 std_logic_1164
+R23
+o+acc
+R16
+Z132 !s100 o4_XB0kfTR2`VNUPRUclC2
+Epc
+Z133 w1407773019
+R9
+R10
+R11
+Z134 8../CPU/pc.vhd
+Z135 F../CPU/pc.vhd
+l0
+L5
+Z136 VEU`:1FzX7VA6VHzz6KCmL1
+R15
+32
+o+acc
+R16
+Z137 !s100 `WALNn16MXMHk7AG;TU153
+Abehav
+R9
+R10
+R11
+Z138 DEx4 work 2 pc 0 22 EU`:1FzX7VA6VHzz6KCmL1
+l18
+L14
+Z139 V6N0fJKb3BddnF_R=iUUAB2
+R15
+32
+R32
+R33
+R34
+o+acc
+R16
+Z140 !s100 bHmK@7NhVS9<d4=F0IlG]3
+Epm
+Z141 w1409243540
+R9
+R10
+R11
+Z142 8../CPU/pm.vhd
+Z143 F../CPU/pm.vhd
+l0
+L5
+Z144 VU_L_maZI^FN7RR6<ndQ5a0
+R15
+32
+o+acc
+R16
+Z145 !s100 oTI40lmiS^;_0_Iz7eGPc0
+Abehav
+R9
+R10
+R11
+Z146 DEx4 work 2 pm 0 22 U_L_maZI^FN7RR6<ndQ5a0
+l1379
+L14
+Z147 VFo4Xf:MSa?o7I@PCHkLj71
+R15
+32
+R32
+R33
+R34
+o+acc
+R16
+Z148 !s100 >SLmlo72<TV^IRAOeadPH3
+Eregi
+Z149 w1399908526
+Z150 DPx17 __model_tech/ieee 15 std_logic_arith 0 22 GJbAT?7@hRQU9IQ702DT]2
+Z151 DPx17 __model_tech/ieee 18 std_logic_unsigned 0 22 hEMVMlaNCR^<OOoVNV;m90
+Z152 DPx17 __model_tech/ieee 14 std_logic_1164 0 22 GH1=`jDDBJ=`LM;:Ak`kf2
+32
+Z153 8../Common/register.vhd
+Z154 F../Common/register.vhd
+l0
+L5
+Z155 V=3bDZ^=oUKMh>@=ddW4VQ1
+R15
+o+acc
+R16
+Z156 !s100 VICfok2N_UG4Bf751kESF3
+Abehav
+R150
+R151
+R152
+Z157 DEx44 /edu/tobhu543/TSEA83/projekt/lab-simdir/work 4 regi 0 22 =3bDZ^=oUKMh>@=ddW4VQ1
+32
+Z158 Mx3 17 __model_tech/ieee 14 std_logic_1164
+Z159 Mx2 17 __model_tech/ieee 18 std_logic_unsigned
+Z160 Mx1 17 __model_tech/ieee 15 std_logic_arith
+l17
+L15
+Z161 VZW9ZET7[DLdOEnK:jzh:K0
+R15
+o+acc
+R16
+Z162 !s100 [0<PPE2^M?4bJAI9QTigH3
+Eshiftregi
+R149
+R150
+R151
+R152
+32
+Z163 8../Common/shiftregister.vhd
+Z164 F../Common/shiftregister.vhd
+l0
+L5
+Z165 VfH^dYGeF?eC:=eE_lMbYP2
+R15
+o+acc
+R16
+Z166 !s100 5=AAd?Oog47d_75oISM<^3
+Abehav
+R150
+R151
+R152
+Z167 DEx44 /edu/tobhu543/TSEA83/projekt/lab-simdir/work 9 shiftregi 0 22 fH^dYGeF?eC:=eE_lMbYP2
+32
+R158
+R159
+R160
+l18
+L16
+Z168 Vih7LSXg9O26k[E_4iIXcL3
+R15
+o+acc
+R16
+Z169 !s100 30B<7A0M7mmLd>CKEZnfe0
+Esnake
+Z170 w1409574952
+R55
+R45
+R9
+R10
+R8
+R11
+Z171 8../snake.vhd
+Z172 F../snake.vhd
+l0
+L10
+Z173 V[Wg=mi]3^k:QoPQIzogB61
+R15
+32
+o+acc
+R16
+Z174 !s100 EU:UB4_>Ld:Zf`M2n_7HE0
+Abehv
+R55
+R45
+R9
+R10
+R8
+R11
+Z175 DEx4 work 5 snake 0 22 [Wg=mi]3^k:QoPQIzogB61
+l173
+L35
+Z176 V0jfFgP6aeehFjWDocoB3B1
+R15
+32
+Z177 Mx6 4 ieee 14 std_logic_1164
+Z178 Mx5 4 ieee 11 numeric_std
+Z179 Mx4 4 ieee 18 std_logic_unsigned
+Z180 Mx3 4 ieee 15 std_logic_arith
+Z181 Mx2 4 work 9 grx_types
+R62
+o+acc
+R16
+Z182 !s100 [jcciXLoj@Qhdfhfe]R]50
+Esnake_tb
+Z183 w1409574745
+R8
+R11
+Z184 8../SNAKE_tb.vhd
+Z185 F../SNAKE_tb.vhd
+l0
+L5
+Z186 VHl_GGK@c<RhQz9JiA307E1
+R15
+32
+o+acc
+R16
+Z187 !s100 e=D[PJ`ZYY_nGI=zoHB4=3
+Espi
+Z188 w1407760283
+R9
+R10
+R11
+Z189 8../SPI/spi.vhd
+Z190 F../SPI/spi.vhd
+l0
+L5
+Z191 V8i6?_ZfTiB314FR7c?2Qz3
+R15
+32
+o+acc
+R16
+Z192 !s100 4FiP5U]h77X;9YQ[1Vg_m0
+Abehav
+R9
+R10
+R11
+Z193 DEx4 work 3 spi 0 22 8i6?_ZfTiB314FR7c?2Qz3
+l43
+L16
+Z194 VjG5J=f;><Mm6O_j263e>P1
+R15
+32
+R32
+R33
+R34
+o+acc
+R16
+Z195 !s100 Dzo=zhe7RVY=zT=hC:XGW0
+Espimaster
+Z196 w1408017049
+R9
+R10
+R11
+Z197 8../SPI/spimaster.vhd
+Z198 F../SPI/spimaster.vhd
+l0
+L5
+Z199 V2V<F0j<Y[hYI@D>3nzcb30
+R15
+32
+o+acc
+R16
+Z200 !s100 EOPazONz0SdREPKn8?]CR2
+Abehav
+R9
+R10
+R11
+Z201 DEx4 work 9 spimaster 0 22 2V<F0j<Y[hYI@D>3nzcb30
+l30
+L18
+Z202 Vcm5WSM3ahzLlRSbVf9jmU0
+R15
+32
+R32
+R33
+R34
+o+acc
+R16
+Z203 !s100 ]_N4hX161nd:0ji6f=NP@3
+Euart
+Z204 w1408026053
+R150
+R151
+Z205 DPx17 __model_tech/ieee 11 numeric_std 0 22 =NSdli^?T5OD8;4F<blj<3
+R152
+32
+Z206 8../UART/UART.vhd
+Z207 F../UART/UART.vhd
+l0
+L8
+Z208 Vo8Z:g:cIPFdVQH]^fejGe0
+R15
+o+acc
+R16
+Z209 !s100 MSXf7880ME^MmoKKP258D0
+Abehav
+R157
+R167
+R150
+R151
+R205
+R152
+Z210 DEx44 /edu/tobhu543/TSEA83/projekt/lab-simdir/work 4 uart 0 22 o8Z:g:cIPFdVQH]^fejGe0
+32
+Mx4 17 __model_tech/ieee 14 std_logic_1164
+Mx3 17 __model_tech/ieee 11 numeric_std
+R159
+R160
+l57
+L21
+Z211 V_Te3kL[5XmB5Akn3b=_O10
+R15
+o+acc
+R16
+Z212 !s100 118jlEGnilA_X9gjP]?112
+Euart_tb
+Z213 w1409575398
+R205
+R152
+32
+Z214 8../UART/UART_tb.vhd
+Z215 F../UART/UART_tb.vhd
+l0
+L5
+Z216 VIQGgH;8P_jABTjPnZ=a>83
+R15
+o+acc
+R16
+Z217 !s100 2CMjkaXlLeK1ER<g?_`SC2
+Abehv
+R210
+R205
+R152
+DEx44 /edu/tobhu543/TSEA83/projekt/lab-simdir/work 7 uart_tb 0 22 IQGgH;8P_jABTjPnZ=a>83
+32
+Mx2 17 __model_tech/ieee 14 std_logic_1164
+Mx1 17 __model_tech/ieee 11 numeric_std
+l33
+L8
+Z218 Vd5T<0:1Z6<d6gXlLZ0QeP1
+R15
+o+acc
+R16
+Z219 !s100 K?5bPPd<G?VN?o0e7MG:l3
+Eupc
+Z220 w1408357577
+R8
+R9
+R10
+R11
+Z221 8../CPU/upc.vhd
+Z222 F../CPU/upc.vhd
+l0
+L6
+Z223 VHHT2HiX>dYACC^gOG?c7j3
+R15
+32
+o+acc
+R16
+Z224 !s100 <becG08B;EAD^WMmdV6zn2
+Abehav
+R8
+R9
+R10
+R11
+Z225 DEx4 work 3 upc 0 22 HHT2HiX>dYACC^gOG?c7j3
+l212
+L21
+Z226 V7a7kYW>EYLRT<a4N=4;zj0
+R15
+32
+R20
+R21
+R22
+R23
+o+acc
+R16
+Z227 !s100 6Mf9zW4F61WSa:6h]06ED1

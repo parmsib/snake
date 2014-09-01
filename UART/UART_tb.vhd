@@ -8,11 +8,14 @@ END UART_tb;
 architecture behv of UART_tb is
 
 	component UART is
-		port (	clk, rst : in STD_LOGIC;
+		Port ( 	
+			clk, rst : in STD_LOGIC;
 			uart_in : in STD_LOGIC;
-			uart_word_ready : out STD_LOGIC;
-			to_bus : out STD_LOGIC_VECTOR(15 downto 0);
-			should_write_bus: in STD_LOGIC);
+			uart_word_ready: out STD_LOGIC; --aktivt låg!
+			dbus: out STD_LOGIC_VECTOR(15 downto 0);
+			tobus: in STD_LOGIC_VECTOR(3 downto 0);
+			debug_signal : out STD_LOGIC_VECTOR(15 downto 0)
+			);
 	end component;
 
 	signal clk : STD_LOGIC := '0';
@@ -22,6 +25,8 @@ architecture behv of UART_tb is
 	signal uart_in : STD_LOGIC;
 	signal uart_word_ready : STD_LOGIC;
 	signal should_write_bus : STD_LOGIC;
+	signal tobus : std_logic_vector(3 downto 0);
+	signal debug_signal : std_logic_vector(15 downto 0);
 
 	signal tb_running : boolean := true;
 	
@@ -32,8 +37,9 @@ begin
 		rst => rst,
 		uart_in => uart_in,
 		uart_word_ready => uart_word_ready,
-		to_bus => dbus,
-		should_write_bus => should_write_bus
+		dbus => dbus,
+		tobus => tobus,
+		debug_signal => debug_signal
 		);
 
 	

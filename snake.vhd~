@@ -1,3 +1,11 @@
+--
+--
+--	snake.vhd
+--	Huvudfilen, innehåller inga processer, enbart andra komponenter.
+--
+--
+
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -23,7 +31,7 @@ entity snake is
 		btnu : in std_logic;
 		ss, mosi, sclk : out STD_LOGIC_VECTOR(3 downto 0);
 		miso : in STD_LOGIC_VECTOR(3 downto 0);
-		Led : out STD_LOGIC_VECTOR(4 downto 0)
+		Led : out STD_LOGIC_VECTOR(6 downto 0)
 		);
             
 		
@@ -163,6 +171,8 @@ architecture behv of snake is
 	signal bspi : std_logic_vector(15 downto 0) := "0000000000000000";
 	signal buart : std_logic_vector(15 downto 0) := "0000000000000000";
 
+	signal indata_tmp : std_logic_vector(15 downto 0) := "0000000000000000";
+
 
 	signal dedata : std_logic_vector(15 downto 0) := "0000000000000000";
 	signal deflag : std_logic := '0';
@@ -280,6 +290,19 @@ begin
 		indata(16) => dpc,
 		indata(17) => bspi,
 		indata(18) => buart,
+		indata(19) => indata_tmp,
+		indata(20) => indata_tmp,
+		indata(21) => indata_tmp,
+		indata(22) => indata_tmp,
+		indata(23) => indata_tmp,
+		indata(24) => indata_tmp,
+		indata(25) => indata_tmp,
+		indata(26) => indata_tmp,
+		indata(27) => indata_tmp,
+		indata(28) => indata_tmp,
+		indata(29) => indata_tmp,
+		indata(30) => indata_tmp,
+		indata(31) => indata_tmp,
 		sw => sw,
 		btn => btnu,
 		outdata => dedata,

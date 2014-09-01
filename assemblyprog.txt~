@@ -1,0 +1,595 @@
+;kartan består av 32*32 bitar, där varje bit bestämmer om det är ett hinder i den cellen.
+;32 * 32 bitar = 1024 bitar = 64 words
+
+;var äpplet befinner sig bestäms av en word som beskriver X, och Y. 
+
+;krävs en word för att bestämma en cell (5 bitar för X, 5 bitar för Y. 2^5 = 32)
+;varje orm har en cirkulär array av celler den ockuperar, eller har ockuperat.
+;finns en head, och en tail, för varje orm som beskriver var i arrayen ormen börjar, och var den slutar.
+;en orm kan vara max 62 celler lång, så arrayen är 64 words (två extra för head och tail)
+
+;menyn behöver en statisk bild att visa. Den är 32*32*4 bitar stor = 256 words
+
+;karta över PM:
+;programmet börjar på 0 och växer neråt
+;return adress ligger på $AF8
+;Orm1 head ligger på $AF9
+;Orm1 tail ligger på $AFA
+;Orm2 head ligger på $AFB
+;Orm2 tail ligger på $AFC
+;Score ligger på $AFD
+;Orm1 föregående håll ligger på $AFE
+;Orm2 föregående håll ligger på $AFF
+;menybild ligger på minesadress $B00 - $BFF
+;orm1 ligger på minnesadress $C00 - $C3F = 3072 - 3135
+;orm2 ligger på minnesadress $C40 - C7F = 3136 - 3199
+;kartan ligger på minnesadress $C80 - $CBF = 3200 - 3263
+;äpplet ligger på minnesadress $CC0 = 3264
+;spelhastigheten (frame-tid i ms) ligger på minssadress $A31 = 3265
+;random minne för implementationer läggs på $D00 - slut = 3328 - slut
+
+;Tiles:
+;	0000 = 0, tomt
+;   1111 = F, hinder
+;   0010 = 2, orm1
+;	0011 = 3, orm2
+;	0100 = 4, äpple
+
+;menyn fungerar så att joystick1 bestämmer spelhastighet med antingen höger, vänster, upp eller ner. Därefter går vi direkt till spelet
+
+;---------------------------------------MENU-DELEN-------------------
+
+MENU
+	LOAD #$000F, Gr9;
+	LOAD #32, Gr10 ;
+	LOAD #32, Gr11 ;
+	LOAD #0, Gr12 ;
+	LOAD #0, Gr13 ;
+	LOAD #$B00, Gr15 ;
+	LOAD #MENURETURN, Gr14 ;
+	BRA #PRINT ;
+MENURETURN
+
+		
+MENULOOP
+	SPI Gr0; ladda SPI-data till gr0
+	AND #$000F, Gr0; anda bort andra joysticks
+	CMP #1, Gr0;
+	BEQ #UPDIRSPEED;
+	CMP #2, Gr0;
+	BEQ #RIGHTDIRSPEED;
+	CMP #3, Gr0;
+	BEQ #DOWNDIRSPEED;
+	CMP #4, Gr0;
+	BEQ #LEFTDIRSPEED;
+	BRA #MENULOOP; var inget håll, fortsätt kolla.
+
+UPDIRSPEED
+	LOAD  #$000F, Gr0;
+	BRA #STORESPEED;
+RIGHTDIRSPEED
+	LOAD  #$000A, Gr0;
+	BRA #STORESPEED,
+DOWNDIRSPEED
+	LOAD  #$0006, Gr0;
+	BRA #STORESPEED;
+LEFTDIRSPEED
+	LOAD  #$0004, Gr0;
+	BRA #STORESPEED;
+
+STORESPEED
+	STORE $A31, Gr0; lägg in vald hastighet på rätt minnesplats
+	;gå vidare till UART
+
+
+
+MENU2
+	LOAD #$000F, Gr9;
+	LOAD #32, Gr10 ;
+	LOAD #7, Gr11 ;
+	LOAD #0, Gr12 ;
+	LOAD #1, Gr13 ;
+	LOAD #$C5C, Gr15 ;
+	LOAD #MENU2RETURN, Gr14 ;
+	BRA #PRINT ;
+MENU2RETURN
+	
+	;---------------------
+
+RESETSPI
+	SPI Gr0 ;
+	AND #$000F, Gr0 ;
+	CMP #$0000, Gr0;
+	BNE #RESETSPI ;
+
+MENU2LOOP
+	SPI Gr0; ladda SPI-data till gr0
+	AND #$000F, Gr0; anda bort andra joysticks
+	CMP #1, Gr0;
+	BEQ #UPDIRPLAYERS;
+	CMP #2, Gr0;
+	BEQ #RIGHTDIRPLAYERS;
+	CMP #3, Gr0;
+	BEQ #DOWNDIRPLAYERS;
+	CMP #4, Gr0;
+	BEQ #LEFTDIRPLAYERS;
+	BRA #MENU2LOOP; var inget håll, fortsätt kolla.
+
+UPDIRPLAYERS
+	LOAD  #$0001, Gr0;
+	BRA #STOREPLAYERS;
+RIGHTDIRPLAYERS
+	LOAD  #$0002, Gr0;
+	BRA #STOREPLAYERS,
+DOWNDIRPLAYERS
+	LOAD  #$0003, Gr0;
+	BRA #STOREPLAYERS;
+LEFTDIRPLAYERS
+	LOAD  #$0004, Gr0;
+	BRA #STOREPLAYERS;
+
+STOREPLAYERS
+	STORE $A32, Gr0; lägg in vald hastighet på rätt minnesplats
+	;gå vidare till UART
+
+	LOAD #MENU3, Gr14 ;
+	LOAD #$0000, Gr15 ;
+	BRA #CLEARSCREEN ;
+MENU3
+	LOAD #$000F, Gr9;
+	LOAD #32, Gr10 ;
+	LOAD #20, Gr11 ;
+	LOAD #0, Gr12 ;
+	LOAD #11, Gr13 ;
+	LOAD #$CDC, Gr15 ;
+	LOAD #MENU3RETURN1, Gr14 ;
+	BRA #PRINT ;
+MENU3RETURN1
+	LOAD #$000F, Gr9;
+	LOAD #22, Gr10 ;
+	LOAD #28, Gr11 ;
+	LOAD #14, Gr12 ;
+	LOAD #23, Gr13 ;
+	LOAD #$D2A, Gr15 ;
+	LOAD #MENU3RETURN2, Gr14 ;
+	BREAK #0, Gr0 ;
+	BRA #PRINT ;
+MENU3RETURN2
+
+
+;-------------------------------------------UART-DELEN----------------
+	;kartan består av 64 words. vi hämtar dem och räknar upp varje gång
+	LOAD #0, Gr0;
+UARTLOOP
+	BOU #UARTREADY ;kolla om uart har ett word redo att hämtas
+	BRA #UARTLOOP ;fortsätt vänta
+UARTREADY
+	UART Gr1; ladda Uart-wordet till Gr1
+	STORE $DB0, Gr1, Gr0; Lägg till wordet på rätt ställe. använder Gr0 som index
+	ADD #1, Gr0; incrementera countern
+	CMP #64, Gr0; kolla om vi är färdiga
+	BEQ #STARTLIGHT; isf, hoppa till spelet
+	BRA #UARTLOOP; annars, fortsätt leta words
+
+
+STARTLIGHT
+	LOAD #$0003, Gr5;
+STARTLIGHTLOOP
+	ADD #1, Gr5;
+	STORE $F50, Gr5;
+	LOAD $F50, Gr9;
+	LOAD #22, Gr10 ;
+	LOAD #28, Gr11 ;
+	LOAD #14, Gr12 ;
+	LOAD #23, Gr13 ;
+	LOAD #$D2A, Gr15 ;
+	LOAD #STARTLIGHTRETURN, Gr14 ;
+	BRA #PRINT ;
+STARTLIGHTRETURN
+	
+	LOAD #0, Gr4 ;
+	LOAD #0, Gr6;
+	
+STARTLIGHTRETURNLOOP
+	ADD #1, Gr4 ;
+	CMP #$FFFF, Gr4 ;
+	BNE #STARTLIGHTRETURNLOOP ;
+	LOAD #0, Gr4 ;
+	ADD #1, Gr6;
+	CMP #$002F, Gr6;
+	BNE #STARTLIGHTRETURNLOOP ;
+	LOAD $F50, Gr5;
+	CMP #$0006, Gr5 ;
+	BNE #STARTLIGHTLOOP ;
+
+
+;-----------------------------------GAME INIT-----------------------------
+
+GAME
+	LOAD #0, Gr9; Gr9 = current orm	
+INITLOOP
+	STORE $A21, Gr9;
+
+	LOAD $A54, Gr0, Gr9; Ladda konstanten färg
+	STORE $A00, Gr0, Gr9; Spara färgen för ormX
+
+	LOAD $A58, Gr0, Gr9 ; Ladda start riktning
+	STORE $A04, Gr0, Gr9 ; Spara ormX riktning
+	STORE $A18, Gr0, Gr9 ; Spara ormX prevRiktning
+
+	LOAD #1, Gr1;	Ladda in Head Pointer till arrpos 1
+	STORE $A10, Gr1, Gr9;
+	LOAD #0, Gr1;  Ladda in Tail Pointer till arrpos 0
+	STORE $A14, Gr1, Gr9;
+
+	STORE $A1C, Gr1, Gr9; Spara 0 som ormX score
+
+;--- Start Pos
+	LOAD $A50, Gr0, Gr9 ; Ladda Start Pos
+
+	LOAD $A21, Gr8;	Ladda ormX till gr8
+	LSL #6, Gr8 ; Multiplicera med 64
+	ADD $A10, Gr8, Gr9 ; Adda med Head pos
+	
+	STORE $E00, Gr0, Gr8; Store Head Pos
+
+	LOAD $A5C, Gr0, Gr9 ; Ladda Start Tail pos
+	SUB $A10, Gr8, Gr9 ; Ta bort Head pos
+	ADD $A14, Gr8, Gr9 ; Adda med Tail pos
+
+	STORE $E00, Gr0, Gr8; Store Tail Pos	
+;---
+	ADD #1, Gr9;
+	CMP $A32, Gr9; Loop stuff
+	BNE #INITLOOP
+APPLEINIT
+	LOAD $A60, Gr0; Ladda in äpple i mitten
+	STORE $A20, Gr0;
+
+
+
+;----------------PRINTA KARTAN
+PRINTMAP
+	LOAD #0, Gr0;
+	LOAD #0, Gr1;
+	
+PRINTMAPLOOPX
+	STORE $F00, Gr0; kopiera X och Y till in-register till TOGMEM
+	STORE $F01, Gr1;
+	LOAD $F00, Gr12;
+	LOAD $F01, Gr13;
+	LOAD #PRINTMAPRETURN, Gr14; return-adress
+	BRA #TOGMEM
+PRINTMAPRETURN
+	;nu har vi X och Y på GMEM-form i Gr15
+	LOAD #PRINTMAPRETURN2, Gr14;
+	BRA #GETOBSTACLEBYGMEM
+PRINTMAPRETURN2
+	;nu har vi FFFF i Gr11 om det är ett hinder på pos
+	GSTORE Gr11; F är tile-värdet för hinder
+	ADD #1, Gr0; öka X
+	CMP #32, Gr0; 
+	BNE #PRINTMAPLOOPX; om vi inte är färdiga med raden
+	;annars ( vi är färdiga med raden) fortsätt ner
+
+PRINTMAPLOOPY
+	LOAD #0, Gr0;
+	ADD #1, Gr1;
+	CMP #32, Gr1;
+	BNE #PRINTMAPLOOPX; om vi inte är färdiga, fortsätt loopa
+	;annars (vi är färdiga) gå vidare
+
+;--------------------------------------GAME LOOP-------------
+	
+GAMELOOP
+
+
+
+SETDIRS
+	LOAD #0, Gr9 ;
+SETDIRSLOOP
+	STORE $A21, Gr9 ;
+	
+	LOAD $A21, Gr8 ;
+	LSL #2, Gr8 ;
+	STORE $F00, Gr8 ;
+	SPI Gr5 ;	
+	LSR $F00, Gr5 ;
+	AND #$000F, Gr5 ;
+	
+	CMP #0, Gr5 ;
+	BEQ #SETDIRNEXT ;
+
+	STORE $F00, Gr5 ;
+	LOAD $F00, Gr4 ;
+	ADD $A04, Gr4, Gr9 ;
+	AND #1, Gr4 ;
+	CMP #0, Gr4 ;
+	BEQ #SETDIRNEXT ;
+	STORE $A04, Gr5, Gr9;
+
+SETDIRNEXT
+	ADD #1, Gr9 ;
+	CMP $A32, Gr9 ;
+	BNE #SETDIRSLOOP ;
+
+
+MOVESNAKES
+	LOAD #0, Gr9;
+MOVESNAKESLOOP
+	STORE $A21, Gr9; Snake i
+
+	LOAD $A21, Gr8 ;
+	LSL #6, Gr8 ;
+	ADD $A10, Gr8, Gr9 ;
+	LOAD $E00, Gr15, Gr8 ;
+	SUB $A10, Gr8, Gr9 ;
+	LOAD #MOVESNAKEDIRRETURN1, Gr14; 
+	BRA #FROMGMEM ;
+
+MOVESNAKEDIRRETURN1
+	LOAD $A04, Gr5, Gr9; Ladda riktning
+	
+	CMP #1, Gr5;
+	BEQ #MOVESNAKEUP;
+	CMP #2, Gr5;
+	BEQ #MOVESNAKERIGHT;
+	CMP #3, Gr5;
+	BEQ #MOVESNAKEDOWN;
+	CMP #4, Gr5;
+	BEQ #MOVESNAKELEFT;
+
+MOVESNAKEUP
+	SUB #1, Gr13 ;
+	BRA #MOVESNAKE ;
+MOVESNAKERIGHT
+	ADD #1, Gr12 ;
+	BRA #MOVESNAKE ;
+MOVESNAKEDOWN
+	ADD #1, Gr13 ;
+	BRA #MOVESNAKE ;
+MOVESNAKELEFT
+	SUB #1, Gr12 ;
+	BRA #MOVESNAKE ;
+
+MOVESNAKE
+	AND #$001F, Gr12 ;
+	AND #$001F, Gr13 ;
+
+	LOAD #MOVESNAKERETURN1, Gr14 ;
+	BRA #TOGMEM ;
+	
+MOVESNAKERETURN1
+	LOAD $A10, Gr7, Gr9 ;
+	ADD #1, Gr7 ;
+	AND #$003F, Gr7 ;
+	STORE $A10, Gr7, Gr9 ;
+	ADD $A10, Gr8, Gr9 ;
+	STORE $E00, Gr15, Gr8 ;
+	SUB $A10, Gr8, Gr9 ;
+	ADD $A14, Gr8, Gr9 ;
+	LOAD $E00, Gr15, Gr8 ;
+	LOAD #0, Gr1;
+	GSTORE Gr1 ;
+
+	LOAD $A14, Gr7, Gr9 ;
+	ADD #1, Gr7 ;
+	AND #$003F, Gr7 ;
+	STORE $A14, Gr7, Gr9 ;
+
+	ADD #1, Gr9 ;
+	CMP $A32, Gr9 ;
+	BNE #MOVESNAKESLOOP ;
+
+CHECKSNAKES
+	LOAD #0, Gr9 ;
+CHECKSNAKESLOOP1
+	STORE $A21, Gr9 ;
+		
+	LOAD $A21, Gr8 ;
+	LSL #6, Gr8 ;
+	ADD $A10, Gr8, Gr9 ;
+	LOAD $E00, Gr7, Gr8 ;
+	LOAD #0, Gr6 ;		Gr9 = Yttre OrmX, Gr8 = arbete för yttre OrmX, Gr7 = Yttre orm huvud pos
+
+CHECKSNAKESLOOP2
+	STORE $F00, Gr6 ;
+	
+	LOAD $F00, Gr5 ;
+	LSL #6, Gr5 ;
+	LOAD $A14, Gr4, Gr6 ;
+	 ;		Gr6 = Inre OrmX, Gr5 = arbete för inre OrmX, Gr4 = Segment index
+
+CHECKSNAKESSEGMENTS
+	
+	
+	STORE $F01, Gr4 ;
+	ADD $F01, Gr5;
+	LOAD $E00, Gr3, Gr5;
+	SUB $F01, Gr5 ;
+	STORE $F02, Gr3 ;
+	CMP $F02, Gr7 ;
+	BEQ #INFINITE ;		Gr3 = Seg pos
+	ADD #1, Gr4 ;
+	AND #$003F, Gr4 ;
+	CMP $A10, Gr4, Gr6 ;
+	BNE #CHECKSNAKESSEGMENTS ;
+
+	ADD #1, Gr6 ;
+	CMP $A32, Gr6 ;
+	BNE #CHECKSNAKESLOOP2 ;
+
+
+
+	ADD #1, Gr9 ;
+	CMP $A32, Gr9 ;
+	BNE #CHECKSNAKESLOOP1 ;
+
+
+
+CHECKWALLS
+	LOAD #0, Gr9 ;
+CHECKWALLSLOOP
+	STORE $A21, Gr9 ;
+	
+	LOAD $A21, Gr8 ;
+	LSL #6, Gr8 ;
+	ADD $A10, Gr8, Gr9 ;
+	LOAD $E00, Gr15, Gr8 ;
+	LOAD #CHECKWALLSRETURN, Gr14 ;
+	BRA #GETOBSTACLEBYGMEM ;
+CHECKWALLSRETURN
+	
+	CMP #$FFFF, Gr11 ;
+	BEQ #INFINITE ;	
+
+	ADD #1, Gr9 ;
+	CMP $A32, Gr9 ;
+	BNE #CHECKWALLSLOOP ;
+
+
+CHECKAPPLE
+	LOAD #0, Gr9 ;
+	LOAD $A20, Gr5 ;
+CHECKAPPLELOOP
+	STORE $A21, Gr9 ;
+	LOAD $A21, Gr8 ;
+	LSL #6, Gr8 ;
+	ADD $A10, Gr8, Gr9 ;
+	CMP $E00, Gr5, Gr8 ;
+	BEQ #TAKEAPPLE
+	ADD #1, Gr9 ;
+	CMP $A32, Gr9 ;
+	BNE #CHECKAPPLELOOP ;
+	BRA #PRINTAPPLE ;
+TAKEAPPLE
+	LOAD $A1C, Gr4, Gr9 ;
+	ADD #1, Gr4 ;
+	STORE $A1C, Gr4, Gr9 ;
+	LOAD $A14, Gr3, Gr9 ;
+	SUB #1, Gr3;
+	AND #$003F, Gr3 ;
+	STORE $A14, Gr3, Gr9 ;
+
+NEWAPPLE
+	LOAD #0, Gr9;
+	RAND #31, Gr12 ;
+	AND #31, Gr12 ;
+	RAND #31, Gr13 ;
+	AND #31, Gr13 ;
+	LOAD #NEWAPPLELOOP, Gr14 ;
+	BRA #TOGMEM ;
+NEWAPPLELOOP
+	STORE $A21, Gr9 ;
+	LOAD $A21, Gr8 ;
+	LSL #6, Gr8 ;
+	LOAD $A14, Gr7, Gr9 ;
+	SUB #1, Gr7;
+NEWAPPLESEGMENT
+	ADD #1, Gr7 ;
+	AND #$003F, Gr7 ;
+	STORE $F00, Gr7 ;
+	ADD $F00, Gr8;
+	LOAD $E00, Gr0, Gr8;
+	SUB $F00, Gr8 ;
+	STORE $F00, Gr0;
+	CMP $F00, Gr15 ;
+	BEQ #NEWAPPLE;
+	CMP $A10, Gr7, Gr9 ;
+	BNE #NEWAPPLESEGMENT ;
+	ADD #1, Gr9;
+	CMP $A32, Gr9;
+	BNE #NEWAPPLELOOP ;
+	LOAD #NEWAPPLERETURN, Gr14 ;
+	BRA #GETOBSTACLEBYGMEM ;
+NEWAPPLERETURN
+	CMP #$FFFF, Gr11 ;
+	BEQ #NEWAPPLE ;
+	STORE $A20, Gr15 ;
+
+PRINTAPPLE
+	LOAD $A20, Gr15 ;
+	LOAD #$E000, Gr14 ;
+	GSTORE Gr14 ;
+
+PRINTSNAKES
+	LOAD #0, Gr9;
+PRINTSNAKESLOOP
+	STORE $A21, Gr9; SNAKE i
+	LOAD $A00, Gr5, Gr9 ; Ladda ormfärg till Gr5
+	LOAD $A21, Gr8 ; Förbered arr index
+	LSL #6, Gr8; Arr start index förberett
+	LOAD $A14, Gr7, Gr9 ; Adda Tail Pointer
+	SUB #1, Gr7 ; tail pointer - 1;
+PRINTSNAKESEGMENT
+	ADD #1, Gr7; Adda 1 till pointern
+	AND #$003F, Gr7 ; Modulo 64;
+	STORE $F00, Gr7;
+	ADD $F00, Gr8;
+	LOAD $E00, Gr15, Gr8 ; Ladda Gr15 med rätt pos
+	GSTORE Gr5 ; Skriv till GMEM
+
+	SUB $F00, Gr8;
+	
+	CMP $A10, Gr7, Gr9 ; CMP pointer med head
+	BNE #PRINTSNAKESEGMENT ;
+	
+	ADD #1, Gr9 ;
+	CMP $A32, Gr9 ;
+	BNE #PRINTSNAKESLOOP ;
+
+;--------------------------SPELHASTIGHET----------------
+; us och ms är egentligen verkligen inte en mikro eller millisekund
+; de är mycket större än så
+
+	LOAD #0, Gr0; usec counter
+	LOAD #0, Gr1; msec counter
+GAMEWAITLOOPU
+	ADD #1, Gr0;
+	CMP #$FFFF, Gr0;
+	BNE #GAMEWAITLOOPU; om vi inte har loopat en ms än
+	;annars (har loopat en ms)
+	ADD #1, Gr1;
+	CMP $A31, Gr1; se om vi har väntat antal ms som står i spelhastighet
+	BNE #GAMEWAITLOOPU; om vi inte gjort det, forstätt loopa
+	;om vi väntat färdigt, gå till game-loop igen
+	BRA #GAMELOOP;
+	
+	
+	
+	;Kolla kollision med banan eller äpple CHECK
+	;om inte äpple tagen: CHECK
+	;	flytta fram tail CHECK
+	;	måla tomt där tail va CHECK
+	;kolla kollision mellan huvud och spelare CHECK
+	;Måla orm på alla ställen mellan head och tail i arraysen CHECK
+
+
+INFINITE
+	
+	LOAD #INFINITE2, Gr14 ;
+	LOAD #$0000, Gr15 ;
+	BRA #CLEARSCREEN ;
+INFINITE2
+	LOAD #$000F, Gr9;
+	LOAD #28, Gr10 ;
+	LOAD #23, Gr11 ;
+	LOAD #4, Gr12 ;
+	LOAD #10, Gr13 ;
+	LOAD #$D34, Gr15 ;
+	LOAD #INFINITE3, Gr14 ;
+	BRA #PRINT ;
+INFINITE3
+	LOAD #0, Gr0 ;
+	ADD $A1C, Gr0 ;
+	ADD $A1D, Gr0 ;
+	ADD $A1E, Gr0 ;
+	ADD $A1F, Gr0 ;
+INFINITE4
+	SPI Gr1;
+	AND #$0008, Gr1;
+	CMP #$0008, Gr1;
+	BEQ #MENU; gaaaah oääääääändlig
+	BRA #INFINITE4 ;	
+
+	INCLUDE util.asm
